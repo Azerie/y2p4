@@ -4,7 +4,7 @@ using UnityEngine.Events;
 
 public class PlayerInventory : MonoBehaviour
 {
-    [SerializeField] private List<Item> items = new List<Item>();
+    [SerializeField] private Dictionary<Item, int> items = new Dictionary<Item, int>();
     public static UnityAction InventoryChanged;
     public static PlayerInventory Instance;
 
@@ -28,30 +28,33 @@ public class PlayerInventory : MonoBehaviour
     {
         return Instance;
     }
-    public List<Item> GetItems() { return items; }
+    public Dictionary<Item, int> GetItems() { return items; }
     public bool HasItem(Item item)
     {
-        var entry = Instance.items.Find(i => i == item);
-        return entry != null;
+        return Instance.items.ContainsKey(item);
     }
 
     public void AddItem(Item item)
     {
-        var entry = Instance.items.Find(i => i == item);
-        if (entry == null)
+        if (Instance.items.ContainsKey(item))
         {
-            Instance.items.Add(item);
-            InventoryChanged?.Invoke();
+            Instance.items[item]++;
         }
+        else
+        {
+            Instance.items.Add(item, 1);
+        }
+        InventoryChanged?.Invoke();
     }
 
     public bool RemoveItem(Item item)
     {
-        
-        var entry = Instance.items.Find(i => i == item);
-        if (entry != null)
+        if (Instance.items.ContainsKey(item))
         {
-            Instance.items.Remove(entry);
+            Instance.items[item]--;
+            if(Instance.items[item] == 0) {
+                Instance.items.Remove(item);
+            }
             InventoryChanged?.Invoke();
             return true;
         }
