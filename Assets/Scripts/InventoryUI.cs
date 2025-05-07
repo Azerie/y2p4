@@ -30,12 +30,13 @@ public class InventoryUI : MonoBehaviour
                 entryTransform.anchoredPosition = currentPosition;
                 currentPosition += entryOffset;
 
-                Image shipPart = entry.transform.Find("Image").GetComponent<Image>();
-                TMP_Text shipPartName = entry.transform.Find("Text").GetComponent<TMP_Text>();
+                Image itemImage = entry.transform.Find("Image").GetComponent<Image>();
+                TMP_Text itemName = entry.transform.Find("Text").GetComponent<TMP_Text>();
+                // TMP_Text itemNumber = entry.transform.Find("Counter").GetComponent<TMP_Text>();
                 // Debug.Log(item.ItemName);
 
-                shipPart.sprite = item.Icon;
-                shipPartName.text = item.ItemName;
+                itemImage.sprite = item.Icon;
+                itemName.text = item.ItemName;
             }
         }
     }

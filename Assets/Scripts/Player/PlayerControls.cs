@@ -50,6 +50,8 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private float MaxStamina = 5f;
     [Tooltip("Full stamina recovery time (in seconds)")]
     [SerializeField] private float StaminaRecoveryRate = 3f;
+    [SerializeField] private float StandingHeight = 2f;
+    [SerializeField] private float CrouchHeight = 1f;
 
     [Space(10)]
     [SerializeField] private string FailScene;
@@ -79,12 +81,15 @@ public class PlayerControls : MonoBehaviour
     private Rigidbody _rb;
     private PlayerInteraction _pickupHandler;
     private AudioSource _audioSource;
+    private CapsuleCollider _hitbox;
+    private bool isCrouched = false;
 
 
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
         _audioSource = GetComponent<AudioSource>();
+        _hitbox = GetComponentInChildren<CapsuleCollider>();
         _health = MaxHealth;
         _stamina = MaxStamina;
     }
@@ -132,7 +137,7 @@ public class PlayerControls : MonoBehaviour
         }
 
         // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
-        if (_verticalVelocity < _terminalVelocity)
+        if (_verticalVelocity > -_terminalVelocity)
         {
             _verticalVelocity += Gravity * Time.deltaTime;
         }
@@ -245,6 +250,16 @@ public class PlayerControls : MonoBehaviour
         pauseMenu.transform.GetComponent<Canvas>().enabled = true;
         Cursor.visible = true;
     }
+
+    private void OnCrouch() {
+        if(isCrouched) {
+            _hitbox.height = StandingHeight;
+        }
+        else{
+            _hitbox.height = CrouchHeight;
+        }
+        isCrouched = !isCrouched;
+    } 
 
     public void SetCameraSensitivity(int pSensitivity)
     {
