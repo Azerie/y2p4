@@ -8,35 +8,35 @@ public class PlayerInteraction : MonoBehaviour
 {
     [SerializeField] private Canvas promptReminder;
 
-    private GameObject pickup;
+    private GameObject interactableObject;
 
     public void Interact()
     {
-        if(pickup != null) 
+        if(interactableObject != null) 
         {
-            // pick up item here
+            interactableObject.GetComponent<InteractableBehaviourAbstract>().OnInteract();
         }
     }
 
     private void OnTriggerEnter(Collider collision)
     {
-        if(collision.gameObject.tag == "Pickup")
+        if(collision.gameObject.tag == "Interactable")
         {
             if(promptReminder != null){
                 promptReminder.enabled = true;
             }
-            pickup = collision.gameObject;
+            interactableObject = collision.gameObject;
         }
     }
 
     private void OnTriggerExit(Collider collision)
     {
-        if(collision.gameObject.tag == "Pickup")
+        if(collision.gameObject.tag == "Interactable")
         {
             if(promptReminder != null){
                 promptReminder.enabled = false;
             }
-            pickup = null;
+            interactableObject = null;
         }
     }
 }

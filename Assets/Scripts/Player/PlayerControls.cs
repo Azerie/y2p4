@@ -13,7 +13,7 @@ public class PlayerControls : MonoBehaviour
     [Tooltip("Sprint speed of the character")]
     [SerializeField] private float SprintSpeed = 6.0f;
     [Tooltip("Rotation speed of the character")]
-    [SerializeField] private float RotationSpeed = 1.0f;
+    [SerializeField] private float Sensitivity = 1.0f;
     [Tooltip("Acceleration and deceleration")]
     [SerializeField] private float SpeedChangeRate = 10.0f;
     
@@ -58,7 +58,6 @@ public class PlayerControls : MonoBehaviour
     [Header("Sound")]
     [SerializeField] private AudioClip runSound;
     [SerializeField] private AudioClip walkSound;
-    [SerializeField] private AudioClip burnSound;
     [SerializeField] private AudioSource _audioSource2;
 
     [Space(10)]
@@ -190,11 +189,11 @@ public class PlayerControls : MonoBehaviour
 
         if(Math.Abs(_speed) > speedOffset && !_audioSource.isPlaying)
         {
-            if(_isSprinting)
+            if(_isSprinting && runSound != null)
             {
                 _audioSource.PlayOneShot(runSound);
             }
-            else
+            else if(walkSound != null)
             {
                 _audioSource.PlayOneShot(walkSound);
             }
@@ -221,18 +220,18 @@ public class PlayerControls : MonoBehaviour
 
     private void OnInteract()
     {
-        _pickupHandler.Interact();   
+        _pickupHandler.Interact();  
     }
 
     private void OnLook(InputValue value) 
     {
-        _rotationVelocity = value.Get<Vector2>().x * RotationSpeed * Time.deltaTime;
+        _rotationVelocity = value.Get<Vector2>().x * Sensitivity * Time.deltaTime;
 
         // rotate the player left and right
         transform.Rotate(Vector3.up * _rotationVelocity);
 
         Camera cam = GetComponentInChildren<Camera>();
-        _cameraYrotation -= value.Get<Vector2>().y * RotationSpeed * Time.deltaTime;
+        _cameraYrotation -= value.Get<Vector2>().y * Sensitivity * Time.deltaTime;
         _cameraYrotation = Math.Clamp(_cameraYrotation, MinCameraAngle, MaxCameraAngle);
 
         Quaternion newRotation = Quaternion.Euler(_cameraYrotation, 0, 0);
@@ -247,21 +246,9 @@ public class PlayerControls : MonoBehaviour
         Cursor.visible = true;
     }
 
-    public void SetCameraSensitivity(int sensitivity)
+    public void SetCameraSensitivity(int pSensitivity)
     {
-        RotationSpeed = sensitivity;
-    }
-
-    public void TakeDamage(float d)
-    {
-        _health -= d;
-        if(!_audioSource2.isPlaying) {
-            _audioSource2.PlayOneShot(burnSound);
-        }
-        if(_health <= 0 ) 
-        {
-            SceneManager.LoadScene(FailScene);
-        }
+        Sensitivity = pSensitivity;
     }
 
     public float GetHealth() {
