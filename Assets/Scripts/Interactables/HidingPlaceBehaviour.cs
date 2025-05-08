@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HidingPlaceBehaviour : InteractableBehaviourAbstract
+public class HidingPlaceBehaviour : InteractableBehaviourAbstract  // TODO: consider moving the hiding bool to the enemies behaviour actually probably do an event instead
 {
     [SerializeField] private Transform playerHiddenPosition;
     [SerializeField] private Transform playerOutsidePosition;
