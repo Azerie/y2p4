@@ -83,6 +83,7 @@ public class PlayerControls : MonoBehaviour
     private AudioSource _audioSource;
     private CapsuleCollider _hitbox;
     private bool isCrouched = false;
+    private bool isEnabled = true;
 
 
     void Start()
@@ -92,6 +93,7 @@ public class PlayerControls : MonoBehaviour
         _hitbox = GetComponentInChildren<CapsuleCollider>();
         _health = MaxHealth;
         _stamina = MaxStamina;
+        isEnabled = true;
     }
 
     private void Awake()
@@ -104,7 +106,9 @@ public class PlayerControls : MonoBehaviour
     {
         GroundedCheck();
         ApplyGravity();
-        Move();
+        if(isEnabled) {
+            Move();
+        }
     }
 
 
@@ -264,6 +268,14 @@ public class PlayerControls : MonoBehaviour
     public void SetCameraSensitivity(int pSensitivity)
     {
         Sensitivity = pSensitivity;
+    }
+
+    public void DisableMovement() {
+        isEnabled = false;
+    }
+
+    public void EnableMovement() {
+        isEnabled = true;
     }
 
     public float GetHealth() {

@@ -235,7 +235,7 @@ GameObject:
   - component: {fileID: 4785226270924334384}
   m_Layer: 3
   m_Name: Capsule
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -345,7 +345,7 @@ GameObject:
   - component: {fileID: 8342667509644045889}
   m_Layer: 3
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -381,7 +381,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoveSpeed: 4
   SprintSpeed: 6
-  Sensitivity: 5
+  Sensitivity: 10
   SpeedChangeRate: 10
   JumpHeight: 1.2
   Gravity: -15
@@ -396,6 +396,8 @@ MonoBehaviour:
   MaxHealth: 100
   MaxStamina: 5
   StaminaRecoveryRate: 3
+  StandingHeight: 2
+  CrouchHeight: 1
   FailScene: 
   runSound: {fileID: 0}
   walkSound: {fileID: 0}
@@ -444,7 +446,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 3
-  m_Center: {x: 0, y: 0, z: 4}
+  m_Center: {x: 0, y: 0, z: 3}
 --- !u!54 &4785226271423879066
 Rigidbody:
   m_ObjectHideFlags: 0
