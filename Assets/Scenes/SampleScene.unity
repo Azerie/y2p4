@@ -279,6 +279,8 @@ MonoBehaviour:
   confirmRange: 0.1
   detectionRange: 5
   chaseRange: 5
+  detectionAngle: 45
+  heightOffset: 0.1
 --- !u!195 &9943303
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -836,7 +838,7 @@ GameObject:
   - component: {fileID: 799997220}
   - component: {fileID: 799997219}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1755,7 +1757,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4785226271423879065, guid: 7d317c7a3d20dd14e9acf109a0b78fdd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 1.8
       objectReference: {fileID: 0}
     - target: {fileID: 4785226271423879065, guid: 7d317c7a3d20dd14e9acf109a0b78fdd, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1763,7 +1765,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4785226271423879065, guid: 7d317c7a3d20dd14e9acf109a0b78fdd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.67
+      value: 4.88
       objectReference: {fileID: 0}
     - target: {fileID: 4785226271423879065, guid: 7d317c7a3d20dd14e9acf109a0b78fdd, type: 3}
       propertyPath: m_LocalRotation.w

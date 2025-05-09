@@ -33,7 +33,7 @@ public class EnemyBehaviour : MonoBehaviour
         } 
         player = GameObject.FindGameObjectWithTag("Player").transform;
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").transform;
-        detectionAngle *= Mathf.Deg2Rad;
+        // detectionAngle *= Mathf.Deg2Rad;
         playerHeight = player.GetComponentInChildren<CapsuleCollider>().height - heightOffset;
         height = GetComponentInChildren<CapsuleCollider>().height - heightOffset;
     }
@@ -64,18 +64,26 @@ public class EnemyBehaviour : MonoBehaviour
     }
 
     private bool CanDetectPlayer() {
-        Vector3 directLine = transform.position - player.position;
+        Vector3 directLine = player.position - transform.position;
         bool isInRange = (directLine).magnitude < detectionRange;
-        bool isInCone = (Vector3.Cross(directLine, transform.forward).magnitude / directLine.magnitude / transform.forward.magnitude) > Mathf.Cos(detectionAngle);
+        bool isInCone = (Vector3.Dot(directLine, transform.forward) / directLine.magnitude / transform.forward.magnitude) > Mathf.Cos(detectionAngle);
+        Debug.DrawRay(transform.position, transform.forward, Color.blue);
+        Debug.DrawRay(transform.position, Vector3.Dot(directLine, transform.forward) * Vector3.up, Color.blue);
+        Debug.DrawRay(transform.position, directLine, Color.red);
+        Debug.DrawRay(transform.position, Quaternion.AngleAxis(-detectionAngle, Vector3.up) * transform.forward * detectionRange, Color.yellow);
+        Debug.DrawRay(transform.position, Quaternion.AngleAxis(detectionAngle, Vector3.up) * transform.forward * detectionRange, Color.yellow);
         return isInRange && isInCone;
     }
 
     private bool HasLineOfSight() {
         RaycastHit hit;
         Vector3 origin = transform.position + new Vector3(0, height, 0);
-        Physics.Raycast(origin, player.position + new Vector3(0, playerHeight, 0) - origin, out hit);
-        if(hit.collider.transform.CompareTag("Player")) {
-            return true;
+        
+        Debug.DrawRay(origin, player.position + new Vector3(0, playerHeight, 0) - origin, Color.green);
+        if(Physics.Raycast(origin, player.position + new Vector3(0, playerHeight, 0) - origin, out hit)) {
+            if(hit.transform.CompareTag("Player")) {
+                return true;
+            }
         }
         return false;
     }
