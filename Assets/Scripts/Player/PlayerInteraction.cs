@@ -9,7 +9,6 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private Canvas promptReminder;
 
     private GameObject interactableObject;
-    private bool isHidden = false;
 
     public void Interact()
     {
@@ -40,7 +39,4 @@ public class PlayerInteraction : MonoBehaviour
             interactableObject = null;
         }
     }
-
-    public void Hide() { isHidden = true; }
-    public void UnHide() { isHidden = false;}
 }

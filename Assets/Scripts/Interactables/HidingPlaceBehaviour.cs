@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class HidingPlaceBehaviour : InteractableBehaviourAbstract  // TODO: consider moving the hiding bool to the enemies behaviour actually probably do an event instead
+
+public class HidingPlaceBehaviour : InteractableBehaviourAbstract
 {
     [SerializeField] private Transform playerHiddenPosition;
     [SerializeField] private Transform playerOutsidePosition;
+    public static event UnityAction onPlayerHidden;
+    public static event UnityAction onPlayerRevealed;
 
     private GameObject player;
     private bool hasPlayer = false;
@@ -19,12 +23,12 @@ public class HidingPlaceBehaviour : InteractableBehaviourAbstract  // TODO: cons
         if(hasPlayer) {
             player.transform.position = playerOutsidePosition.position;
             player.GetComponent<PlayerControls>().EnableMovement();
-            player.GetComponent<PlayerInteraction>().UnHide();
+            onPlayerRevealed();
         }
         else {
             player.transform.position = playerHiddenPosition.position;
             player.GetComponent<PlayerControls>().DisableMovement();
-            player.GetComponent<PlayerInteraction>().Hide();
+            onPlayerHidden();
         }
         hasPlayer = !hasPlayer;
     }

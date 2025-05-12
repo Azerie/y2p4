@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,19 +12,34 @@ public class EnemyBehaviour : MonoBehaviour
     [SerializeField] private float confirmRange = 0.1f;
     [Tooltip("How far away the enemy detects player")]
     [SerializeField] private float detectionRange = 5f;
-    [Tooltip("How far away the player has to be for the enemy to stop chasing")]
-    [SerializeField] private float chaseRange = 5f;
     [Tooltip("1/2 of the angle of the detection cone (in degrees)")]
     [SerializeField] private float detectionAngle = 45f;
     [SerializeField] private float heightOffset = 0.1f;
+    [Tooltip("How long it takes for the enemy to go from roaming to alert state while seeing the player")]
+    [SerializeField] private float RoamingToAlertTime = 1f;
+    [Tooltip("How long it takes for the enemy to go from alert to chasing state while seeing the player")]
+    [SerializeField] private float AlertToChasingTime = 1f;
+    [Tooltip("How long it takes for the enemy to go from alert to roaming state while not seeing the player")]
+    [SerializeField] private float AlertToRoamingTime = 1f;
+    [Tooltip("How long it takes for the enemy to go from chasing to alert state while not seeing the player")]
+    [SerializeField] private float ChasingToAlertTime = 1f;
+    [SerializeField] private float RoamingSpeed = 3f;
+    [SerializeField] private float AlertSpeed = 4f;
+    [SerializeField] private float ChasingSpeed = 6f;
+    
 
+
+    enum State {Roaming, Alert, Chasing}
+    private State state = State.Roaming;
+    private State oldState = State.Roaming;
     private Transform player;
     private Transform mainCamera;
     private float playerHeight;
     private float height;
     private NavMeshAgent navMeshAgent;
     private int currentPointIndex = 0;
-    private bool isChasing = false;
+    private float stateTimer = 0f;
+    private bool isPlayerHidden = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,43 +49,107 @@ public class EnemyBehaviour : MonoBehaviour
         } 
         player = GameObject.FindGameObjectWithTag("Player").transform;
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").transform;
-        // detectionAngle *= Mathf.Deg2Rad;
         playerHeight = player.GetComponentInChildren<CapsuleCollider>().height - heightOffset;
         height = GetComponentInChildren<CapsuleCollider>().height - heightOffset;
+        HidingPlaceBehaviour.onPlayerHidden += HidePlayer;
+        HidingPlaceBehaviour.onPlayerRevealed += RevealPlayer;
+
+        ChangeState(State.Roaming);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(!isChasing && (transform.position - player.position).magnitude < detectionRange) {
-            // navMeshAgent.destination = player.position;
-            // isChasing = true;
-        }
-        else if(isChasing && (transform.position - player.position).magnitude > chaseRange) {
-            navMeshAgent.destination = points[currentPointIndex].position;
-            isChasing = false;
-        }
+        UpdateState();
+        UpdateDestination();
 
-        if(navMeshAgent.remainingDistance < confirmRange) {
-            currentPointIndex++;
-            if(currentPointIndex > points.Count - 1) {
-                currentPointIndex = 0;
-            }
-            navMeshAgent.destination = points[currentPointIndex].position;
-            isChasing = false;
-        }
-
-        Debug.Log("Can detect player? " + CanDetectPlayer());
-        Debug.Log("Has line of sight to the player? " + HasLineOfSight());
+        // Debug.Log("Can detect player? " + CanDetectPlayer());
+        // Debug.Log("Has line of sight to the player? " + HasLineOfSight());
     }
 
-    private bool CanDetectPlayer() {
+    void OnDestroy()
+    {
+        HidingPlaceBehaviour.onPlayerHidden -= HidePlayer;
+        HidingPlaceBehaviour.onPlayerRevealed -= RevealPlayer;
+    }
+
+    private void ChangeState(State newState) {
+        if(newState == State.Chasing) {
+            GetComponentInChildren<MeshRenderer>().material.SetColor("_Color", Color.red);
+            navMeshAgent.speed = ChasingSpeed;
+            navMeshAgent.destination = player.position;
+        }
+        else if (newState == State.Alert) {
+            GetComponentInChildren<MeshRenderer>().material.SetColor("_Color", Color.yellow);
+            navMeshAgent.speed = AlertSpeed;
+            navMeshAgent.destination = player.position;
+        }
+        else if (newState == State.Roaming) {
+            GetComponentInChildren<MeshRenderer>().material.SetColor("_Color", Color.green);
+            navMeshAgent.speed = RoamingSpeed;
+            navMeshAgent.destination = points[currentPointIndex].position;
+        }
+        oldState = state;
+        state = newState;
+        stateTimer = 0;
+    }
+
+    private void UpdateDestination() {
+        if(state == State.Chasing) {
+            navMeshAgent.destination = player.position;
+        }
+        else if(navMeshAgent.remainingDistance < confirmRange) {
+            if(state == State.Roaming) {
+                currentPointIndex++;
+                if(currentPointIndex > points.Count - 1) {
+                    currentPointIndex = 0;
+                }
+                navMeshAgent.destination = points[currentPointIndex].position;
+            }
+        }
+    }
+
+    private void UpdateState() {
+        if(state == State.Chasing) {
+            if(!CanSeePlayer()) { 
+                // for state timer i use negative numbers for lowering aggression and positive for upping it
+                stateTimer -= Time.deltaTime;
+                if(stateTimer <= -ChasingToAlertTime) {
+                    ChangeState(State.Alert);
+                }
+            }
+        }
+        else if(state == State.Alert) {
+            if(CanSeePlayer()) {
+                stateTimer += Time.deltaTime;
+                if(stateTimer >= AlertToChasingTime) {
+                    ChangeState(State.Chasing);
+                }
+            }
+            else if(IsAtDestination()) {
+                stateTimer -= Time.deltaTime;
+                if(stateTimer <= -AlertToRoamingTime) {
+                    ChangeState(State.Roaming);
+                }
+            }
+        }
+        else if(state == State.Roaming) {
+            if(CanSeePlayer()) {
+                stateTimer += Time.deltaTime;
+                if(stateTimer >= RoamingToAlertTime) {
+                    ChangeState(State.Alert);
+                }
+            }
+        }
+    }
+
+    private bool IsPlayerInVisionCone() {
         Vector3 directLine = player.position - transform.position;
         bool isInRange = (directLine).magnitude < detectionRange;
-        bool isInCone = (Vector3.Dot(directLine, transform.forward) / directLine.magnitude / transform.forward.magnitude) > Mathf.Cos(detectionAngle);
-        Debug.DrawRay(transform.position, transform.forward, Color.blue);
-        Debug.DrawRay(transform.position, Vector3.Dot(directLine, transform.forward) * Vector3.up, Color.blue);
-        Debug.DrawRay(transform.position, directLine, Color.red);
+        bool isInCone = (Vector3.Dot(directLine, transform.forward) / directLine.magnitude / transform.forward.magnitude) > Mathf.Cos(detectionAngle * Mathf.Deg2Rad);
+        // Debug.DrawRay(transform.position, transform.forward, Color.blue);
+        // Debug.DrawRay(transform.position, Vector3.Dot(directLine, transform.forward) * Vector3.up, Color.blue);
+        // Debug.DrawRay(transform.position, directLine, Color.red);
         Debug.DrawRay(transform.position, Quaternion.AngleAxis(-detectionAngle, Vector3.up) * transform.forward * detectionRange, Color.yellow);
         Debug.DrawRay(transform.position, Quaternion.AngleAxis(detectionAngle, Vector3.up) * transform.forward * detectionRange, Color.yellow);
         return isInRange && isInCone;
@@ -86,5 +166,21 @@ public class EnemyBehaviour : MonoBehaviour
             }
         }
         return false;
+    }
+
+    private bool CanSeePlayer() {
+        return !isPlayerHidden && HasLineOfSight() && IsPlayerInVisionCone();
+    }
+
+    private void HidePlayer() {
+        isPlayerHidden = true;
+    }
+    private void RevealPlayer() {
+        isPlayerHidden = false;
+    }
+
+    private bool IsAtDestination() {
+        float dist = navMeshAgent.remainingDistance;
+        return dist != Mathf.Infinity && navMeshAgent.pathStatus==NavMeshPathStatus.PathComplete && navMeshAgent.remainingDistance == 0;
     }
 }
