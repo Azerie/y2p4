@@ -11,9 +11,9 @@ public class DoorBehaviour : InteractableBehaviourAbstract
     [Tooltip("How fast the door opens")]
     [SerializeField] private float openingSpeed = 1f;
     private bool isOpen = false;
-    private Quaternion closedRotation;
-    private Quaternion openRotation;
-    private Quaternion targetRotation;
+    protected Quaternion closedRotation;
+    protected Quaternion openRotation;
+    protected Quaternion targetRotation;
 
 
     void Start()
@@ -53,7 +53,7 @@ public class DoorBehaviour : InteractableBehaviourAbstract
         }
     }
 
-    private void Open() 
+    public void Open() 
     {
         targetRotation = openRotation;
         isOpen = true;
