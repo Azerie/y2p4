@@ -27,6 +27,7 @@ public class HidingPlaceBehaviour : InteractableBehaviourAbstract
         }
         else {
             player.transform.position = playerHiddenPosition.position;
+            player.transform.rotation = playerHiddenPosition.rotation;
             player.GetComponent<PlayerControls>().DisableMovement();
             OnPlayerHidden();
         }

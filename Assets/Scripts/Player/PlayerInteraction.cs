@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -15,6 +16,12 @@ public class PlayerInteraction : MonoBehaviour
         if(interactableObject != null) 
         {
             interactableObject.GetComponent<InteractableBehaviourAbstract>().OnInteract();
+            if(interactableObject.IsDestroyed()) {
+                interactableObject = null;
+                if(promptReminder != null){
+                    promptReminder.enabled = false;
+                }
+            }
         }
     }
 

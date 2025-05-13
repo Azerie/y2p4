@@ -22,6 +22,9 @@ public class InventoryUI : MonoBehaviour
     void OnItemGained()
     {
         if(PlayerInventory.GetInstance() != null && this != null) {
+            foreach (Transform entry in InventoryEntryContainer.transform) {
+                Destroy(entry.gameObject);
+            }
             Vector2 currentPosition = startingPosition;
             foreach (Item item in PlayerInventory.GetInstance().GetItems().Keys)
             {
