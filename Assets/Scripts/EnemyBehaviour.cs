@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class EnemyBehaviour : MonoBehaviour
 {
@@ -26,6 +27,9 @@ public class EnemyBehaviour : MonoBehaviour
     [SerializeField] private float RoamingSpeed = 3f;
     [SerializeField] private float AlertSpeed = 4f;
     [SerializeField] private float ChasingSpeed = 6f;
+    [SerializeField] private bool failEnabled = true;
+
+    [SerializeField] private string failSceneName = "MainMenu";
     
 
 
@@ -51,8 +55,8 @@ public class EnemyBehaviour : MonoBehaviour
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").transform;
         playerHeight = player.GetComponentInChildren<CapsuleCollider>().height - heightOffset;
         height = GetComponentInChildren<CapsuleCollider>().height - heightOffset;
-        HidingPlaceBehaviour.onPlayerHidden += HidePlayer;
-        HidingPlaceBehaviour.onPlayerRevealed += RevealPlayer;
+        HidingPlaceBehaviour.OnPlayerHidden += HidePlayer;
+        HidingPlaceBehaviour.OnPlayerRevealed += RevealPlayer;
 
         ChangeState(State.Roaming);
     }
@@ -69,8 +73,8 @@ public class EnemyBehaviour : MonoBehaviour
 
     void OnDestroy()
     {
-        HidingPlaceBehaviour.onPlayerHidden -= HidePlayer;
-        HidingPlaceBehaviour.onPlayerRevealed -= RevealPlayer;
+        HidingPlaceBehaviour.OnPlayerHidden -= HidePlayer;
+        HidingPlaceBehaviour.OnPlayerRevealed -= RevealPlayer;
     }
 
     private void ChangeState(State newState) {
@@ -182,5 +186,12 @@ public class EnemyBehaviour : MonoBehaviour
     private bool IsAtDestination() {
         float dist = navMeshAgent.remainingDistance;
         return dist != Mathf.Infinity && navMeshAgent.pathStatus==NavMeshPathStatus.PathComplete && navMeshAgent.remainingDistance == 0;
+    }
+
+    void OollisionEnter(Collision collision)
+    {
+        if(failEnabled && collision.transform.parent != null && collision.transform.parent.CompareTag("Player")) {
+            SceneManager.LoadScene(failSceneName);
+        }
     }
 }
