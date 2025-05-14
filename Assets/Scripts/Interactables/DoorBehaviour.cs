@@ -30,7 +30,7 @@ public class DoorBehaviour : InteractableBehaviourAbstract
 
     public override void OnInteract()
     {
-        Debug.Log("interacted");
+        // Debug.Log("interacted");
         if(requiredItem != null) {
             if(PlayerInventory.GetInstance().HasItem(requiredItem)) {
                 Use();

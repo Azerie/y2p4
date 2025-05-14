@@ -5,25 +5,20 @@ using UnityEngine.Events;
 
 public class CandlePuzzleEndBehaviour : MonoBehaviour
 {
-    [SerializeField] GameObject itemInside;
     [SerializeField] int requiredCandlesNumber;
     int currentCandlesNumber = 0;
+    PuzzleItemReveal itemReveal;
 
     void Start()
     {
         CandlePuzzlePieceBehaviour.CandleLit += AddCandle;
-        itemInside.SetActive(false);
+        itemReveal = GetComponent<PuzzleItemReveal>();
     }
 
     void AddCandle() {
         currentCandlesNumber += 1;
         if(currentCandlesNumber >= requiredCandlesNumber) {
-            EndPuzzle();
+            itemReveal.EndPuzzle();
         }
-    }
-
-    void EndPuzzle() {
-        itemInside.SetActive(true);
-        Destroy(gameObject);
     }
 }

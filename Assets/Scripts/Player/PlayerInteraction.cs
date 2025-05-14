@@ -9,7 +9,7 @@ public class PlayerInteraction : MonoBehaviour
 {
     [SerializeField] private Canvas promptReminder;
 
-    private GameObject interactableObject;
+    [SerializeField] private GameObject interactableObject;
 
     public void Interact()
     {

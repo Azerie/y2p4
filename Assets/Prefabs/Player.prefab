@@ -102,8 +102,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4785226270609094861}
   - component: {fileID: 6925939409550521032}
+  - component: {fileID: 1546817999556095773}
+  - component: {fileID: 4526898985781178273}
   m_Layer: 3
-  m_Name: PlayerCameraRoot
+  m_Name: Head
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -221,6 +223,40 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1546817999556095773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4785226270609094858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b456d034bda2bd65a3b0cc40374b384, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  promptReminder: {fileID: 0}
+--- !u!65 &4526898985781178273
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4785226270609094858}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.3, y: 0.3, z: 3}
+  m_Center: {x: 0, y: 0, z: 1.5}
 --- !u!1 &4785226270924334382
 GameObject:
   m_ObjectHideFlags: 0
@@ -234,7 +270,7 @@ GameObject:
   - component: {fileID: 4785226270924334387}
   - component: {fileID: 4785226270924334384}
   m_Layer: 3
-  m_Name: Capsule
+  m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -338,8 +374,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4785226271423879065}
   - component: {fileID: 4785226271423879067}
-  - component: {fileID: 4785226271423879069}
-  - component: {fileID: 4785226271423879068}
   - component: {fileID: 4785226271423879066}
   - component: {fileID: 4785226271423879064}
   - component: {fileID: 8342667509644045889}
@@ -413,40 +447,6 @@ MonoBehaviour:
   _cameraYrotation: 0
   moveInput: {x: 0, y: 0}
   lookInput: {x: 0, y: 0}
---- !u!114 &4785226271423879069
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4785226271423879062}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b456d034bda2bd65a3b0cc40374b384, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  promptReminder: {fileID: 0}
---- !u!135 &4785226271423879068
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4785226271423879062}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 1
-  m_Center: {x: 0, y: 1, z: 1}
 --- !u!54 &4785226271423879066
 Rigidbody:
   m_ObjectHideFlags: 0
