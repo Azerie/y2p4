@@ -125,6 +125,10 @@ public class EnemyBehaviour : MonoBehaviour
         }
         else if(state == State.Alert) {
             if(CanSeePlayer()) {
+                if(stateTimer < 0)
+                {
+                    stateTimer = 0;
+                }
                 stateTimer += Time.deltaTime;
                 if(stateTimer >= AlertToChasingTime) {
                     ChangeState(State.Chasing);
@@ -188,9 +192,11 @@ public class EnemyBehaviour : MonoBehaviour
         return dist != Mathf.Infinity && navMeshAgent.pathStatus==NavMeshPathStatus.PathComplete && navMeshAgent.remainingDistance == 0;
     }
 
-    void OollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision collision)
     {
-        if(failEnabled && collision.transform.parent != null && collision.transform.parent.CompareTag("Player")) {
+        // Debug.Log("enemy collision");
+
+        if (failEnabled && collision.transform.CompareTag("Player")) {
             SceneManager.LoadScene(failSceneName);
         }
     }
