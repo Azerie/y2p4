@@ -121,7 +121,7 @@ GameObject:
   - component: {fileID: 7583653014880639653}
   m_Layer: 0
   m_Name: DestructablePanel
-  m_TagString: Interactable
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -224,7 +224,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee0c5f15c1ba0425c9111949a1768c8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemInside: {fileID: 6660007685650800645}
   requiredCandlesNumber: 3
 --- !u!114 &7583653014880639653
 MonoBehaviour:
