@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
 
 public class HidingPlaceBehaviour : InteractableBehaviourAbstract
 {
     [SerializeField] private Transform playerHiddenPosition;
     [SerializeField] private Transform playerOutsidePosition;
+    public static event UnityAction OnPlayerHidden;
+    public static event UnityAction OnPlayerRevealed;
 
     private GameObject player;
     private bool hasPlayer = false;
@@ -19,12 +23,13 @@ public class HidingPlaceBehaviour : InteractableBehaviourAbstract
         if(hasPlayer) {
             player.transform.position = playerOutsidePosition.position;
             player.GetComponent<PlayerControls>().EnableMovement();
-            player.GetComponent<PlayerInteraction>().UnHide();
+            OnPlayerRevealed();
         }
         else {
             player.transform.position = playerHiddenPosition.position;
+            player.transform.rotation = playerHiddenPosition.rotation;
             player.GetComponent<PlayerControls>().DisableMovement();
-            player.GetComponent<PlayerInteraction>().Hide();
+            OnPlayerHidden();
         }
         hasPlayer = !hasPlayer;
     }

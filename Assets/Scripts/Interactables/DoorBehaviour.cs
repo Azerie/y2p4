@@ -6,12 +6,31 @@ public class DoorBehaviour : InteractableBehaviourAbstract
 {
     [Tooltip("Don't set required item for doors that dont need an item")]
     [SerializeField] private Item requiredItem;
+    [Tooltip("Angle of open door")]
     [SerializeField] private int angle;
+    [Tooltip("How fast the door opens")]
+    [SerializeField] private float openingSpeed = 1f;
     private bool isOpen = false;
+    protected Quaternion closedRotation;
+    protected Quaternion openRotation;
+    protected Quaternion targetRotation;
+
+
+    void Start()
+    {
+        targetRotation = transform.parent.rotation;
+        closedRotation = transform.parent.rotation;
+        openRotation = Quaternion.Euler(transform.parent.rotation.eulerAngles + new Vector3(0, angle, 0));
+    }
+
+    void Update()
+    {
+        transform.parent.rotation = Quaternion.Slerp(transform.parent.rotation, targetRotation, openingSpeed * Time.deltaTime);
+    }
 
     public override void OnInteract()
     {
-        Debug.Log("interacted");
+        // Debug.Log("interacted");
         if(requiredItem != null) {
             if(PlayerInventory.GetInstance().HasItem(requiredItem)) {
                 Use();
@@ -34,15 +53,15 @@ public class DoorBehaviour : InteractableBehaviourAbstract
         }
     }
 
-    private void Open() 
+    public void Open() 
     {
-        transform.parent.rotation = Quaternion.Euler(transform.parent.rotation.eulerAngles + new Vector3(0, angle, 0));
+        targetRotation = openRotation;
         isOpen = true;
     }
 
     private void Close() 
     {
-        transform.parent.rotation = Quaternion.Euler(transform.parent.rotation.eulerAngles - new Vector3(0, angle, 0));
+        targetRotation = closedRotation;
         isOpen = false;
     }
 

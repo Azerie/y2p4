@@ -91,6 +91,7 @@ public class PlayerControls : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _audioSource = GetComponent<AudioSource>();
         _hitbox = GetComponentInChildren<CapsuleCollider>();
+        _pickupHandler = GetComponentInChildren<PlayerInteraction>();
         _health = MaxHealth;
         _stamina = MaxStamina;
         isEnabled = true;
@@ -98,7 +99,6 @@ public class PlayerControls : MonoBehaviour
 
     private void Awake()
     {
-        _pickupHandler = GetComponent<PlayerInteraction>();
         Cursor.visible = false;
     }
 
@@ -239,13 +239,13 @@ public class PlayerControls : MonoBehaviour
         // rotate the player left and right
         transform.Rotate(Vector3.up * _rotationVelocity);
 
-        Camera cam = GetComponentInChildren<Camera>();
+        Transform head = GetComponentInChildren<Camera>().transform.parent;
         _cameraYrotation -= value.Get<Vector2>().y * Sensitivity * Time.deltaTime;
         _cameraYrotation = Math.Clamp(_cameraYrotation, MinCameraAngle, MaxCameraAngle);
 
         Quaternion newRotation = Quaternion.Euler(_cameraYrotation, 0, 0);
 
-        cam.transform.localRotation = newRotation;
+        head.localRotation = newRotation;
     }
 
     private void OnPause() {

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -8,14 +9,19 @@ public class PlayerInteraction : MonoBehaviour
 {
     [SerializeField] private Canvas promptReminder;
 
-    private GameObject interactableObject;
-    private bool isHidden = false;
+    [SerializeField] private GameObject interactableObject;
 
     public void Interact()
     {
         if(interactableObject != null) 
         {
             interactableObject.GetComponent<InteractableBehaviourAbstract>().OnInteract();
+            if(interactableObject.IsDestroyed()) {
+                interactableObject = null;
+                if(promptReminder != null){
+                    promptReminder.enabled = false;
+                }
+            }
         }
     }
 
@@ -40,7 +46,4 @@ public class PlayerInteraction : MonoBehaviour
             interactableObject = null;
         }
     }
-
-    public void Hide() { isHidden = true; }
-    public void UnHide() { isHidden = false;}
 }
