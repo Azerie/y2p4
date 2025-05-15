@@ -15,35 +15,43 @@ public class PlayerInteraction : MonoBehaviour
     {
         if(interactableObject != null) 
         {
-            interactableObject.GetComponent<InteractableBehaviourAbstract>().OnInteract();
-            if(interactableObject.IsDestroyed()) {
-                interactableObject = null;
-                if(promptReminder != null){
-                    promptReminder.enabled = false;
-                }
+            InteractableBehaviourAbstract interactableObjectBehaviour = interactableObject.GetComponent<InteractableBehaviourAbstract>();
+            interactableObjectBehaviour.OnInteract();
+            if(interactableObjectBehaviour.IsMarkedForDestruction()) {
+                RemoveInteractable();
             }
         }
     }
 
     private void OnTriggerEnter(Collider collision)
     {
-        if(collision.gameObject.tag == "Interactable")
+        if(collision.gameObject.CompareTag("Interactable"))
         {
-            if(promptReminder != null){
-                promptReminder.enabled = true;
+            if(collision.gameObject.GetComponent<InteractableBehaviourAbstract>() != null) {
+                SetInteractable(collision.gameObject);
             }
-            interactableObject = collision.gameObject;
         }
     }
 
     private void OnTriggerExit(Collider collision)
     {
-        if(collision.gameObject.tag == "Interactable")
+        if(collision.gameObject.CompareTag("Interactable") && interactableObject == collision.gameObject)
         {
-            if(promptReminder != null){
-                promptReminder.enabled = false;
-            }
-            interactableObject = null;
+            RemoveInteractable();
         }
+    }
+
+    private void SetInteractable(GameObject pObject) {
+        if(promptReminder != null){
+            promptReminder.enabled = true;
+        }
+        interactableObject = pObject;
+    }
+
+    private void RemoveInteractable() {
+        if(promptReminder != null){
+            promptReminder.enabled = false;
+        }
+        interactableObject = null;
     }
 }
