@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
@@ -250,6 +251,12 @@ public class PlayerControls : MonoBehaviour
             _hitbox.height = CrouchHeight;
         }
         isCrouched = !isCrouched;
+    }
+
+    private void OnScroll(InputValue value)
+    {
+        // Debug.Log(value.Get<Vector2>());
+        PlayerInventory.GetInstance().SwapSelectedItem(-Mathf.RoundToInt(value.Get<Vector2>().y / 120));
     }
 
     public void SetCameraSensitivity(int pSensitivity)

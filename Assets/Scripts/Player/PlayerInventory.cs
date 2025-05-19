@@ -1,11 +1,15 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class PlayerInventory : MonoBehaviour
 {
     [SerializeField] private Dictionary<Item, int> items = new Dictionary<Item, int>();
+    private Item selectedItem;
+    private int selectedItemId;
     public static UnityAction InventoryChanged;
+    public static UnityAction SelectedItemChanged;
     public static PlayerInventory Instance;
 
     private void Awake()
@@ -20,7 +24,8 @@ public class PlayerInventory : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    private void OnEnable() {
+    private void OnEnable()
+    {
         InventoryChanged?.Invoke();
     }
 
@@ -44,6 +49,7 @@ public class PlayerInventory : MonoBehaviour
         {
             Instance.items.Add(item, 1);
         }
+        SetSelectedItem(item);
         InventoryChanged?.Invoke();
     }
 
@@ -52,7 +58,8 @@ public class PlayerInventory : MonoBehaviour
         if (Instance.items.ContainsKey(item))
         {
             Instance.items[item]--;
-            if(Instance.items[item] == 0) {
+            if (Instance.items[item] == 0)
+            {
                 Instance.items.Remove(item);
             }
             InventoryChanged?.Invoke();
@@ -64,5 +71,34 @@ public class PlayerInventory : MonoBehaviour
     {
         Instance.items.Clear();
         InventoryChanged?.Invoke();
+    }
+
+    public void SwapSelectedItem(int diff)
+    {
+        int newId = MyUtils.mod(selectedItemId + diff, items.Keys.Count);
+        SetSelectedItem(newId);
+    }
+
+    public Item GetSelectedItem()
+    {
+        return selectedItem;
+    }
+
+    public int GetSelectedItemId()
+    {
+        return selectedItemId;
+    }
+
+    public void SetSelectedItem(Item item)
+    {
+        selectedItem = item;
+        selectedItemId = items.Keys.ToList().IndexOf(selectedItem);
+        SelectedItemChanged?.Invoke();
+    }
+    
+    public void SetSelectedItem(int id) {
+        selectedItemId = id;
+        selectedItem = items.Keys.ToList()[selectedItemId];
+        SelectedItemChanged?.Invoke();
     }
 }

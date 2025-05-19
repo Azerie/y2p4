@@ -383,7 +383,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!65 &463379583
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -523,7 +523,7 @@ NavMeshObstacle:
   m_Shape: 1
   m_Extents: {x: 0.5, y: 1, z: 0.05}
   m_MoveThreshold: 0.1
-  m_Carve: 0
+  m_Carve: 1
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
@@ -2476,7 +2476,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4441c0e4ded8db9a6a761b0114924d2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemToGive: {fileID: 11400000, guid: 66b29e26f7efafc7ca2ea4fe7889098e, type: 2}
+  itemToGive: {fileID: 11400000, guid: 670ad85c680a79959a9ba8d280818bb9, type: 2}
 --- !u!65 &1725023586
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3337,6 +3337,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6411875841806586705, guid: 2c5bd57925be7784288691768eb80883, type: 3}
+      propertyPath: m_Carve
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7990766055189320433, guid: 2c5bd57925be7784288691768eb80883, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3400,7 +3404,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 310329102492962155, guid: e8402fc969eeac35eb145db69f597900, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 4.45
       objectReference: {fileID: 0}
     - target: {fileID: 310329102492962155, guid: e8402fc969eeac35eb145db69f597900, type: 3}
       propertyPath: m_LocalPosition.z
