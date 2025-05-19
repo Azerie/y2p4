@@ -1,113 +1,37 @@
 [LOG] system_create                            : Header version = 2.03.07. Current version = 2.03.07.
-[LOG] Manager::init                            : maxchannels = 256 studioflags = 00000006 flags 00000000 extradriverdata 0000000000000000.
+[LOG] Manager::init                            : maxchannels = 256 studioflags = 00000006 flags 00000000 extradriverdata (nil).
 [LOG] SystemI::init                            : Initialize version=20307 (150747), maxchannels=256, flags=0x00020000
-[LOG] SystemI::setOutputInternal               : Setting output to 'FMOD WASAPI Output'
-[LOG] OutputWASAPI::init                       : Mix Format (WAVEFORMATEX): wFormatTag=0xFFFE, nChannels=8, nSamplesPerSec=96000, nAvgBytesPerSec=3072000, nBlockAlign=32, wBitsPerSample=32, cbSize=22.
-[LOG] OutputWASAPI::init                       : Mix Format (WAVEFORMATEXTENSIBLE): wValidBitsPerSample=32, dwChannelMask=0x0000063F, SubFormat=00000003-0000-0010-8000-00AA00389B71.
-[LOG] OutputWASAPI::init                       : Output buffer size: 4096 samples, latency: 0.00ms, period: 10.00ms, DSP buffer: 512 * 4
-[LOG] SystemI::init                            : Output requires a sample rate of 96000Hz, resampling will occur.
-[LOG] DownMix::init                            : dspbuffersize: 512  rate: 48000. output speaker mode: 7, input speaker mode 3
-[LOG] DownMix::init                            : done.
+[LOG] SystemI::setOutputInternal               : Setting output to 'FMOD PulseAudio Output'
+[LOG] OutputPulseAudio::PulseAudio_RegisterLib : Loaded PulseAudio version 15.99.0.
+[LOG] PulseAudio_EnumOutputCallback            : Found output device NAME:alsa_output.pci-0000_03_00.6.analog-stereo DESC:Family 17h (Models 10h-1fh) HD Audio Controller Analog Stereo CHANNELS:2 RATE:48000.
+[LOG] PulseAudio_EnumInputCallback             : Found input device NAME:alsa_output.pci-0000_03_00.6.analog-stereo.monitor DESC:Monitor of Family 17h (Models 10h-1fh) HD Audio Controller Analog Stereo CHANNELS:2 RATE:48000.
+[LOG] PulseAudio_EnumInputCallback             : Found input device NAME:alsa_input.pci-0000_03_00.6.analog-stereo DESC:Family 17h (Models 10h-1fh) HD Audio Controller Analog Stereo CHANNELS:2 RATE:48000.
 [LOG] Thread::initThread                       : Init FMOD stream thread. Affinity: 0x4000000000000003, Priority: 0xFFFF7FFB, Stack Size: 98304, Semaphore: No, Sleep Time: 10, Looping: Yes.
+[LOG] FMOD_OS_Thread_Callback                  : Cannot set real-time thread priorities due to insufficient privileges
 [LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 0
 [LOG] Thread::initThread                       : Init FMOD mixer thread. Affinity: 0x4000000000000001, Priority: 0xFFFF7FFA, Stack Size: 81920, Semaphore: No, Sleep Time: 0, Looping: Yes.
-[LOG] AsyncManager::init                       : manager 000001F597EB69F8 isAsync 0 updatePeriod 0.02
+[LOG] FMOD_OS_Thread_Callback                  : Cannot set real-time thread priorities due to insufficient privileges
+[LOG] AsyncManager::init                       : manager 0x62bc1ccf5c18 isAsync 0 updatePeriod 0.02
 [LOG] AsyncManager::init                       : done
 [LOG] PlaybackSystem::init                     : 
 [LOG] Thread::initThread                       : Init FMOD Studio sample load thread. Affinity: 0x4000000000000003, Priority: 0xFFFF7FFD, Stack Size: 98304, Semaphore: No, Sleep Time: 1, Looping: No.
+[LOG] FMOD_OS_Thread_Callback                  : Cannot set real-time thread priorities due to insufficient privileges
 [LOG] PlaybackSystem::init                     : done
 [LOG] Thread::initThread                       : Init FMOD Studio bank load thread. Affinity: 0x4000000000000003, Priority: 0xFFFF7FFD, Stack Size: 98304, Semaphore: No, Sleep Time: 1, Looping: No.
+[LOG] FMOD_OS_Thread_Callback                  : Cannot set real-time thread priorities due to insufficient privileges
 [LOG] Manager::init                            : done.
 [LOG] BankLoader::serializeBank                : fileversion = 146, compatVersion = 146 (oldest = 44, newest = 146)
 [LOG] BankLoader::serializeBank                : fileversion = 146, compatVersion = 146 (oldest = 44, newest = 146)
 [LOG] BankLoader::serializeBank                : fileversion = 146, compatVersion = 146 (oldest = 44, newest = 146)
 [LOG] PlaybackSystem::acquireMasterBus         : Setting master channel group format to 6
-[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
-[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
-[LOG] SystemI::createSoundInternal             : exinfo->length             = 2855328
-[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 9088
-[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0000008FD2FBEEE8
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
-[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
-[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFABC2CD3E0
-[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFABC2CD3A0
-[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFABC2CD4C0
-[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFABC2CD580
-[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 000001F544B7E6F8
-[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
-[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 4
-[LOG] SystemI::createSoundInternal             : Sample 0/1: name='amen break original', format=5, channels=2, frequency=48000, lengthbytes=94464, lengthpcm=335360, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.999969.
-[LOG] SystemI::createSound                     : filename = Assets/Audio/Audio system/Build/Desktop/Master.bank : mode 02010082
-[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
-[LOG] AsyncThread::add                         : add sound to async queue : soundi = 000001F61FCD8228, queue head = 000001F61FCD2428, queue count = 0
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000001F61FCD8228
-[LOG] SystemI::createSoundInternal             :     Create name='Assets/Audio/Audio system/Build/Desktop/Master.bank', mode=0x02010082
-[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
-[LOG] SystemI::createSoundInternal             :     exinfo->length             = 2855328
-[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 9088
-[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 000001F5975144C8
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
-[LOG] SystemI::createSoundInternal             :     exinfo->initialseekposition = 5000
-[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
-[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='fireplace-fire-crackling-loop-123930', format=5, channels=2, frequency=48000, lengthbytes=2385440, lengthpcm=8645485, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.449829.
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000001F61FCD8228
-[LOG] SoundI::release                          : fireplace-fire-crackling-loop-123930 (000001F61FCD1978)
-[LOG] SoundI::release                          :     fireplace-fire-crackling-loop-123930 (000001F61FF89BF8)
-[LOG] SoundI::release                          :     fireplace-fire-crackling-loop-123930 (000001F61FCD5B18)
-[LOG] SystemI::createSound                     : filename = Assets/Audio/Audio system/Build/Desktop/Master.bank : mode 02010082
-[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
-[LOG] AsyncThread::add                         : add sound to async queue : soundi = 000001F61FCDCB98, queue head = 000001F61FCD2428, queue count = 0
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000001F61FCDCB98
-[LOG] SystemI::createSoundInternal             :     Create name='Assets/Audio/Audio system/Build/Desktop/Master.bank', mode=0x02010082
-[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
-[LOG] SystemI::createSoundInternal             :     exinfo->length             = 2855328
-[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 9088
-[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 000001F59751C4A8
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
-[LOG] SystemI::createSoundInternal             :     exinfo->initialseekposition = 5000
-[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
-[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='fireplace-fire-crackling-loop-123930', format=5, channels=2, frequency=48000, lengthbytes=2385440, lengthpcm=8645485, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.449829.
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000001F61FCDCB98
-[LOG] SoundI::release                          : fireplace-fire-crackling-loop-123930 (000001F61FCD8228)
-[LOG] SoundI::release                          :     fireplace-fire-crackling-loop-123930 (000001F61FC7B3E8)
-[LOG] SoundI::release                          :     fireplace-fire-crackling-loop-123930 (000001F61FCD9B28)
-[LOG] SystemI::createSound                     : filename = Assets/Audio/Audio system/Build/Desktop/Master.bank : mode 02010082
-[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
-[LOG] AsyncThread::add                         : add sound to async queue : soundi = 000001F61FCDA168, queue head = 000001F61FCD2428, queue count = 0
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000001F61FCDA168
-[LOG] SystemI::createSoundInternal             :     Create name='Assets/Audio/Audio system/Build/Desktop/Master.bank', mode=0x02010082
-[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
-[LOG] SystemI::createSoundInternal             :     exinfo->length             = 2855328
-[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 9088
-[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 000001F59751D7E8
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
-[LOG] SystemI::createSoundInternal             :     exinfo->initialseekposition = 5000
-[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
-[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='fireplace-fire-crackling-loop-123930', format=5, channels=2, frequency=48000, lengthbytes=2385440, lengthpcm=8645485, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.449829.
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000001F61FCDA168
-[LOG] SoundI::release                          : fireplace-fire-crackling-loop-123930 (000001F61FCDCB98)
-[LOG] SoundI::release                          :     fireplace-fire-crackling-loop-123930 (000001F61FC7B6E8)
-[LOG] SoundI::release                          :     fireplace-fire-crackling-loop-123930 (000001F61FCDC238)
-[LOG] SoundI::release                          : fireplace-fire-crackling-loop-123930 (000001F61FCDA168)
-[LOG] SoundI::release                          :     fireplace-fire-crackling-loop-123930 (000001F61FC7B3E8)
-[LOG] SoundI::release                          :     fireplace-fire-crackling-loop-123930 (000001F61FCDB298)
-[LOG] SoundI::release                          :  (000001F59751D548)
-[LOG] SoundI::release                          :     amen break original (000001F61FC7B568)
-[LOG] Thread::callback                         : FMOD Studio update thread finished.
-[LOG] Thread::callback                         : FMOD Studio bank load thread finished.
-[LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
-[LOG] Thread::callback                         : FMOD Studio sample load thread finished.
-[LOG] LiveUpdate::release                      : 
-[LOG] LiveUpdate::reset                        : Reset connection (reason Disconnected)
-[LOG] Thread::callback                         : FMOD stream thread finished.
-[LOG] Thread::callback                         : FMOD mixer thread finished.
-[LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
-[LOG] SystemI::closeInternal                   : Closed.
-[ERR] ~Global                                  : assertion: 'gSystemInitCount == 0' failed
+[WRN] PulseAudio_StreamUnderflowCallback       : Buffer underrun detected in PulseAudio. Current block Count = 4
+[LOG] PulseAudio_StreamUnderflowCallback       : Increasing buffer size - new block count = 5.
+[WRN] PulseAudio_StreamUnderflowCallback       : Buffer underrun detected in PulseAudio. Current block Count = 5
+[LOG] PulseAudio_StreamUnderflowCallback       : Increasing buffer size - new block count = 6.
+[WRN] PulseAudio_StreamUnderflowCallback       : Buffer underrun detected in PulseAudio. Current block Count = 6
+[LOG] PulseAudio_StreamUnderflowCallback       : Increasing buffer size - new block count = 7.
+[WRN] PulseAudio_StreamUnderflowCallback       : Buffer underrun detected in PulseAudio. Current block Count = 7
+[LOG] PulseAudio_StreamUnderflowCallback       : Increasing buffer size - new block count = 8.
+[WRN] PulseAudio_StreamUnderflowCallback       : Buffer underrun detected in PulseAudio. Current block Count = 8
+[WRN] PulseAudio_StreamUnderflowCallback       : Buffer underrun detected in PulseAudio. Current block Count = 8
+[WRN] PulseAudio_StreamUnderflowCallback       : Buffer underrun detected in PulseAudio. Current block Count = 8
