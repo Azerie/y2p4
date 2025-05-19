@@ -1,46 +1,62 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
 {
-    [SerializeField] GameObject UIEntryPrefab;
+    // [SerializeField] GameObject UIEntryPrefab;
     [SerializeField] GameObject InventoryEntryContainer;
 
-    [Header("Layout Settings")]
-    [SerializeField] private Vector2 entryOffset = new Vector2(0, -50);
-    [SerializeField] private Vector2 startingPosition = Vector2.zero;
+    // [Header("Layout Settings")]
+    // [SerializeField] private Vector2 entryOffset = new Vector2(0, -50);
+    // [SerializeField] private Vector2 startingPosition = Vector2.zero;
 
     private void Awake()
     {
-        PlayerInventory.InventoryChanged += OnItemGained;
-        OnItemGained();
+        PlayerInventory.InventoryChanged += DrawUI;
+        PlayerInventory.SelectedItemChanged += DrawUI;
+        DrawUI();
     }
 
-    void OnItemGained()
+    void DrawUI()
     {
-        if(PlayerInventory.GetInstance() != null && this != null) {
-            foreach (Transform entry in InventoryEntryContainer.transform) {
-                Destroy(entry.gameObject);
-            }
-            Vector2 currentPosition = startingPosition;
-            foreach (Item item in PlayerInventory.GetInstance().GetItems().Keys)
+        if (PlayerInventory.GetInstance() != null && this != null)
+        {
+            List<Item> items = PlayerInventory.GetInstance().GetItems().Keys.ToList();
+            int startId = PlayerInventory.GetInstance().GetSelectedItemId();
+            List<Item> itemsReordered = new List<Item>();
+            for (int i = 0; i < items.Count; i++)
             {
-                GameObject entry = Instantiate(UIEntryPrefab, InventoryEntryContainer.transform);
-                RectTransform entryTransform = entry.GetComponent<RectTransform>();
-                entryTransform.anchoredPosition = currentPosition;
-                currentPosition += entryOffset;
-
-                Image itemImage = entry.transform.Find("Image").GetComponent<Image>();
-                TMP_Text itemName = entry.transform.Find("Text").GetComponent<TMP_Text>();
-                // TMP_Text itemNumber = entry.transform.Find("Counter").GetComponent<TMP_Text>();
-                // Debug.Log(item.ItemName);
-
-                itemImage.sprite = item.Icon;
-                itemName.text = item.ItemName;
+                itemsReordered.Add(items[(i + startId) % items.Count]);
+            }
+            int counter = 0;
+            foreach (Transform entry in InventoryEntryContainer.transform)
+            {
+                if (counter < itemsReordered.Count)
+                {
+                    entry.gameObject.SetActive(true);
+                    DrawInventoryItem(itemsReordered[counter], entry);
+                    counter++;
+                }
+                else
+                {
+                    entry.gameObject.SetActive(false);
+                }
             }
         }
+    }
+
+    void DrawInventoryItem(Item item, Transform entry)
+    {
+        Image itemImage = entry.Find("Image").GetComponent<Image>();
+        TMP_Text itemName = entry.Find("Text").GetComponent<TMP_Text>();
+        // TMP_Text itemNumber = entry.Find("Counter").GetComponent<TMP_Text>();
+        // Debug.Log(item.ItemName);
+
+        itemImage.sprite = item.Icon;
+        itemName.text = item.ItemName;
     }
 }

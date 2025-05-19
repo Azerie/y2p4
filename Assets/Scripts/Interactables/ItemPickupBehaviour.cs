@@ -9,6 +9,7 @@ public class ItemPickupBehaviour : InteractableBehaviourAbstract
     public override void OnInteract()
     {
         PlayerInventory.GetInstance().AddItem(itemToGive);
+        isMarkedForDestruction = true;
         Destroy(gameObject);
     }
 }
