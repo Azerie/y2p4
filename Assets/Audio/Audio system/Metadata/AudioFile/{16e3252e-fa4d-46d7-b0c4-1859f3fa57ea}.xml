@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{16e3252e-fa4d-46d7-b0c4-1859f3fa57ea}">
+		<property name="assetPath">
+			<value>amen break original.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>6.9866666666666664</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{e8f4920c-e530-4a39-9c89-f285b4bf8e22}</destination>
+		</relationship>
+	</object>
+</objects>
