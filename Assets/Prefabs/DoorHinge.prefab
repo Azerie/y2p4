@@ -121,7 +121,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   requiredItem: {fileID: 11400000, guid: 29e0c082fa4b5b9aebe5fe2728b79d4b, type: 2}
   angle: 120
-  openingSpeed: 1
+  openingSpeed: 4
 --- !u!208 &6411875841806586705
 NavMeshObstacle:
   m_ObjectHideFlags: 0
