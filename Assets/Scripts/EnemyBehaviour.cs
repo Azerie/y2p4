@@ -9,6 +9,8 @@ public class EnemyBehaviour : MonoBehaviour
 {
     [Tooltip("Transforms of points the enemy is cycling")]
     [SerializeField] private List<Transform> points = new();
+    [Tooltip("Alternatively, assign the parent of the points here")]
+    [SerializeField] private Transform pointsParent;
     [Tooltip("How far away the enemy detects player")]
     [SerializeField] private float detectionRange = 5f;
     [Tooltip("1/2 of the angle of the detection cone (in degrees)")]
@@ -45,15 +47,24 @@ public class EnemyBehaviour : MonoBehaviour
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
-        if(currentPointIndex >= 0 || currentPointIndex < points.Count -1) {
-            navMeshAgent.destination = points[currentPointIndex].position;
-        } 
+        
         player = GameObject.FindGameObjectWithTag("Player").transform;
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").transform;
         playerHeight = player.GetComponentInChildren<CapsuleCollider>().height - heightOffset;
         height = GetComponentInChildren<CapsuleCollider>().height - heightOffset;
         HidingPlaceBehaviour.OnPlayerHidden += HidePlayer;
         HidingPlaceBehaviour.OnPlayerRevealed += RevealPlayer;
+
+        if (points.Count == 0 && pointsParent != null)
+        {
+            foreach (Transform point in pointsParent)
+            {
+                points.Add(point);
+            }
+        }
+        if(currentPointIndex >= 0 || currentPointIndex < points.Count -1) {
+            navMeshAgent.destination = points[currentPointIndex].position;
+        } 
 
         ChangeState(State.Roaming);
     }
@@ -207,7 +218,6 @@ public class EnemyBehaviour : MonoBehaviour
     private bool HasLineOfSight() {
         RaycastHit hit;
         Vector3 origin = transform.position + new Vector3(0, height, 0);
-        
         Debug.DrawRay(origin, player.position + new Vector3(0, playerHeight, 0) - origin, Color.green);
         if(Physics.Raycast(origin, player.position + new Vector3(0, playerHeight, 0) - origin, out hit)) {
             if(hit.transform.CompareTag("Player")) {
@@ -218,7 +228,7 @@ public class EnemyBehaviour : MonoBehaviour
     }
 
     private bool CanSeePlayer() {
-        return !isPlayerHidden && HasLineOfSight() && IsPlayerInVisionCone();
+        return ((state == State.Chasing) || (!isPlayerHidden && HasLineOfSight())) && IsPlayerInVisionCone();
     }
 
     private void HidePlayer() {
