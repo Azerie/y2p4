@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: item4
   m_EditorClassIdentifier: 
   itemName: 
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: d281112986da9a142b90f4432fcff880, type: 3}
