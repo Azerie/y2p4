@@ -107,7 +107,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4785226270609094861}
-  - component: {fileID: 6925939409550521032}
   - component: {fileID: 1546817999556095773}
   - component: {fileID: 4526898985781178273}
   m_Layer: 3
@@ -166,7 +165,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.3, y: 0.3, z: 3}
+  m_Size: {x: 0.1, y: 0.1, z: 3}
   m_Center: {x: 0, y: 0, z: 1.5}
 --- !u!1 &4785226270924334382
 GameObject:
@@ -350,6 +349,7 @@ MonoBehaviour:
   _verticalVelocity: 0
   _terminalVelocity: 53
   _isSprinting: 0
+  _isCrouching: 0
   _jumpTimeoutDelta: 0
   _cameraYrotation: 0
   moveInput: {x: 0, y: 0}
