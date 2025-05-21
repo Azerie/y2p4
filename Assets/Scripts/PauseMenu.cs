@@ -12,11 +12,17 @@ public class PauseMenu : MonoBehaviour
     }
     public void Resume() {
         Time.timeScale = 1;
-        GameObject pauseMenu = GameObject.FindGameObjectWithTag("PauseMenu");
-        pauseMenu.transform.GetComponent<Canvas>().enabled = false;
-        Cursor.visible = false;
+        gameObject.GetComponent<Canvas>().enabled = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
-    public void Menu() {
+    public void Pause()
+    {
+        Time.timeScale = 0;
+        gameObject.GetComponent<Canvas>().enabled = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+    public void Menu()
+    {
         SceneManager.LoadScene(menuSceneName);
     }
 
