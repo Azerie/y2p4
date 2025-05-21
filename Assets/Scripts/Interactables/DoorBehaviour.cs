@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class DoorBehaviour : InteractableBehaviourAbstract
 {
@@ -21,6 +22,15 @@ public class DoorBehaviour : InteractableBehaviourAbstract
         targetRotation = transform.parent.rotation;
         closedRotation = transform.parent.rotation;
         openRotation = Quaternion.Euler(transform.parent.rotation.eulerAngles + new Vector3(0, angle, 0));
+        GetComponent<NavMeshObstacle>().carving = true;
+        if (requiredItem == null)
+        {
+            GetComponent<NavMeshObstacle>().enabled = false;
+        }
+        else
+        {
+            GetComponent<NavMeshObstacle>().enabled = true;
+        }
     }
 
     void Update()
@@ -32,10 +42,12 @@ public class DoorBehaviour : InteractableBehaviourAbstract
     {
         // Debug.Log("interacted");
         if(requiredItem != null) {
-            if(PlayerInventory.GetInstance().HasItem(requiredItem)) {
+            if (PlayerInventory.GetInstance().HasItem(requiredItem))
+            {
                 Use();
                 PlayerInventory.GetInstance().RemoveItem(requiredItem);
                 requiredItem = null;
+                GetComponent<NavMeshObstacle>().enabled = false;
             }
         } 
         else {
@@ -53,16 +65,23 @@ public class DoorBehaviour : InteractableBehaviourAbstract
         }
     }
 
-    public void Open() 
+    public void Open()
     {
         targetRotation = openRotation;
         isOpen = true;
+        GetComponent<NavMeshObstacle>().enabled = false;
     }
 
-    private void Close() 
+    public void Close()
     {
         targetRotation = closedRotation;
         isOpen = false;
+    }
+
+    public void CloseAndLock(Item pRequiredItem)
+    {
+        Close();
+        requiredItem = pRequiredItem;
     }
 
     public bool IsOpen() { return isOpen; }

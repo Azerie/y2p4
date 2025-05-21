@@ -9,8 +9,8 @@ public class EnemyBehaviour : MonoBehaviour
 {
     [Tooltip("Transforms of points the enemy is cycling")]
     [SerializeField] private List<Transform> points = new();
-    [Tooltip("How far away the enemy has to be from the destination point")]
-    [SerializeField] private float confirmRange = 0.1f;
+    [Tooltip("Alternatively, assign the parent of the points here")]
+    [SerializeField] private Transform pointsParent;
     [Tooltip("How far away the enemy detects player")]
     [SerializeField] private float detectionRange = 5f;
     [Tooltip("1/2 of the angle of the detection cone (in degrees)")]
@@ -35,7 +35,6 @@ public class EnemyBehaviour : MonoBehaviour
 
     enum State {Roaming, Alert, Chasing}
     private State state = State.Roaming;
-    private State oldState = State.Roaming;
     private Transform player;
     private Transform mainCamera;
     private float playerHeight;
@@ -48,15 +47,24 @@ public class EnemyBehaviour : MonoBehaviour
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
-        if(currentPointIndex >= 0 || currentPointIndex < points.Count -1) {
-            navMeshAgent.destination = points[currentPointIndex].position;
-        } 
+        
         player = GameObject.FindGameObjectWithTag("Player").transform;
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").transform;
         playerHeight = player.GetComponentInChildren<CapsuleCollider>().height - heightOffset;
         height = GetComponentInChildren<CapsuleCollider>().height - heightOffset;
         HidingPlaceBehaviour.OnPlayerHidden += HidePlayer;
         HidingPlaceBehaviour.OnPlayerRevealed += RevealPlayer;
+
+        if (points.Count == 0 && pointsParent != null)
+        {
+            foreach (Transform point in pointsParent)
+            {
+                points.Add(point);
+            }
+        }
+        if(currentPointIndex >= 0 || currentPointIndex < points.Count -1) {
+            navMeshAgent.destination = points[currentPointIndex].position;
+        } 
 
         ChangeState(State.Roaming);
     }
@@ -93,59 +101,103 @@ public class EnemyBehaviour : MonoBehaviour
             navMeshAgent.speed = RoamingSpeed;
             navMeshAgent.destination = points[currentPointIndex].position;
         }
-        oldState = state;
         state = newState;
         stateTimer = 0;
     }
 
-    private void UpdateDestination() {
-        if(state == State.Chasing) {
+    private void GetNextPoint()
+    {
+        currentPointIndex++;
+        if (currentPointIndex > points.Count - 1)
+        {
+            currentPointIndex = 0;
+        }
+        NavMeshPath path = new NavMeshPath();
+        navMeshAgent.CalculatePath(points[currentPointIndex].position, path);
+
+        if (path.status == NavMeshPathStatus.PathComplete)
+        {
+            navMeshAgent.destination = points[currentPointIndex].position;
+        }
+        else
+        {
+            GetNextPoint();
+        }
+    }
+
+    private void UpdateDestination()
+    {
+        if (state == State.Chasing)
+        {
             navMeshAgent.destination = player.position;
         }
-        else if(navMeshAgent.remainingDistance < confirmRange) {
-            if(state == State.Roaming) {
-                currentPointIndex++;
-                if(currentPointIndex > points.Count - 1) {
-                    currentPointIndex = 0;
-                }
-                navMeshAgent.destination = points[currentPointIndex].position;
+        else if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
+        {
+            if (state == State.Roaming)
+            {
+                GetNextPoint();
             }
         }
     }
 
     private void UpdateState() {
-        if(state == State.Chasing) {
-            if(!CanSeePlayer()) { 
-                // for state timer i use negative numbers for lowering aggression and positive for upping it
+        if (state == State.Chasing)
+        {
+            if (CanSeePlayer())
+            {
+                if (stateTimer < 0)
+                {
+                    stateTimer = 0;
+                }
+            }
+            else
+            {
+                // for state timers i use negative numbers for lowering aggression and positive for upping it
                 stateTimer -= Time.deltaTime;
-                if(stateTimer <= -ChasingToAlertTime) {
+                if (stateTimer <= -ChasingToAlertTime)
+                {
                     ChangeState(State.Alert);
                 }
             }
         }
-        else if(state == State.Alert) {
-            if(CanSeePlayer()) {
-                if(stateTimer < 0)
+        else if (state == State.Alert)
+        {
+            if (CanSeePlayer())
+            {
+                if (stateTimer < 0)
                 {
                     stateTimer = 0;
                 }
                 stateTimer += Time.deltaTime;
-                if(stateTimer >= AlertToChasingTime) {
+                if (stateTimer >= AlertToChasingTime)
+                {
                     ChangeState(State.Chasing);
                 }
             }
-            else if(IsAtDestination()) {
+            else if (IsAtDestination())
+            {
                 stateTimer -= Time.deltaTime;
-                if(stateTimer <= -AlertToRoamingTime) {
+                if (stateTimer <= -AlertToRoamingTime)
+                {
                     ChangeState(State.Roaming);
                 }
             }
         }
-        else if(state == State.Roaming) {
-            if(CanSeePlayer()) {
+        else if (state == State.Roaming)
+        {
+            if (CanSeePlayer())
+            {
                 stateTimer += Time.deltaTime;
-                if(stateTimer >= RoamingToAlertTime) {
+                if (stateTimer >= RoamingToAlertTime)
+                {
                     ChangeState(State.Alert);
+                }
+            }
+            else
+            {
+                if(stateTimer > 0)
+                {
+                    stateTimer -= Time.deltaTime;
                 }
             }
         }
@@ -166,7 +218,6 @@ public class EnemyBehaviour : MonoBehaviour
     private bool HasLineOfSight() {
         RaycastHit hit;
         Vector3 origin = transform.position + new Vector3(0, height, 0);
-        
         Debug.DrawRay(origin, player.position + new Vector3(0, playerHeight, 0) - origin, Color.green);
         if(Physics.Raycast(origin, player.position + new Vector3(0, playerHeight, 0) - origin, out hit)) {
             if(hit.transform.CompareTag("Player")) {
@@ -177,7 +228,7 @@ public class EnemyBehaviour : MonoBehaviour
     }
 
     private bool CanSeePlayer() {
-        return !isPlayerHidden && HasLineOfSight() && IsPlayerInVisionCone();
+        return ((state == State.Chasing) || (!isPlayerHidden && HasLineOfSight())) && IsPlayerInVisionCone();
     }
 
     private void HidePlayer() {

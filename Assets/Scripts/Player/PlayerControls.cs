@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
@@ -16,7 +17,7 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private float Sensitivity = 1.0f;
     [Tooltip("Acceleration and deceleration")]
     [SerializeField] private float SpeedChangeRate = 10.0f;
-    
+
     [Space(10)]
     [Tooltip("The height the player can jump")]
     [SerializeField] private float JumpHeight = 1.2f;
@@ -25,7 +26,7 @@ public class PlayerControls : MonoBehaviour
     [Tooltip("Time required to pass before being able to jump again. Set to 0f to instantly jump again")]
     [SerializeField] private float JumpTimeout = 0.1f;
 
-	[Space(10)]
+    [Space(10)]
     [Header("Player Grounded")]
     private bool Grounded = true;
     [Tooltip("How far grounded check is offset")]
@@ -57,20 +58,14 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private string FailScene;
 
     [Space(10)]
-    [Header("Sound")]
-    [SerializeField] private AudioClip runSound;
-    [SerializeField] private AudioClip walkSound;
-    [SerializeField] private AudioSource _audioSource2;
-
-    [Space(10)]
     [Header("Debug values")]
     [SerializeField] private float _health;
     [SerializeField] private float _stamina;
 
     [SerializeField] private float _speed;
-	[SerializeField] private float _rotationVelocity;
-	[SerializeField] private float _verticalVelocity;
-	[SerializeField] private float _terminalVelocity = 53.0f;
+    [SerializeField] private float _rotationVelocity;
+    [SerializeField] private float _verticalVelocity;
+    [SerializeField] private float _terminalVelocity = 53.0f;
     [SerializeField] private bool _isSprinting;
     [SerializeField] private float _jumpTimeoutDelta = 0f;
     [SerializeField] private float _cameraYrotation = 0f;
@@ -80,16 +75,13 @@ public class PlayerControls : MonoBehaviour
 
     private Rigidbody _rb;
     private PlayerInteraction _pickupHandler;
-    private AudioSource _audioSource;
     private CapsuleCollider _hitbox;
     private bool isCrouched = false;
     private bool isEnabled = true;
 
-
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
-        _audioSource = GetComponent<AudioSource>();
         _hitbox = GetComponentInChildren<CapsuleCollider>();
         _pickupHandler = GetComponentInChildren<PlayerInteraction>();
         _health = MaxHealth;
@@ -106,11 +98,11 @@ public class PlayerControls : MonoBehaviour
     {
         GroundedCheck();
         ApplyGravity();
-        if(isEnabled) {
+        if (isEnabled)
+        {
             Move();
         }
     }
-
 
     private void GroundedCheck()
     {
@@ -119,7 +111,8 @@ public class PlayerControls : MonoBehaviour
         Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers, QueryTriggerInteraction.Ignore);
     }
 
-    private void ApplyGravity() {
+    private void ApplyGravity()
+    {
         if (Grounded)
         {
             // stop our velocity dropping infinitely when grounded
@@ -147,17 +140,21 @@ public class PlayerControls : MonoBehaviour
         }
     }
 
-    private void Move() 
+    private void Move()
     {
-        if (_stamina <= 0) {
+        if (_stamina <= 0)
+        {
             _isSprinting = false;
         }
         // set target speed based on move speed, sprint speed and if sprint is pressed
         float targetSpeed = _isSprinting ? SprintSpeed : MoveSpeed;
 
-        if(_isSprinting) {
+        if (_isSprinting)
+        {
             _stamina -= Time.deltaTime;
-        } else {
+        }
+        else
+        {
             if (_stamina <= MaxStamina)
             {
                 _stamina += Time.deltaTime * MaxStamina / StaminaRecoveryRate;
@@ -166,7 +163,6 @@ public class PlayerControls : MonoBehaviour
 
         // if there is no input, set the target speed to 0
         if (moveInput == Vector2.zero) targetSpeed = 0.0f;
-            
 
         // a reference to the players current horizontal velocity
         float currentHorizontalSpeed = new Vector3(_rb.velocity.x, 0.0f, _rb.velocity.z).magnitude;
@@ -195,18 +191,6 @@ public class PlayerControls : MonoBehaviour
 
         // move the player
         _rb.velocity = inputDirection.normalized * _speed + new Vector3(0.0f, _verticalVelocity, 0.0f);
-
-        if(Math.Abs(_speed) > speedOffset && !_audioSource.isPlaying)
-        {
-            if(_isSprinting && runSound != null)
-            {
-                _audioSource.PlayOneShot(runSound);
-            }
-            else if(walkSound != null)
-            {
-                _audioSource.PlayOneShot(walkSound);
-            }
-        }
     }
 
     private void OnMove(InputValue value)
@@ -229,10 +213,10 @@ public class PlayerControls : MonoBehaviour
 
     private void OnInteract()
     {
-        _pickupHandler.Interact();  
+        _pickupHandler.Interact();
     }
 
-    private void OnLook(InputValue value) 
+    private void OnLook(InputValue value)
     {
         _rotationVelocity = value.Get<Vector2>().x * Sensitivity * Time.deltaTime;
 
@@ -248,49 +232,65 @@ public class PlayerControls : MonoBehaviour
         head.localRotation = newRotation;
     }
 
-    private void OnPause() {
+    private void OnPause()
+    {
         Time.timeScale = 0;
         GameObject pauseMenu = GameObject.FindGameObjectWithTag("PauseMenu");
         pauseMenu.transform.GetComponent<Canvas>().enabled = true;
         Cursor.visible = true;
     }
 
-    private void OnCrouch() {
-        if(isCrouched) {
+    private void OnCrouch()
+    {
+        if (isCrouched)
+        {
             _hitbox.height = StandingHeight;
         }
-        else{
+        else
+        {
             _hitbox.height = CrouchHeight;
         }
         isCrouched = !isCrouched;
-    } 
+    }
+
+    private void OnScroll(InputValue value)
+    {
+        // Debug.Log(value.Get<Vector2>());
+        PlayerInventory.GetInstance().SwapSelectedItem(-Mathf.RoundToInt(value.Get<Vector2>().y / 120));
+    }
 
     public void SetCameraSensitivity(int pSensitivity)
     {
         Sensitivity = pSensitivity;
     }
 
-    public void DisableMovement() {
+    public void DisableMovement()
+    {
         isEnabled = false;
     }
 
-    public void EnableMovement() {
+    public void EnableMovement()
+    {
         isEnabled = true;
     }
 
-    public float GetHealth() {
+    public float GetHealth()
+    {
         return _health;
     }
 
-    public float GetStamina() {
+    public float GetStamina()
+    {
         return _stamina;
     }
 
-    public float GetMaxHealth() {
+    public float GetMaxHealth()
+    {
         return MaxHealth;
     }
 
-    public float GetMaxStamina() {
+    public float GetMaxStamina()
+    {
         return MaxStamina;
     }
 }
