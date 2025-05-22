@@ -296,4 +296,16 @@ public class PlayerControls : MonoBehaviour
     {
         return MaxStamina;
     }
+
+    // ADDED: Public method to get the current move input vector
+    public Vector2 GetMoveInput()
+    {
+        return moveInput;
+    }
+
+    // ADDED: Public method to get the current sprint state
+    public bool IsSprinting()
+    {
+        return _isSprinting;
+    }
 }
