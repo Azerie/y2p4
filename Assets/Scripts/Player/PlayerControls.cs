@@ -61,12 +61,12 @@ public class PlayerControls : MonoBehaviour
     [Header("Debug values")]
     [SerializeField] private float _health;
     [SerializeField] private float _stamina;
-
     [SerializeField] private float _speed;
     [SerializeField] private float _rotationVelocity;
     [SerializeField] private float _verticalVelocity;
     [SerializeField] private float _terminalVelocity = 53.0f;
     [SerializeField] private bool _isSprinting;
+    [SerializeField] private bool _isCrouching;
     [SerializeField] private float _jumpTimeoutDelta = 0f;
     [SerializeField] private float _cameraYrotation = 0f;
 
@@ -76,7 +76,6 @@ public class PlayerControls : MonoBehaviour
     private Rigidbody _rb;
     private PlayerInteraction _pickupHandler;
     private CapsuleCollider _hitbox;
-    private bool isCrouched = false;
     private bool isEnabled = true;
 
     void Start()
@@ -102,6 +101,8 @@ public class PlayerControls : MonoBehaviour
         {
             Move();
         }
+
+        Debug.DrawRay(transform.position, transform.up, Color.red, StandingHeight);
     }
 
     private void GroundedCheck()
@@ -199,7 +200,10 @@ public class PlayerControls : MonoBehaviour
     }
     private void OnSprint()
     {
-        _isSprinting = !_isSprinting;
+        if (!_isCrouching)
+        {
+            _isSprinting = !_isSprinting;
+        }
     }
 
     private void OnJump()
@@ -242,7 +246,8 @@ public class PlayerControls : MonoBehaviour
 
     private void OnCrouch()
     {
-        if (isCrouched)
+        Physics.Raycast(transform.position, transform.up, StandingHeight); // use this later to determine if player can stand up
+        if (_isCrouching)
         {
             _hitbox.height = StandingHeight;
         }
@@ -250,7 +255,7 @@ public class PlayerControls : MonoBehaviour
         {
             _hitbox.height = CrouchHeight;
         }
-        isCrouched = !isCrouched;
+        _isCrouching = !_isCrouching;
     }
 
     private void OnScroll(InputValue value)

@@ -2149,10 +2149,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Head
       objectReference: {fileID: 0}
-    - target: {fileID: 4785226270924334382, guid: 7d317c7a3d20dd14e9acf109a0b78fdd, type: 3}
-      propertyPath: m_Name
-      value: Body
-      objectReference: {fileID: 0}
     - target: {fileID: 4785226271423879062, guid: 7d317c7a3d20dd14e9acf109a0b78fdd, type: 3}
       propertyPath: m_Name
       value: Player
@@ -2306,6 +2302,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 310329102492962155, guid: e8402fc969eeac35eb145db69f597900, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3532642181388419142, guid: e8402fc969eeac35eb145db69f597900, type: 3}
+      propertyPath: pointsParent
+      value: 
+      objectReference: {fileID: 740111114}
+    - target: {fileID: 3532642181388419142, guid: e8402fc969eeac35eb145db69f597900, type: 3}
+      propertyPath: points.Array.size
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3532642181388419142, guid: e8402fc969eeac35eb145db69f597900, type: 3}

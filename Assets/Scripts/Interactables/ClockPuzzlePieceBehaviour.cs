@@ -5,9 +5,15 @@ using UnityEngine.Events;
 
 public class ClockPuzzlePieceBehaviour : InteractableBehaviourAbstract
 {
+    private ClockPuzzleBehaviour clockHand;
     public override void OnInteract()
     {
-        Debug.Log("puzzle position interacted");
-        transform.parent.GetComponent<ClockPuzzleBehaviour>().SetClockInPosition(transform);
+        // Debug.Log("puzzle position interacted");
+        clockHand.SetClockInPosition(transform);
+    }
+
+    public void SetClockHand(ClockPuzzleBehaviour pClockHand)
+    {
+        clockHand = pClockHand;
     }
 }
