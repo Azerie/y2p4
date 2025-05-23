@@ -252,9 +252,9 @@ Material:
     - _ObjectSpaceUVMapping: 0
     - _ObjectSpaceUVMappingEmissive: 0
     - _OcclusionStrength: 1
-    - _OffsetAmount: 0
-    - _OffsetNoise: 2.56
-    - _OffsetSpeed: 0.05
+    - _OffsetAmount: 0.58
+    - _OffsetNoise: 0.3
+    - _OffsetSpeed: 1.26
     - _OpaqueCullMode: 2
     - _PPDLodThreshold: 5
     - _PPDMaxSamples: 15
