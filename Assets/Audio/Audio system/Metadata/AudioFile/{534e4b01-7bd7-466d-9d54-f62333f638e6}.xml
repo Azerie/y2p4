@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{534e4b01-7bd7-466d-9d54-f62333f638e6}">
+		<property name="assetPath">
+			<value>Dirt run 4.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.22222222222222221</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{e8f4920c-e530-4a39-9c89-f285b4bf8e22}</destination>
+		</relationship>
+	</object>
+</objects>
