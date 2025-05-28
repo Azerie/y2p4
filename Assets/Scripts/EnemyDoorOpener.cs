@@ -9,7 +9,7 @@ public class EnemyDoorOpener : MonoBehaviour
         if (collision.gameObject.CompareTag("Interactable"))
         {
             DoorBehaviour doorBehaviour = collision.gameObject.GetComponent<DoorBehaviour>();
-            if (doorBehaviour != null)
+            if (doorBehaviour != null && doorBehaviour.GetRequiredItem() == null)
             {
                 doorBehaviour.Open();
             }

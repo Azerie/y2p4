@@ -72,11 +72,10 @@ public class PlayerControls : MonoBehaviour
 
     [SerializeField] private Vector2 moveInput = Vector2.zero;
     [SerializeField] private Vector2 lookInput = Vector2.zero;
-
+    [SerializeField] private bool isEnabled = true;
     private Rigidbody _rb;
     private PlayerInteraction _pickupHandler;
     private CapsuleCollider _hitbox;
-    private bool isEnabled = true;
 
     void Start()
     {
@@ -102,7 +101,7 @@ public class PlayerControls : MonoBehaviour
             Move();
         }
 
-        Debug.DrawRay(transform.position, transform.up, Color.red, StandingHeight);
+        // Debug.DrawRay(transform.position, transform.up, Color.red, StandingHeight);
     }
 
     private void GroundedCheck()
@@ -200,6 +199,10 @@ public class PlayerControls : MonoBehaviour
     }
     private void OnSprint()
     {
+        if (_isCrouching)
+        {
+            OnCrouch();
+        }
         if (!_isCrouching)
         {
             _isSprinting = !_isSprinting;
@@ -222,13 +225,13 @@ public class PlayerControls : MonoBehaviour
 
     private void OnLook(InputValue value)
     {
-        _rotationVelocity = value.Get<Vector2>().x * Sensitivity * Time.deltaTime;
+        _rotationVelocity = value.Get<Vector2>().x * Sensitivity;
 
         // rotate the player left and right
         transform.Rotate(Vector3.up * _rotationVelocity);
 
         Transform head = GetComponentInChildren<Camera>().transform.parent;
-        _cameraYrotation -= value.Get<Vector2>().y * Sensitivity * Time.deltaTime;
+        _cameraYrotation -= value.Get<Vector2>().y * Sensitivity;
         _cameraYrotation = Math.Clamp(_cameraYrotation, MinCameraAngle, MaxCameraAngle);
 
         Quaternion newRotation = Quaternion.Euler(_cameraYrotation, 0, 0);
@@ -238,24 +241,24 @@ public class PlayerControls : MonoBehaviour
 
     private void OnPause()
     {
-        Time.timeScale = 0;
         GameObject pauseMenu = GameObject.FindGameObjectWithTag("PauseMenu");
-        pauseMenu.transform.GetComponent<Canvas>().enabled = true;
-        Cursor.visible = true;
+        pauseMenu.GetComponent<PauseMenu>().Pause();
     }
 
     private void OnCrouch()
     {
         Physics.Raycast(transform.position, transform.up, StandingHeight); // use this later to determine if player can stand up
-        if (_isCrouching)
-        {
-            _hitbox.height = StandingHeight;
-        }
-        else
+        if (!_isCrouching)
         {
             _hitbox.height = CrouchHeight;
+            _isSprinting = false;
+            _isCrouching = true;
         }
-        _isCrouching = !_isCrouching;
+        else if (!Physics.Raycast(transform.position, transform.up, StandingHeight, LayerMask.GetMask("Default")))
+        {
+            _hitbox.height = StandingHeight;
+            _isCrouching = false;
+        }
     }
 
     private void OnScroll(InputValue value)
@@ -297,5 +300,17 @@ public class PlayerControls : MonoBehaviour
     public float GetMaxStamina()
     {
         return MaxStamina;
+    }
+
+    // ADDED: Public method to get the current move input vector
+    public Vector2 GetMoveInput()
+    {
+        return moveInput;
+    }
+
+    // ADDED: Public method to get the current sprint state
+    public bool IsSprinting()
+    {
+        return _isSprinting;
     }
 }

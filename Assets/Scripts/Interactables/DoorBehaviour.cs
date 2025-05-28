@@ -69,7 +69,10 @@ public class DoorBehaviour : InteractableBehaviourAbstract
     {
         targetRotation = openRotation;
         isOpen = true;
+
+        // this part is for editor buttons to work properly
         GetComponent<NavMeshObstacle>().enabled = false;
+        requiredItem = null;
     }
 
     public void Close()
@@ -82,6 +85,25 @@ public class DoorBehaviour : InteractableBehaviourAbstract
     {
         Close();
         requiredItem = pRequiredItem;
+        GetComponent<NavMeshObstacle>().enabled = true;
+    }
+
+    public Item GetRequiredItem()
+    {
+        return requiredItem;
+    }
+
+    public void SetRequiredItem(Item newItem)
+    {
+        if (newItem != null)
+        {
+            GetComponent<NavMeshObstacle>().enabled = true;
+        }
+        else
+        {
+            GetComponent<NavMeshObstacle>().enabled = false;
+        }
+        requiredItem = newItem;
     }
 
     public bool IsOpen() { return isOpen; }
