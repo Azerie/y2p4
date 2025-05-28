@@ -1,5 +1,32 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8307331434734238889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Abandoned house sounds (random)
+  m_EditorClassIdentifier: 
+  Path: event:/Abandoned house sounds (random)
+  Guid:
+    Data1: -1715938535
+    Data2: 1185233440
+    Data3: -1866918767
+    Data4: -1138465279
+  Banks:
+  - {fileID: 94408777358099788}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 3391
 --- !u!114 &-5151916993315357405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107,13 +134,14 @@ MonoBehaviour:
   - {fileID: -3031283440903808853}
   - {fileID: 4318347521073826483}
   - {fileID: -2804330225873650247}
+  - {fileID: -8307331434734238889}
   EditorParameters: []
   MasterBanks:
   - {fileID: 94408777358099788}
   StringsBanks:
   - {fileID: 4019843712167514335}
   cacheVersion: 131847
-  cacheTime: 638835181540152218
+  cacheTime: 638840253205794999
   SerializableEventsDict:
   - key: event:/Torch
     index: 0
@@ -131,6 +159,8 @@ MonoBehaviour:
     index: 6
   - key: event:/Ambience
     index: 7
+  - key: event:/Abandoned house sounds (random)
+    index: 8
 --- !u!114 &94408777358099788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,10 +176,10 @@ MonoBehaviour:
   Path: Assets/Audio/Audio system/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638835181540142000
+  lastModified: 638840253205759851
   FileSizes:
   - Name: Desktop
-    Value: 4928128
+    Value: 4998560
   Exists: 1
 --- !u!114 &704998655170163295
 MonoBehaviour:
@@ -296,10 +326,10 @@ MonoBehaviour:
   Path: Assets/Audio/Audio system/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638835181540152218
+  lastModified: 638840253205794999
   FileSizes:
   - Name: Desktop
-    Value: 1280
+    Value: 1352
   Exists: 1
 --- !u!114 &4318347521073826483
 MonoBehaviour:
