@@ -2,13 +2,13 @@
 <objects serializationModel="Studio.02.03.00">
 	<object class="Event" id="{2b8a060f-613e-4555-85ae-e3533a9a211c}">
 		<property name="name">
-			<value>Footstep</value>
+			<value>Footsteps</value>
 		</property>
 		<property name="outputFormat">
-			<value>0</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
-			<destination>{cd8dc66a-cfa2-4c89-adf0-0126ccff801f}</destination>
+			<destination>{8fbf4467-1ccf-4a6f-8a3e-9029bf58152e}</destination>
 		</relationship>
 		<relationship name="mixer">
 			<destination>{c670b25b-395c-4f60-ae3f-2a21c28eba98}</destination>
@@ -90,10 +90,7 @@
 	<object class="MixerBusPanner" id="{3f781a67-8dee-488b-be5d-41a8066cbf1e}" />
 	<object class="MultiSound" id="{84275362-1267-435b-b889-7153f24ebc3c}">
 		<property name="length">
-			<value>2.7000000000000002</value>
-		</property>
-		<property name="playlistMode">
-			<value>3</value>
+			<value>0.40000000000000002</value>
 		</property>
 		<relationship name="modulators">
 			<destination>{385b4c9b-c58d-4d71-910e-b980fb225f4c}</destination>
@@ -126,6 +123,7 @@
 	<object class="MixerBusEffectChain" id="{a0e35764-b204-449f-af66-8e716fe578e6}">
 		<relationship name="effects">
 			<destination>{3d9d305d-9dd5-4d72-8014-58751056c523}</destination>
+			<destination>{3971e6a9-3b94-446c-aea4-8fef2b4d8244}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{6b64a350-dbd0-421d-9ad9-3c1aa2b44da2}" />
@@ -143,7 +141,7 @@
 			<value>pitch</value>
 		</property>
 		<property name="amount">
-			<value>4.5</value>
+			<value>2.5</value>
 		</property>
 	</object>
 	<object class="ADSRModulator" id="{230040e8-b0dc-49e1-9031-1fca8c34ac16}">
@@ -209,5 +207,6 @@
 	</object>
 	<object class="MixerBusPanner" id="{60488f04-4cab-464f-b125-ba980e6e4ca6}" />
 	<object class="MixerBusFader" id="{3d9d305d-9dd5-4d72-8014-58751056c523}" />
+	<object class="SpatialiserEffect" id="{3971e6a9-3b94-446c-aea4-8fef2b4d8244}" />
 	<object class="MixerBusFader" id="{dec9977e-457b-4c16-b92a-cafc6d6070ec}" />
 </objects>

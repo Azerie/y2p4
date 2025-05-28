@@ -55,7 +55,7 @@ public class PlayerInventory : MonoBehaviour
 
     public bool RemoveItem(Item item)
     {
-        if (Instance.items.ContainsKey(item))
+        if (item != null && Instance.items.ContainsKey(item))
         {
             Instance.items[item]--;
             if (Instance.items[item] == 0)
