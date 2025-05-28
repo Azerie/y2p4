@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -187,7 +188,11 @@ public class EnemyBehaviour : MonoBehaviour
             }
             else if (IsAtDestination())
             {
+                float curRot = Mathf.Sin(Mathf.Max(0, -(stateTimer / AlertToRoamingTime)) * Mathf.PI * 2) * 90;
+                // Debug.Log("time: " + (stateTimer / AlertToRoamingTime).ToString() + "rotation: " + curRot);
                 stateTimer -= Time.deltaTime;
+                float newRot = Mathf.Sin(Mathf.Max(0, -(stateTimer / AlertToRoamingTime)) * Mathf.PI * 2) * 90;
+                transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0, newRot - curRot, 0));
                 if (stateTimer <= -AlertToRoamingTime)
                 {
                     ChangeState(State.Roaming);
