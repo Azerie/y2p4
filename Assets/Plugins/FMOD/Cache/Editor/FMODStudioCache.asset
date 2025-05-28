@@ -1,5 +1,32 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8307331434734238889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Abandoned house sounds (random)
+  m_EditorClassIdentifier: 
+  Path: event:/Abandoned house sounds (random)
+  Guid:
+    Data1: -1715938535
+    Data2: 1185233440
+    Data3: -1866918767
+    Data4: -1138465279
+  Banks:
+  - {fileID: 94408777358099788}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 3391
 --- !u!114 &-5151916993315357405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27,7 +54,7 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 18624
---- !u!114 &-1935651669679825942
+--- !u!114 &-3031283440903808853
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -37,23 +64,52 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Footstep
+  m_Name: event:/Footsteps/Dynamic footsteps
   m_EditorClassIdentifier: 
-  Path: event:/Footstep
+  Path: event:/Footsteps/Dynamic footsteps
   Guid:
-    Data1: 730465807
-    Data2: 1163223358
-    Data3: 1407430277
-    Data4: 471964218
+    Data1: 1569252423
+    Data2: 1161411658
+    Data3: -890589511
+    Data4: -1739484412
   Banks:
   - {fileID: 94408777358099788}
   IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters:
+  - {fileID: 3621891799075642223}
+  - {fileID: 5964803197131172544}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-2804330225873650247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Ambience
+  m_EditorClassIdentifier: 
+  Path: event:/Ambience
+  Guid:
+    Data1: -1357499
+    Data2: 1259550013
+    Data3: -170187370
+    Data4: 1746041205
+  Banks:
+  - {fileID: 94408777358099788}
+  IsStream: 1
   Is3D: 0
   IsOneShot: 1
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 28750
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73,15 +129,19 @@ MonoBehaviour:
   - {fileID: 4856968929788044954}
   - {fileID: 3954735302850735403}
   - {fileID: -5151916993315357405}
-  - {fileID: -1935651669679825942}
   - {fileID: 914086742410096703}
+  - {fileID: 3219904023927805952}
+  - {fileID: -3031283440903808853}
+  - {fileID: 4318347521073826483}
+  - {fileID: -2804330225873650247}
+  - {fileID: -8307331434734238889}
   EditorParameters: []
   MasterBanks:
   - {fileID: 94408777358099788}
   StringsBanks:
   - {fileID: 4019843712167514335}
   cacheVersion: 131847
-  cacheTime: 638832643263635507
+  cacheTime: 638840253205794999
   SerializableEventsDict:
   - key: event:/Torch
     index: 0
@@ -89,10 +149,18 @@ MonoBehaviour:
     index: 1
   - key: event:/Floor Creek (Probability)
     index: 2
-  - key: event:/Footstep
-    index: 3
   - key: event:/Ambience dynamic
+    index: 3
+  - key: event:/Footsteps/Footsteps
     index: 4
+  - key: event:/Footsteps/Dynamic footsteps
+    index: 5
+  - key: event:/Crickets (addition if needed)
+    index: 6
+  - key: event:/Ambience
+    index: 7
+  - key: event:/Abandoned house sounds (random)
+    index: 8
 --- !u!114 &94408777358099788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108,10 +176,10 @@ MonoBehaviour:
   Path: Assets/Audio/Audio system/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638832643263605507
+  lastModified: 638840253205759851
   FileSizes:
   - Name: Desktop
-    Value: 2864416
+    Value: 4998560
   Exists: 1
 --- !u!114 &704998655170163295
 MonoBehaviour:
@@ -157,14 +225,65 @@ MonoBehaviour:
     Data4: 214324939
   Banks:
   - {fileID: 94408777358099788}
-  IsStream: 0
+  IsStream: 1
   Is3D: 0
   IsOneShot: 0
   Parameters:
   - {fileID: 704998655170163295}
   MinDistance: 1
   MaxDistance: 20
-  Length: 6986
+  Length: 28750
+--- !u!114 &3219904023927805952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Footsteps/Footsteps
+  m_EditorClassIdentifier: 
+  Path: event:/Footsteps/Footsteps
+  Guid:
+    Data1: 730465807
+    Data2: 1163223358
+    Data3: 1407430277
+    Data4: 471964218
+  Banks:
+  - {fileID: 94408777358099788}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 400
+--- !u!114 &3621891799075642223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Dynamic footsteps/Terrain
+  m_EditorClassIdentifier: 
+  Name: Terrain
+  StudioPath: 
+  Min: 0
+  Max: 5
+  Default: 0
+  ID:
+    data1: 324849136
+    data2: 2997497049
+  Type: 1
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
 --- !u!114 &3954735302850735403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,11 +326,38 @@ MonoBehaviour:
   Path: Assets/Audio/Audio system/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638832643263635507
+  lastModified: 638840253205794999
   FileSizes:
   - Name: Desktop
-    Value: 1018
+    Value: 1352
   Exists: 1
+--- !u!114 &4318347521073826483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Crickets (addition if needed)
+  m_EditorClassIdentifier: 
+  Path: event:/Crickets (addition if needed)
+  Guid:
+    Data1: 132069879
+    Data2: 1106021992
+    Data3: 1308608395
+    Data4: 1676230895
+  Banks:
+  - {fileID: 94408777358099788}
+  IsStream: 1
+  Is3D: 1
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 16000
 --- !u!114 &4856968929788044954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,3 +385,27 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 180114
+--- !u!114 &5964803197131172544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Dynamic footsteps/WalkRun
+  m_EditorClassIdentifier: 
+  Name: WalkRun
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 1115970620
+    data2: 523854545
+  Type: 1
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
