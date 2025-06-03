@@ -49,6 +49,8 @@ public class EnemyBehaviour : MonoBehaviour
     private float stateTimer = 0f;
     private bool isPlayerHidden = false;
     // Start is called before the first frame update
+
+    Animator enemyAnimator;
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -59,6 +61,12 @@ public class EnemyBehaviour : MonoBehaviour
         height = GetComponentInChildren<CapsuleCollider>().height - heightOffset;
         HidingPlaceBehaviour.OnPlayerHidden += HidePlayer;
         HidingPlaceBehaviour.OnPlayerRevealed += RevealPlayer;
+
+        enemyAnimator = GetComponentInChildren<Animator>();
+        if (enemyAnimator == null)
+        {
+            Debug.Log("no fk animator");
+        }
 
         if (points.Count == 0 && pointsParent != null)
         {
@@ -99,18 +107,26 @@ public class EnemyBehaviour : MonoBehaviour
             GetComponentInChildren<MeshRenderer>().material.SetColor("_BaseColor", Color.red);
             navMeshAgent.speed = ChasingSpeed;
             navMeshAgent.destination = player.position;
+            enemyAnimator.Play("F_Run");
         }
         else if (newState == State.Alert)
         {
             GetComponentInChildren<MeshRenderer>().material.SetColor("_BaseColor", Color.yellow);
             navMeshAgent.speed = AlertSpeed;
             navMeshAgent.destination = player.position;
+            enemyAnimator.Play("Walking");
+
+            // enemyAnimator.SetBool("IsRunning",true) ;
         }
         else if (newState == State.Roaming)
         {
             GetComponentInChildren<MeshRenderer>().material.SetColor("_BaseColor", Color.green);
             navMeshAgent.speed = RoamingSpeed;
             navMeshAgent.destination = points[currentPointIndex].position;
+            //  enemyAnimator.SetBool("IsWalking", true);
+            enemyAnimator.Play("Walking");
+
+
         }
         state = newState;
         stateTimer = 0;
@@ -188,6 +204,7 @@ public class EnemyBehaviour : MonoBehaviour
             }
             else if (IsAtDestination())
             {
+                enemyAnimator.Play("Idle");
                 float curRot = Mathf.Sin(Mathf.Max(0, -(stateTimer / AlertToRoamingTime)) * Mathf.PI * 2) * 90;
                 // Debug.Log("time: " + (stateTimer / AlertToRoamingTime).ToString() + "rotation: " + curRot);
                 stateTimer -= Time.deltaTime;
