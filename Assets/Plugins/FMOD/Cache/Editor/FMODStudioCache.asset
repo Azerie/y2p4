@@ -81,7 +81,7 @@ MonoBehaviour:
   StringsBanks:
   - {fileID: 4019843712167514335}
   cacheVersion: 131847
-  cacheTime: 638835092340274693
+  cacheTime: 638835111489001507
   SerializableEventsDict:
   - key: event:/Torch
     index: 0
@@ -108,7 +108,7 @@ MonoBehaviour:
   Path: Assets/Audio/Audio system/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638835092340274693
+  lastModified: 638835111488860017
   FileSizes:
   - Name: Desktop
     Value: 2864416
@@ -207,7 +207,7 @@ MonoBehaviour:
   Path: Assets/Audio/Audio system/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638835092340274693
+  lastModified: 638835111489001507
   FileSizes:
   - Name: Desktop
     Value: 1018
