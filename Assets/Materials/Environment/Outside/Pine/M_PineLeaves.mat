@@ -197,6 +197,7 @@ Material:
     - _BumpScale: 1
     - _CenterStrength: 0.45
     - _CoatMask: 0
+    - _ConnectionPointDistance: 0.318
     - _ConservativeDepthOffsetEnable: 0
     - _CullMode: 0
     - _CullModeForward: 0
@@ -252,9 +253,9 @@ Material:
     - _ObjectSpaceUVMapping: 0
     - _ObjectSpaceUVMappingEmissive: 0
     - _OcclusionStrength: 1
-    - _OffsetAmount: 0.58
-    - _OffsetNoise: 0.3
-    - _OffsetSpeed: 1.26
+    - _OffsetAmount: 0.84
+    - _OffsetNoise: 0.6
+    - _OffsetSpeed: 0.28
     - _OpaqueCullMode: 2
     - _PPDLodThreshold: 5
     - _PPDMaxSamples: 15
@@ -306,6 +307,7 @@ Material:
     - _UVDetail: 0
     - _UVEmissive: 0
     - _UVSec: 0
+    - _UseConectionPoint: 1
     - _UseEmissiveIntensity: 0
     - _UseShadowThreshold: 0
     - _ZTestDepthEqualForOpaque: 3
@@ -313,9 +315,11 @@ Material:
     - _ZTestTransparent: 4
     - _ZWrite: 1
     m_Colors:
+    - _AngleStrength: {r: 0.1, g: 0.5, b: 0.1, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _ConnectionPoint: {r: 0.2, g: 0.2, b: 0, a: 0}
     - _DiffusionProfileAsset: {r: 0, g: 0, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
