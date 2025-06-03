@@ -96,19 +96,19 @@ public class EnemyBehaviour : MonoBehaviour
     {
         if (newState == State.Chasing)
         {
-            GetComponentInChildren<MeshRenderer>().material.SetColor("_Color", Color.red);
+            GetComponentInChildren<MeshRenderer>().material.SetColor("_BaseColor", Color.red);
             navMeshAgent.speed = ChasingSpeed;
             navMeshAgent.destination = player.position;
         }
         else if (newState == State.Alert)
         {
-            GetComponentInChildren<MeshRenderer>().material.SetColor("_Color", Color.yellow);
+            GetComponentInChildren<MeshRenderer>().material.SetColor("_BaseColor", Color.yellow);
             navMeshAgent.speed = AlertSpeed;
             navMeshAgent.destination = player.position;
         }
         else if (newState == State.Roaming)
         {
-            GetComponentInChildren<MeshRenderer>().material.SetColor("_Color", Color.green);
+            GetComponentInChildren<MeshRenderer>().material.SetColor("_BaseColor", Color.green);
             navMeshAgent.speed = RoamingSpeed;
             navMeshAgent.destination = points[currentPointIndex].position;
         }
