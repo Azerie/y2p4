@@ -38,7 +38,7 @@ public class EnemyBehaviour : MonoBehaviour
 
 
 
-    enum State { Roaming, Alert, Chasing }
+    public enum State { Roaming, Alert, Chasing }
     private State state = State.Roaming;
     private Transform player;
     private Transform mainCamera;
@@ -107,26 +107,30 @@ public class EnemyBehaviour : MonoBehaviour
             GetComponentInChildren<MeshRenderer>().material.SetColor("_BaseColor", Color.red);
             navMeshAgent.speed = ChasingSpeed;
             navMeshAgent.destination = player.position;
-            enemyAnimator.Play("F_Run");
+            if (enemyAnimator != null)
+            {
+                enemyAnimator.Play("F_Run");
+            }
         }
         else if (newState == State.Alert)
         {
             GetComponentInChildren<MeshRenderer>().material.SetColor("_BaseColor", Color.yellow);
             navMeshAgent.speed = AlertSpeed;
             navMeshAgent.destination = player.position;
-            enemyAnimator.Play("Walking");
-
-            // enemyAnimator.SetBool("IsRunning",true) ;
+            if (enemyAnimator != null)
+            {
+                enemyAnimator.Play("Walking");
+            }
         }
         else if (newState == State.Roaming)
         {
             GetComponentInChildren<MeshRenderer>().material.SetColor("_BaseColor", Color.green);
             navMeshAgent.speed = RoamingSpeed;
             navMeshAgent.destination = points[currentPointIndex].position;
-            //  enemyAnimator.SetBool("IsWalking", true);
-            enemyAnimator.Play("Walking");
-
-
+            if (enemyAnimator != null)
+            {
+                enemyAnimator.Play("Walking");
+            }
         }
         state = newState;
         stateTimer = 0;
@@ -204,7 +208,10 @@ public class EnemyBehaviour : MonoBehaviour
             }
             else if (IsAtDestination())
             {
-                enemyAnimator.Play("Idle");
+                if (enemyAnimator != null)
+                {
+                    enemyAnimator.Play("Idle");
+                }
                 float curRot = Mathf.Sin(Mathf.Max(0, -(stateTimer / AlertToRoamingTime)) * Mathf.PI * 2) * 90;
                 // Debug.Log("time: " + (stateTimer / AlertToRoamingTime).ToString() + "rotation: " + curRot);
                 stateTimer -= Time.deltaTime;
@@ -255,7 +262,7 @@ public class EnemyBehaviour : MonoBehaviour
         return directLine.magnitude < proximityDetectionRange;
     }
 
-    private bool HasLineOfSight()
+    public bool HasLineOfSight()
     {
         RaycastHit hit;
         Vector3 origin = transform.position + new Vector3(0, height, 0);
@@ -316,4 +323,6 @@ public class EnemyBehaviour : MonoBehaviour
 
         return linear0to1 * (1 - MinDetectionCoef) + MinDetectionCoef;
     }
+
+    public State GetState() { return state; }
 }
