@@ -148,6 +148,9 @@ Possibly add crouch
 		</relationship>
 	</object>
 	<object class="MultiSound" id="{8e2e7230-9ac6-43da-b84c-db5c648bd7f1}">
+		<property name="volume">
+			<value>-1</value>
+		</property>
 		<relationship name="sounds">
 			<destination>{17c4f65f-46a1-44bb-bde5-a6bda98f51ec}</destination>
 			<destination>{7edf51d2-4ce9-40fb-b59c-08f36e5f3847}</destination>
