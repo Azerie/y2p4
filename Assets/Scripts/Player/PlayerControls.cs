@@ -247,7 +247,7 @@ public class PlayerControls : MonoBehaviour
 
     private void OnCrouch()
     {
-        Physics.Raycast(transform.position, transform.up, StandingHeight); // use this later to determine if player can stand up
+        // Physics.Raycast(transform.position, transform.up, StandingHeight); // use this later to determine if player can stand up
         if (!_isCrouching)
         {
             _hitbox.height = CrouchHeight;
@@ -267,9 +267,14 @@ public class PlayerControls : MonoBehaviour
         PlayerInventory.GetInstance().SwapSelectedItem(-Mathf.RoundToInt(value.Get<Vector2>().y / 120));
     }
 
-    public void SetCameraSensitivity(int pSensitivity)
+    public void SetCameraSensitivity(float pSensitivity)
     {
         Sensitivity = pSensitivity;
+    }
+
+    public float GetCameraSensitivity()
+    {
+        return Sensitivity;
     }
 
     public void DisableMovement()

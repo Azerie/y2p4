@@ -14,12 +14,38 @@ public class InventoryUI : MonoBehaviour
     // [SerializeField] private Vector2 entryOffset = new Vector2(0, -50);
     // [SerializeField] private Vector2 startingPosition = Vector2.zero;
 
+    [SerializeField] private float showTime = 5f;
+    private float timer = 0;
+    private bool isHidden = false;
+
     private void Awake()
     {
         PlayerInventory.InventoryChanged += DrawUI;
         PlayerInventory.SelectedItemChanged += DrawUI;
         DrawUI();
     }
+
+    private void Update()
+    {
+        if (!isHidden)
+        {
+            timer += Time.deltaTime;
+            if (timer >= showTime)
+            {
+                HideUI();
+            }
+        }
+    }
+
+    void HideUI()
+    {
+        foreach (Transform entry in InventoryEntryContainer.transform)
+        {
+            entry.gameObject.SetActive(false);
+        }
+        isHidden = true;
+    }
+
 
     void DrawUI()
     {
@@ -47,6 +73,8 @@ public class InventoryUI : MonoBehaviour
                 }
             }
         }
+        timer = 0;
+        isHidden = false;
     }
 
     void DrawInventoryItem(Item item, Transform entry)
