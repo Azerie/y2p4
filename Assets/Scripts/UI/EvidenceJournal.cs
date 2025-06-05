@@ -13,6 +13,7 @@ public class EvidenceJournal : MonoBehaviour
     }
     private void OnEvidenceJournalChanged()
     {
+        textField.text = "";
         List<string> texts = EvidenceManager.GetInstance().GetJournal();
         foreach (string text in texts)
         {
