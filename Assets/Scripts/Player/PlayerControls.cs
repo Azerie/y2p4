@@ -199,19 +199,22 @@ public class PlayerControls : MonoBehaviour
     }
     private void OnSprint()
     {
-        if (_isCrouching)
+        if (isEnabled)
         {
-            OnCrouch();
-        }
-        if (!_isCrouching)
-        {
-            _isSprinting = !_isSprinting;
+            if (_isCrouching)
+            {
+                OnCrouch();
+            }
+            if (!_isCrouching)
+            {
+                _isSprinting = !_isSprinting;
+            }
         }
     }
 
     private void OnJump()
     {
-        if (Grounded && _jumpTimeoutDelta <= 0.0f)
+        if (isEnabled && Grounded && _jumpTimeoutDelta <= 0.0f)
         {
             // the square root of H * -2 * G = how much velocity needed to reach desired height
             _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
@@ -220,23 +223,29 @@ public class PlayerControls : MonoBehaviour
 
     private void OnInteract()
     {
-        _pickupHandler.Interact();
+        if (isEnabled)
+        {
+            _pickupHandler.Interact();
+        }
     }
 
     private void OnLook(InputValue value)
     {
-        _rotationVelocity = value.Get<Vector2>().x * Sensitivity;
+        if (isEnabled)
+        {
+            _rotationVelocity = value.Get<Vector2>().x * Sensitivity;
 
-        // rotate the player left and right
-        transform.Rotate(Vector3.up * _rotationVelocity);
+            // rotate the player left and right
+            transform.Rotate(Vector3.up * _rotationVelocity);
 
-        Transform head = GetComponentInChildren<Camera>().transform.parent;
-        _cameraYrotation -= value.Get<Vector2>().y * Sensitivity;
-        _cameraYrotation = Math.Clamp(_cameraYrotation, MinCameraAngle, MaxCameraAngle);
+            Transform head = GetComponentInChildren<Camera>().transform.parent;
+            _cameraYrotation -= value.Get<Vector2>().y * Sensitivity;
+            _cameraYrotation = Math.Clamp(_cameraYrotation, MinCameraAngle, MaxCameraAngle);
 
-        Quaternion newRotation = Quaternion.Euler(_cameraYrotation, 0, 0);
+            Quaternion newRotation = Quaternion.Euler(_cameraYrotation, 0, 0);
 
-        head.localRotation = newRotation;
+            head.localRotation = newRotation;
+        }
     }
 
     private void OnPause()
@@ -247,24 +256,29 @@ public class PlayerControls : MonoBehaviour
 
     private void OnCrouch()
     {
-        // Physics.Raycast(transform.position, transform.up, StandingHeight); // use this later to determine if player can stand up
-        if (!_isCrouching)
+        if (isEnabled)
         {
-            _hitbox.height = CrouchHeight;
-            _isSprinting = false;
-            _isCrouching = true;
-        }
-        else if (!Physics.Raycast(transform.position, transform.up, StandingHeight, LayerMask.GetMask("Default")))
-        {
-            _hitbox.height = StandingHeight;
-            _isCrouching = false;
+            if (!_isCrouching)
+            {
+                _hitbox.height = CrouchHeight;
+                _isSprinting = false;
+                _isCrouching = true;
+            }
+            else if (!Physics.Raycast(transform.position, transform.up, StandingHeight, LayerMask.GetMask("Default")))
+            {
+                _hitbox.height = StandingHeight;
+                _isCrouching = false;
+            }   
         }
     }
 
     private void OnScroll(InputValue value)
     {
-        // Debug.Log(value.Get<Vector2>());
-        PlayerInventory.GetInstance().SwapSelectedItem(-Mathf.RoundToInt(value.Get<Vector2>().y / 120));
+        if (isEnabled)
+        {
+            // Debug.Log(value.Get<Vector2>());
+            PlayerInventory.GetInstance().SwapSelectedItem(-Mathf.RoundToInt(value.Get<Vector2>().y / 120));        
+        }
     }
 
     public void SetCameraSensitivity(float pSensitivity)
@@ -277,7 +291,7 @@ public class PlayerControls : MonoBehaviour
         return Sensitivity;
     }
 
-    public void DisableMovement()
+    public void DisableMovement() // disables all controls, not just movement
     {
         isEnabled = false;
     }
