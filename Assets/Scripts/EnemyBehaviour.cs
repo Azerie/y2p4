@@ -38,7 +38,7 @@ public class EnemyBehaviour : MonoBehaviour
 
 
 
-    public enum State { Roaming, Alert, Chasing }
+    public enum State { Roaming, Alert, Chasing, KillAnimation }
     private State state = State.Roaming;
     private Transform player;
     private Transform mainCamera;
@@ -162,12 +162,9 @@ public class EnemyBehaviour : MonoBehaviour
         {
             navMeshAgent.destination = player.position;
         }
-        else if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
+        else if (state == State.Roaming && navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
         {
-            if (state == State.Roaming)
-            {
-                GetNextPoint();
-            }
+            GetNextPoint();
         }
     }
 
@@ -303,7 +300,14 @@ public class EnemyBehaviour : MonoBehaviour
 
         if (failEnabled && collision.transform.CompareTag("Player"))
         {
-            SceneManager.LoadScene(failSceneName);
+            ChangeState(State.KillAnimation);
+            if (enemyAnimator != null)
+            {
+                // play animation here
+            }
+            collision.gameObject.GetComponent<PlayerControls>().DisableMovement();
+            // make a playercontrols function that will pan player camera to the enemy and call it here
+            // SceneManager.LoadScene(failSceneName);
         }
     }
 
