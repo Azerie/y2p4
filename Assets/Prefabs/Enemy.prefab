@@ -271,6 +271,7 @@ GameObject:
   - component: {fileID: 3532642181388419142}
   - component: {fileID: 6707996554218094035}
   - component: {fileID: 5459280107179182592}
+  - component: {fileID: 7454775544400685782}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -333,18 +334,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   points: []
   pointsParent: {fileID: 0}
-  detectionRange: 10
-  detectionAngle: 75
+  proximityDetectionRange: 3
+  detectionRange: 14
+  detectionAngle: 60
   heightOffset: 0.1
-  RoamingToAlertTime: 1
-  AlertToChasingTime: 2
-  AlertToRoamingTime: 1
-  ChasingToAlertTime: 2
-  RoamingSpeed: 3
-  AlertSpeed: 4
-  ChasingSpeed: 5
+  RoamingToAlertTime: 2
+  AlertToChasingTime: 1.5
+  AlertToRoamingTime: 3
+  ChasingToAlertTime: 1.5
+  RoamingSpeed: 2.5
+  AlertSpeed: 3
+  ChasingSpeed: 3.5
+  MinDetectionCoef: 0.25
   failEnabled: 1
   failSceneName: MainMenu
+  m_AlertSoundEventPath:
+    Guid:
+      Data1: 272438237
+      Data2: 1341718732
+      Data3: -1612675934
+      Data4: -334725777
+    Path: event:/Enemy/Alert
+  m_ChasingSoundEventPath:
+    Guid:
+      Data1: 1616044042
+      Data2: 1134053543
+      Data3: -202916223
+      Data4: -990238610
+    Path: event:/Enemy/Chase
 --- !u!136 &6707996554218094035
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -395,6 +412,29 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &7454775544400685782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4011043403573591943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8126a3eb889da642bd7caff701b9e1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EventPath:
+    Guid:
+      Data1: 1850500122
+      Data2: 1170140018
+      Data3: 1950585472
+      Data4: 1280158659
+    Path: event:/Enemy/Enemy footsteps
+  m_Terrain: 0
+  m_WalkRun: 0
+  m_StepDistance: 1.2
+  m_Debug: 0
 --- !u!1 &4348337318392104846
 GameObject:
   m_ObjectHideFlags: 0
