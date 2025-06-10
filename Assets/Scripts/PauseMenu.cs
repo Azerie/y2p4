@@ -7,13 +7,10 @@ public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private string menuSceneName = "MainMenu";
     private PlayerControls playerControls;
-    void Start()
-    {
-        Resume();
-    }
     void Awake()
     {
         playerControls = FindObjectOfType<PlayerControls>();
+        Resume();
     }
     public void Resume()
     {

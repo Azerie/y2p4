@@ -33,8 +33,8 @@ public class EnemyBehaviour : MonoBehaviour
     [Tooltip("How much slower the detection is at maximum range")]
     [SerializeField] private float MinDetectionCoef = 0.5f;
     [SerializeField] private bool failEnabled = true;
-
     [SerializeField] private string failSceneName = "MainMenu";
+    [SerializeField] private float killAnimationTime = 0.5f;
 
 
 
@@ -130,6 +130,14 @@ public class EnemyBehaviour : MonoBehaviour
             if (enemyAnimator != null)
             {
                 enemyAnimator.Play("Walking");
+            }
+        }
+        else if (newState == State.KillAnimation)
+        {
+            navMeshAgent.destination = transform.position;
+            if (enemyAnimator != null)
+            {
+                enemyAnimator.Play("Walking"); // change to the correct animation later
             }
         }
         state = newState;
@@ -238,6 +246,15 @@ public class EnemyBehaviour : MonoBehaviour
                 }
             }
         }
+        else if (state == State.KillAnimation)
+        {
+            stateTimer += Time.deltaTime;
+            if(stateTimer >= killAnimationTime)
+            {
+                SceneManager.LoadScene(failSceneName);
+                Cursor.lockState = CursorLockMode.None;
+            }
+        }
     }
 
     private bool IsPlayerInVisionCone()
@@ -301,13 +318,8 @@ public class EnemyBehaviour : MonoBehaviour
         if (failEnabled && collision.transform.CompareTag("Player"))
         {
             ChangeState(State.KillAnimation);
-            if (enemyAnimator != null)
-            {
-                // play animation here
-            }
             collision.gameObject.GetComponent<PlayerControls>().DisableMovement();
-            // make a playercontrols function that will pan player camera to the enemy and call it here
-            // SceneManager.LoadScene(failSceneName);
+            collision.gameObject.GetComponent<PlayerControls>().LookAt(transform);
         }
     }
 

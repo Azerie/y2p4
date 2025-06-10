@@ -223,10 +223,7 @@ public class PlayerControls : MonoBehaviour
 
     private void OnInteract()
     {
-        if (isEnabled)
-        {
-            _pickupHandler.Interact();
-        }
+        _pickupHandler.Interact();
     }
 
     private void OnLook(InputValue value)
@@ -236,7 +233,7 @@ public class PlayerControls : MonoBehaviour
             _rotationVelocity = value.Get<Vector2>().x * Sensitivity;
 
             // rotate the player left and right
-            transform.Rotate(Vector3.up * _rotationVelocity);
+            _rb.MoveRotation(transform.rotation * Quaternion.Euler(Vector3.up * _rotationVelocity));
 
             Transform head = GetComponentInChildren<Camera>().transform.parent;
             _cameraYrotation -= value.Get<Vector2>().y * Sensitivity;
@@ -281,6 +278,13 @@ public class PlayerControls : MonoBehaviour
         }
     }
 
+    public void LookAt(Transform target)
+    {
+        transform.LookAt(target);
+        Transform head = GetComponentInChildren<Camera>().transform.parent;
+        head.transform.LookAt(target);
+    }
+
     public void SetCameraSensitivity(float pSensitivity)
     {
         Sensitivity = pSensitivity;
@@ -294,11 +298,16 @@ public class PlayerControls : MonoBehaviour
     public void DisableMovement() // disables all controls, not just movement
     {
         isEnabled = false;
+        _rb.isKinematic = true;
     }
 
     public void EnableMovement()
     {
         isEnabled = true;
+        if(_rb != null)
+        {
+            _rb.isKinematic = false;
+        }
     }
 
     public float GetHealth()
