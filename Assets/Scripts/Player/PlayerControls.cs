@@ -285,11 +285,11 @@ public class PlayerControls : MonoBehaviour
         EvidenceJournal.enabled = !EvidenceJournal.enabled;
     }
 
-    public void LookAt(Transform target)
+    public void LookAtEnemy(EnemyBehaviour target)
     {
-        transform.LookAt(target);
+        transform.LookAt(target.transform);
         Transform head = GetComponentInChildren<Camera>().transform.parent;
-        head.transform.LookAt(target);
+        head.transform.LookAt(target.transform.position + new Vector3(0, target.GetHeight(), 0));
     }
 
     public void SetCameraSensitivity(float pSensitivity)

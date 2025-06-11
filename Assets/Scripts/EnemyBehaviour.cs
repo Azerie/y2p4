@@ -30,8 +30,11 @@ public class EnemyBehaviour : MonoBehaviour
     [SerializeField] private float RoamingSpeed = 3f;
     [SerializeField] private float AlertSpeed = 4f;
     [SerializeField] private float ChasingSpeed = 6f;
-    [Tooltip("How much slower the detection is at maximum range")]
-    [SerializeField] private float MinDetectionCoef = 0.5f;
+    [Tooltip("How much slower the detection is at maximum range while in roaming state")]
+    [SerializeField] private float MinDetectionCoefRoaming = 0.5f;
+    [Tooltip("How much slower the detection is at maximum range while in alert state")]
+    [SerializeField] private float MinDetectionCoefAlert = 0.5f;
+
     [SerializeField] private bool failEnabled = true;
     [SerializeField] private string failSceneName = "MainMenu";
     [SerializeField] private float killAnimationTime = 0.5f;
@@ -280,7 +283,7 @@ public class EnemyBehaviour : MonoBehaviour
         else if (state == State.KillAnimation)
         {
             stateTimer += Time.deltaTime;
-            if(stateTimer >= killAnimationTime)
+            if (stateTimer >= killAnimationTime)
             {
                 SceneManager.LoadScene(failSceneName);
                 Cursor.lockState = CursorLockMode.None;
@@ -350,7 +353,7 @@ public class EnemyBehaviour : MonoBehaviour
         {
             ChangeState(State.KillAnimation);
             collision.gameObject.GetComponent<PlayerControls>().DisableMovement();
-            collision.gameObject.GetComponent<PlayerControls>().LookAt(transform);
+            collision.gameObject.GetComponent<PlayerControls>().LookAtEnemy(this);
         }
     }
 
@@ -367,9 +370,14 @@ public class EnemyBehaviour : MonoBehaviour
         }
         float linear0to1 = (detectionRange - dist) / (detectionRange - proximityDetectionRange);
         // Debug.Log("dist: " + dist.ToString() + "linear: " + linear0to1.ToString());
+        float MinDetectionCoef = 0;
+        if (state == State.Roaming) { MinDetectionCoef = MinDetectionCoefRoaming; }
+        else { MinDetectionCoef = MinDetectionCoefAlert; }
 
         return linear0to1 * (1 - MinDetectionCoef) + MinDetectionCoef;
     }
 
     public State GetState() { return state; }
+
+    public float GetHeight() { return height; }
 }
