@@ -43,7 +43,7 @@ public class CompoundMuffleTrigger : MonoBehaviour
     {
         if (!enabled || targetEmitter == null) return; // Early exit if script disabled or no target
 
-        if (other.CompareTag(playerTag))
+        if (other.transform.parent != null && other.transform.parent.CompareTag(playerTag))
         {
             overlappingCollidersCount++;
             if (!isPlayerConsideredInZone && overlappingCollidersCount > 0) // Player just entered the first part of the compound zone
@@ -60,7 +60,7 @@ public class CompoundMuffleTrigger : MonoBehaviour
     {
         if (!enabled || targetEmitter == null) return; // Early exit if script disabled or no target
 
-        if (other.CompareTag(playerTag))
+        if (other.transform.parent != null && other.transform.parent.CompareTag(playerTag))
         {
             if (overlappingCollidersCount > 0) // Only decrement if we had registered an enter for the player
             {

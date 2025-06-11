@@ -144,12 +144,15 @@ Possibly add crouch
 		</relationship>
 	</object>
 	<object class="MultiSound" id="{eea65a72-35f1-4284-a8ca-d9defe1e3891}">
+		<property name="volume">
+			<value>5</value>
+		</property>
 		<relationship name="sounds">
-			<destination>{d9532fe4-4d52-48d2-ad82-06649585da20}</destination>
-			<destination>{a0e2d3ab-d14e-424f-a182-b32ca5fae137}</destination>
-			<destination>{9cab5363-a26b-40bc-8abf-9178a7faa9a4}</destination>
-			<destination>{e9c4a9e6-f28b-4738-b243-765921d193c7}</destination>
-			<destination>{3ceaea64-6dc8-4a7a-bec5-770ebf0ac983}</destination>
+			<destination>{27f35cf5-d918-417e-ba8f-88736722ad5b}</destination>
+			<destination>{16c1770a-5fca-498f-86a5-a12c94194eec}</destination>
+			<destination>{141787f1-0530-45c9-b300-4bc07f2f893d}</destination>
+			<destination>{c1704d1a-127d-4c77-be11-75737d26b4f5}</destination>
+			<destination>{596ebf71-fe13-48e8-a544-0dee6f403521}</destination>
 		</relationship>
 	</object>
 	<object class="MultiSound" id="{c128743f-a202-495a-b12f-cb62f81dbbd6}">
@@ -187,6 +190,9 @@ Possibly add crouch
 		</relationship>
 	</object>
 	<object class="MultiSound" id="{8a1caa9a-6b03-467a-bd22-9e624c9fbda4}">
+		<property name="volume">
+			<value>5</value>
+		</property>
 		<relationship name="sounds">
 			<destination>{f0d2261d-7c52-40f2-82c5-2f4b75d93f05}</destination>
 			<destination>{b3f34985-5c6c-4f1b-ac30-caae748f72e5}</destination>
@@ -232,29 +238,29 @@ Possibly add crouch
 	</object>
 	<object class="MixerBusPanner" id="{20265db8-95da-4a57-8a62-17414e357d0e}" />
 	<object class="MixerBusFader" id="{85d78c99-9831-4db2-8716-423959ad5b67}" />
-	<object class="SingleSound" id="{d9532fe4-4d52-48d2-ad82-06649585da20}">
+	<object class="SingleSound" id="{27f35cf5-d918-417e-ba8f-88736722ad5b}">
 		<relationship name="audioFile">
-			<destination>{37e2d61e-f0c5-450e-b005-b12d6dcc1e27}</destination>
+			<destination>{ba1b8dcc-4935-4a1c-b669-39869666738e}</destination>
 		</relationship>
 	</object>
-	<object class="SingleSound" id="{a0e2d3ab-d14e-424f-a182-b32ca5fae137}">
+	<object class="SingleSound" id="{16c1770a-5fca-498f-86a5-a12c94194eec}">
 		<relationship name="audioFile">
-			<destination>{04c86629-1d5f-4d6d-a4b4-0ca21ca4b428}</destination>
+			<destination>{81862991-22ee-4842-9802-383ee2c3185f}</destination>
 		</relationship>
 	</object>
-	<object class="SingleSound" id="{9cab5363-a26b-40bc-8abf-9178a7faa9a4}">
+	<object class="SingleSound" id="{141787f1-0530-45c9-b300-4bc07f2f893d}">
 		<relationship name="audioFile">
-			<destination>{1d0d097a-e2ae-49e6-acb0-f472c2f65815}</destination>
+			<destination>{719f3046-ee70-49ce-8519-9857a1141dcd}</destination>
 		</relationship>
 	</object>
-	<object class="SingleSound" id="{e9c4a9e6-f28b-4738-b243-765921d193c7}">
+	<object class="SingleSound" id="{c1704d1a-127d-4c77-be11-75737d26b4f5}">
 		<relationship name="audioFile">
-			<destination>{cadf9f9b-726e-435b-acb2-4e14a599e666}</destination>
+			<destination>{5dc96865-6651-4f97-92b9-15407bad5f0b}</destination>
 		</relationship>
 	</object>
-	<object class="SingleSound" id="{3ceaea64-6dc8-4a7a-bec5-770ebf0ac983}">
+	<object class="SingleSound" id="{596ebf71-fe13-48e8-a544-0dee6f403521}">
 		<relationship name="audioFile">
-			<destination>{6971a454-1849-4cf7-82e7-93728b64751a}</destination>
+			<destination>{5a2c238f-7e25-4010-84d4-93436b25b183}</destination>
 		</relationship>
 	</object>
 	<object class="SingleSound" id="{0018235d-53fa-40ec-9f00-9019d821a2bf}">
@@ -389,7 +395,7 @@ Possibly add crouch
 			<value>0</value>
 		</property>
 		<property name="value">
-			<value>3.81469727e-06</value>
+			<value>0</value>
 		</property>
 	</object>
 	<object class="AutomationPoint" id="{c541bb7c-6400-48dc-abdb-1c07d8d986d1}">
