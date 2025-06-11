@@ -76,6 +76,7 @@ public class PlayerControls : MonoBehaviour
     private Rigidbody _rb;
     private PlayerInteraction _pickupHandler;
     private CapsuleCollider _hitbox;
+    private Canvas EvidenceJournal;
 
     void Start()
     {
@@ -84,6 +85,7 @@ public class PlayerControls : MonoBehaviour
         _pickupHandler = GetComponentInChildren<PlayerInteraction>();
         _health = MaxHealth;
         _stamina = MaxStamina;
+        EvidenceJournal = GameObject.Find("EvidenceJournal").GetComponent<Canvas>();
         isEnabled = true;
     }
 
@@ -276,6 +278,11 @@ public class PlayerControls : MonoBehaviour
             // Debug.Log(value.Get<Vector2>());
             PlayerInventory.GetInstance().SwapSelectedItem(-Mathf.RoundToInt(value.Get<Vector2>().y / 120));        
         }
+    }
+
+    private void OnJournal()
+    {
+        EvidenceJournal.enabled = !EvidenceJournal.enabled;
     }
 
     public void LookAt(Transform target)
