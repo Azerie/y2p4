@@ -25,8 +25,8 @@ public class SkillCheck : MonoBehaviour
         if (isActive)
         {
             pointer.Rotate(0, 0, speed * Time.deltaTime);
-            Debug.DrawRay(pointer.position, Quaternion.Euler(0, 0, angle) * pointer.transform.up.normalized);
-            Debug.DrawRay(pointer.position, Quaternion.Euler(0, 0, -angle) * pointer.transform.up.normalized);
+            Debug.DrawRay(circle.position, Quaternion.Euler(0, 0, angle) * circle.transform.up.normalized * 200);
+            Debug.DrawRay(circle.position, Quaternion.Euler(0, 0, -angle) * circle.transform.up.normalized * 200);
         }
     }
 

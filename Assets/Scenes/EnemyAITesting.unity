@@ -1493,6 +1493,10 @@ PrefabInstance:
       propertyPath: m_PresetInfoIsWorld
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6240532502980215547, guid: bfe1492213abf4c44a7a351d87906e93, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7369102941241907194, guid: bfe1492213abf4c44a7a351d87906e93, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -4219,6 +4223,10 @@ PrefabInstance:
     - target: {fileID: 4785226271423879065, guid: 7d317c7a3d20dd14e9acf109a0b78fdd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4785226271423879066, guid: 7d317c7a3d20dd14e9acf109a0b78fdd, type: 3}
+      propertyPath: m_Constraints
+      value: 112
       objectReference: {fileID: 0}
     - target: {fileID: 4785226271423879067, guid: 7d317c7a3d20dd14e9acf109a0b78fdd, type: 3}
       propertyPath: Sensitivity
