@@ -176,6 +176,9 @@ Possibly add crouch
 		<property name="start">
 			<value>1</value>
 		</property>
+		<property name="volume">
+			<value>-2</value>
+		</property>
 		<relationship name="sounds">
 			<destination>{97295747-97de-4072-ae37-251b0f3576ea}</destination>
 			<destination>{eb5589d0-bd55-47f1-9204-30ecad3cbcb2}</destination>
