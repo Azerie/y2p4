@@ -65,8 +65,9 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private float _rotationVelocity;
     [SerializeField] private float _verticalVelocity;
     [SerializeField] private float _terminalVelocity = 53.0f;
-    [SerializeField] private bool _isSprinting;
-    [SerializeField] private bool _isCrouching;
+    [SerializeField] private bool _isSprinting = false;
+    [SerializeField] private bool _isCrouching = false;
+    [SerializeField] private bool _isInKillAnimation = false;
     [SerializeField] private float _jumpTimeoutDelta = 0f;
     [SerializeField] private float _cameraYrotation = 0f;
 
@@ -285,11 +286,19 @@ public class PlayerControls : MonoBehaviour
         EvidenceJournal.enabled = !EvidenceJournal.enabled;
     }
 
-    public void LookAtEnemy(EnemyBehaviour target)
+    public void StartKillAnimation(EnemyBehaviour target)
     {
+        DisableMovement();
+        _isInKillAnimation = true;
         transform.LookAt(target.transform);
         Transform head = GetComponentInChildren<Camera>().transform.parent;
         head.transform.LookAt(target.transform.position + new Vector3(0, target.GetHeight(), 0));
+    }
+
+    public void ExitKillAnimation()
+    {
+        EnableMovement();
+        _isInKillAnimation = false;
     }
 
     public void SetCameraSensitivity(float pSensitivity)
@@ -345,5 +354,10 @@ public class PlayerControls : MonoBehaviour
     public bool IsSprinting()
     {
         return _isSprinting;
+    }
+
+    public bool IsInKillAnimation()
+    {
+        return _isInKillAnimation;
     }
 }

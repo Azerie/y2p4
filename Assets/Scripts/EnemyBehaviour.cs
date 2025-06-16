@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class EnemyBehaviour : MonoBehaviour
@@ -56,6 +57,8 @@ public class EnemyBehaviour : MonoBehaviour
     private int currentPointIndex = 0;
     private float stateTimer = 0f;
     private bool isPlayerHidden = false;
+    public static event UnityAction OnKillAnimationStart;
+    public static event UnityAction OnKillAnimationEnd;
     // Start is called before the first frame update
 
     Animator enemyAnimator;
@@ -70,6 +73,8 @@ public class EnemyBehaviour : MonoBehaviour
         height = GetComponentInChildren<CapsuleCollider>().height - heightOffset;
         HidingPlaceBehaviour.OnPlayerHidden += HidePlayer;
         HidingPlaceBehaviour.OnPlayerRevealed += RevealPlayer;
+        OnKillAnimationStart += HidePlayer;
+        OnKillAnimationEnd += RevealPlayer;
 
         enemyAnimator = GetComponentInChildren<Animator>();
         if (enemyAnimator == null)
@@ -107,6 +112,8 @@ public class EnemyBehaviour : MonoBehaviour
     {
         HidingPlaceBehaviour.OnPlayerHidden -= HidePlayer;
         HidingPlaceBehaviour.OnPlayerRevealed -= RevealPlayer;
+        OnKillAnimationStart -= HidePlayer;
+        OnKillAnimationEnd -= RevealPlayer;
     }
 
     private void ChangeState(State newState)
@@ -152,6 +159,7 @@ public class EnemyBehaviour : MonoBehaviour
         else if (newState == State.KillAnimation)
         {
             navMeshAgent.destination = transform.position;
+            OnKillAnimationStart();
             if (enemyAnimator != null)
             {
                 enemyAnimator.Play("Walking"); // change to the correct animation later
@@ -251,7 +259,7 @@ public class EnemyBehaviour : MonoBehaviour
                 {
                     enemyAnimator.Play("Idle");
                 }
-                float curRot = Mathf.Sin(Mathf.Max(0, -(stateTimer / AlertToRoamingTime)) * Mathf.PI * 2) * 90;
+                float curRot = Mathf.Sin(Mathf.Max(0, -(stateTimer / AlertToRoamingTime)) * Mathf.PI * 2) * 90; // change this to use a separate timer later
                 // Debug.Log("time: " + (stateTimer / AlertToRoamingTime).ToString() + "rotation: " + curRot);
                 stateTimer -= Time.deltaTime;
                 float newRot = Mathf.Sin(Mathf.Max(0, -(stateTimer / AlertToRoamingTime)) * Mathf.PI * 2) * 90;
@@ -285,6 +293,7 @@ public class EnemyBehaviour : MonoBehaviour
             stateTimer += Time.deltaTime;
             if (stateTimer >= killAnimationTime)
             {
+                OnKillAnimationEnd();
                 SceneManager.LoadScene(failSceneName);
                 Cursor.lockState = CursorLockMode.None;
             }
@@ -327,7 +336,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     private bool CanSeePlayer()
     {
-        return ((state == State.Chasing) || (!isPlayerHidden && HasLineOfSight())) && (IsPlayerInVisionCone() || IsPlayerClose());
+        return !isPlayerHidden && HasLineOfSight() && (IsPlayerInVisionCone() || IsPlayerClose());
     }
 
     private void HidePlayer()
@@ -352,8 +361,7 @@ public class EnemyBehaviour : MonoBehaviour
         if (failEnabled && collision.transform.CompareTag("Player"))
         {
             ChangeState(State.KillAnimation);
-            collision.gameObject.GetComponent<PlayerControls>().DisableMovement();
-            collision.gameObject.GetComponent<PlayerControls>().LookAtEnemy(this);
+            collision.gameObject.GetComponent<PlayerControls>().StartKillAnimation(this);
         }
     }
 
