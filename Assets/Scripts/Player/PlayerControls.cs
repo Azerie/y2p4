@@ -215,13 +215,14 @@ public class PlayerControls : MonoBehaviour
         }
     }
 
-    private void OnJump()
+    private void OnSpace()
     {
-        if (isEnabled && Grounded && _jumpTimeoutDelta <= 0.0f)
-        {
-            // the square root of H * -2 * G = how much velocity needed to reach desired height
-            _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
-        }
+        // if (isEnabled && Grounded && _jumpTimeoutDelta <= 0.0f)
+        // {
+        //     // the square root of H * -2 * G = how much velocity needed to reach desired height
+        //     _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+        // }
+        FindObjectOfType<SkillCheck>().DebugFunc();
     }
 
     private void OnInteract()

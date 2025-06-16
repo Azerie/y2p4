@@ -312,6 +312,7 @@ GameObject:
   - component: {fileID: 6115542946071558933}
   - component: {fileID: 7907932435117532272}
   - component: {fileID: 8370796162689458753}
+  - component: {fileID: 6980749411649887984}
   m_Layer: 5
   m_Name: SkillCheck
   m_TagString: Untagged
@@ -402,6 +403,22 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &6980749411649887984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2185490182947012184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9a18f0dbb9d1f249a49b24047eed5b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  angle: 20
+  speed: 120
+  pointer: {fileID: 2586376015950396911}
+  circle: {fileID: 2532678715974973047}
 --- !u!1 &2331103876216427969
 GameObject:
   m_ObjectHideFlags: 0
