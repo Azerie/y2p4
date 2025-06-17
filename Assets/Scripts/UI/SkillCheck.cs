@@ -13,6 +13,7 @@ public class SkillCheck : MonoBehaviour
     private Canvas canvas;
     private bool isActive = false;
     private float circleRotation;
+    private bool wasLastCheckPassed = false;
 
     void Start()
     {
@@ -30,22 +31,32 @@ public class SkillCheck : MonoBehaviour
         }
     }
 
-    public void StartMinigame()
+    public bool StartMinigame()
     {
-        canvas.enabled = true;
-        isActive = true;
-        speed *= Math.Sign(UnityEngine.Random.Range(-1f, 1f));
-        pointer.Rotate(0, 0, UnityEngine.Random.Range(0, 360));
-        circle.Rotate(0, 0, UnityEngine.Random.Range(0, 360));
+        if (!isActive) 
+        {
+            canvas.enabled = true;
+            isActive = true;
+            speed *= Math.Sign(UnityEngine.Random.Range(-1f, 1f));
+            pointer.Rotate(0, 0, UnityEngine.Random.Range(0, 360));
+            circle.Rotate(0, 0, UnityEngine.Random.Range(0, 360));
+            return true;
+        }
+        return false;
     }
 
     public bool EndMinigame()
     {
-        canvas.enabled = false;
-        isActive = false;
-        float r1 = circle.rotation.eulerAngles.z;
-        float r2 = pointer.rotation.eulerAngles.z;
-        return Math.Abs(r1 - r2) % 360 < angle;
+        if(isActive)
+        {
+            canvas.enabled = false;
+            isActive = false;
+            float r1 = circle.rotation.eulerAngles.z;
+            float r2 = pointer.rotation.eulerAngles.z;
+            wasLastCheckPassed = Math.Abs(r1 - r2) % 360 < angle;
+            return true;
+        }
+        return false;
     }
 
     public void DebugFunc()
@@ -59,4 +70,8 @@ public class SkillCheck : MonoBehaviour
             Debug.Log(EndMinigame());
         }
     }
+
+    public bool IsActive() { return isActive; }
+
+    public bool WasLastCheckPassed() { return wasLastCheckPassed; }
 }

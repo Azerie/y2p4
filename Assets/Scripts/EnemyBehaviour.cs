@@ -39,6 +39,16 @@ public class EnemyBehaviour : MonoBehaviour
     [SerializeField] private bool failEnabled = true;
     [SerializeField] private string failSceneName = "MainMenu";
     [SerializeField] private float killAnimationTime = 0.5f;
+    [SerializeField] private float knockoutTime = 2f;
+    [SerializeField] private bool isLethal = true;
+
+    [Header("Animation names")]
+    [SerializeField] private string idleAnimationName = "Idle";
+    [SerializeField] private string walkingAnimationName = "Walking";
+    [SerializeField] private string runningAnimationName = "F_Run";
+    [SerializeField] private string attackAnimationName = "Idle";
+    [SerializeField] private string knockedAnimationName = "Idle";
+
     [Header("FMOD State Sounds")]
     [Tooltip("FMOD event path for the alert state sound.")]
     public FMODUnity.EventReference m_AlertSoundEventPath = new FMODUnity.EventReference();
@@ -47,25 +57,27 @@ public class EnemyBehaviour : MonoBehaviour
 
 
 
-    public enum State { Roaming, Alert, Chasing, KillAnimation }
+    public enum State { Roaming, Alert, Chasing, KillAnimation, SkillCheck, Knocked }
     private State state = State.Roaming;
     private Transform player;
     private Transform mainCamera;
     private float playerHeight;
     private float height;
-    private NavMeshAgent navMeshAgent;
     private int currentPointIndex = 0;
     private float stateTimer = 0f;
     private bool isPlayerHidden = false;
+    private SkillCheck skillCheck;
     public static event UnityAction OnKillAnimationStart;
     public static event UnityAction OnKillAnimationEnd;
-    // Start is called before the first frame update
-
-    Animator enemyAnimator;
-    Rigidbody enemyRigidbody;
+    
+    private NavMeshAgent _navMeshAgent;
+    private Animator _animator;
+    private Rigidbody _rb;
+    private Collider _collider;
     void Start()
     {
-        navMeshAgent = GetComponent<NavMeshAgent>();
+        _navMeshAgent = GetComponent<NavMeshAgent>();
+        _collider = GetComponent<Collider>();
 
         player = GameObject.FindGameObjectWithTag("Player").transform;
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").transform;
@@ -76,11 +88,12 @@ public class EnemyBehaviour : MonoBehaviour
         OnKillAnimationStart += HidePlayer;
         OnKillAnimationEnd += RevealPlayer;
 
-        enemyAnimator = GetComponentInChildren<Animator>();
-        if (enemyAnimator == null)
+        _animator = GetComponentInChildren<Animator>();
+        if (_animator == null)
         {
             Debug.Log("no fk animator");
         }
+        skillCheck = FindObjectOfType<SkillCheck>();
 
         if (points.Count == 0 && pointsParent != null)
         {
@@ -91,7 +104,7 @@ public class EnemyBehaviour : MonoBehaviour
         }
         if (currentPointIndex >= 0 || currentPointIndex < points.Count - 1)
         {
-            navMeshAgent.destination = points[currentPointIndex].position;
+            _navMeshAgent.destination = points[currentPointIndex].position;
         }
 
         ChangeState(State.Roaming);
@@ -121,48 +134,60 @@ public class EnemyBehaviour : MonoBehaviour
         if (newState == State.Chasing)
         {
             GetComponentInChildren<MeshRenderer>().material.SetColor("_BaseColor", Color.red);
-            navMeshAgent.speed = ChasingSpeed;
+            _navMeshAgent.speed = ChasingSpeed;
             if (player != null)
             {
-                navMeshAgent.destination = player.position;
+                _navMeshAgent.destination = player.position;
             }
-            if (enemyAnimator != null)
+            if (_animator != null)
             {
-                enemyAnimator.Play("F_Run");
+                _animator.Play(runningAnimationName);
             }
             PlayFMODEvent(m_ChasingSoundEventPath, "Chasing");
         }
         else if (newState == State.Alert)
         {
             GetComponentInChildren<MeshRenderer>().material.SetColor("_BaseColor", Color.yellow);
-            navMeshAgent.speed = AlertSpeed;
+            _navMeshAgent.speed = AlertSpeed;
             if (player != null)
             {
-                navMeshAgent.destination = player.position;
+                _navMeshAgent.destination = player.position;
             }
-            if (enemyAnimator != null)
+            if (_animator != null)
             {
-                enemyAnimator.Play("Walking");
+                _animator.Play(walkingAnimationName);
             }
             PlayFMODEvent(m_AlertSoundEventPath, "Alert");
         }
         else if (newState == State.Roaming)
         {
             GetComponentInChildren<MeshRenderer>().material.SetColor("_BaseColor", Color.green);
-            navMeshAgent.speed = RoamingSpeed;
-            navMeshAgent.destination = points[currentPointIndex].position;
-            if (enemyAnimator != null)
+            _navMeshAgent.speed = RoamingSpeed;
+            _navMeshAgent.destination = points[currentPointIndex].position;
+            if (_animator != null)
             {
-                enemyAnimator.Play("Walking");
+                _animator.Play(walkingAnimationName);
             }
         }
         else if (newState == State.KillAnimation)
         {
-            navMeshAgent.destination = transform.position;
+            _navMeshAgent.destination = transform.position;
             OnKillAnimationStart();
-            if (enemyAnimator != null)
+            if (_animator != null)
             {
-                enemyAnimator.Play("Walking"); // change to the correct animation later
+                _animator.Play(attackAnimationName);
+            }
+        }
+        else if (newState == State.SkillCheck)
+        {
+            skillCheck.StartMinigame();
+        }
+        else if (newState == State.Knocked)
+        {
+            _collider.enabled = false;
+            if (_animator != null)
+            {
+                _animator.Play(knockedAnimationName);
             }
         }
         state = newState;
@@ -175,7 +200,7 @@ public class EnemyBehaviour : MonoBehaviour
         {
             FMOD.Studio.EventInstance stateSoundInstance = FMODUnity.RuntimeManager.CreateInstance(eventReference);
             // Corrected line: passing gameObject instead of transform
-            FMODUnity.RuntimeManager.AttachInstanceToGameObject(stateSoundInstance, gameObject, enemyRigidbody);
+            FMODUnity.RuntimeManager.AttachInstanceToGameObject(stateSoundInstance, gameObject, _rb);
             stateSoundInstance.start();
             stateSoundInstance.release();
             // Debug.Log($"EnemyBehaviour: Playing {eventNameForLog} sound."); // Optional: uncomment for debugging
@@ -194,11 +219,11 @@ public class EnemyBehaviour : MonoBehaviour
             currentPointIndex = 0;
         }
         NavMeshPath path = new NavMeshPath();
-        navMeshAgent.CalculatePath(points[currentPointIndex].position, path);
+        _navMeshAgent.CalculatePath(points[currentPointIndex].position, path);
 
         if (path.status == NavMeshPathStatus.PathComplete)
         {
-            navMeshAgent.destination = points[currentPointIndex].position;
+            _navMeshAgent.destination = points[currentPointIndex].position;
         }
         else
         {
@@ -210,9 +235,9 @@ public class EnemyBehaviour : MonoBehaviour
     {
         if (state == State.Chasing)
         {
-            navMeshAgent.destination = player.position;
+            _navMeshAgent.destination = player.position;
         }
-        else if (state == State.Roaming && navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
+        else if (state == State.Roaming && _navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
         {
             GetNextPoint();
         }
@@ -255,9 +280,9 @@ public class EnemyBehaviour : MonoBehaviour
             }
             else if (IsAtDestination())
             {
-                if (enemyAnimator != null)
+                if (_animator != null)
                 {
-                    enemyAnimator.Play("Idle");
+                    _animator.Play(idleAnimationName);
                 }
                 float curRot = Mathf.Sin(Mathf.Max(0, -(stateTimer / AlertToRoamingTime)) * Mathf.PI * 2) * 90; // change this to use a separate timer later
                 // Debug.Log("time: " + (stateTimer / AlertToRoamingTime).ToString() + "rotation: " + curRot);
@@ -293,9 +318,40 @@ public class EnemyBehaviour : MonoBehaviour
             stateTimer += Time.deltaTime;
             if (stateTimer >= killAnimationTime)
             {
+                if(isLethal)
+                {
+                    KillPlayer();
+                }
+                else
+                {
+                    ChangeState(State.SkillCheck);
+                }
+            }
+        }
+        else if (state == State.SkillCheck)
+        {
+            if (!skillCheck.IsActive())
+            {
+                Debug.Log("Skillcheck over, Result: " + skillCheck.WasLastCheckPassed());
+                if (skillCheck.WasLastCheckPassed())
+                {
+                    ChangeState(State.Knocked);
+                    player.gameObject.GetComponent<PlayerControls>().ExitKillAnimation();
+                }
+                else
+                {
+                    KillPlayer();
+                }
+            }
+        }
+        else if (state == State.Knocked)
+        {
+            stateTimer += Time.deltaTime;
+            if (stateTimer >= knockoutTime)
+            {
+                _collider.enabled = true;
                 OnKillAnimationEnd();
-                SceneManager.LoadScene(failSceneName);
-                Cursor.lockState = CursorLockMode.None;
+                ChangeState(State.Roaming);
             }
         }
     }
@@ -350,15 +406,15 @@ public class EnemyBehaviour : MonoBehaviour
 
     private bool IsAtDestination()
     {
-        float dist = navMeshAgent.remainingDistance;
-        return dist != Mathf.Infinity && navMeshAgent.pathStatus == NavMeshPathStatus.PathComplete && navMeshAgent.remainingDistance == 0;
+        float dist = _navMeshAgent.remainingDistance;
+        return dist != Mathf.Infinity && _navMeshAgent.pathStatus == NavMeshPathStatus.PathComplete && _navMeshAgent.remainingDistance == 0;
     }
 
     void OnCollisionEnter(Collision collision)
     {
         // Debug.Log("enemy collision");
 
-        if (failEnabled && collision.transform.CompareTag("Player"))
+        if (!isPlayerHidden && failEnabled && collision.transform.CompareTag("Player"))
         {
             ChangeState(State.KillAnimation);
             collision.gameObject.GetComponent<PlayerControls>().StartKillAnimation(this);
@@ -383,6 +439,13 @@ public class EnemyBehaviour : MonoBehaviour
         else { MinDetectionCoef = MinDetectionCoefAlert; }
 
         return linear0to1 * (1 - MinDetectionCoef) + MinDetectionCoef;
+    }
+
+    private void KillPlayer()
+    {
+        OnKillAnimationEnd();
+        SceneManager.LoadScene(failSceneName);
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public State GetState() { return state; }
