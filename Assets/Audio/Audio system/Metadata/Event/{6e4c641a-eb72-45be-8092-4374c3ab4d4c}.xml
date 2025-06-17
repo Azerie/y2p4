@@ -49,6 +49,7 @@ Possibly add crouch
 		<relationship name="parameters">
 			<destination>{37cc0fcf-a162-45ba-9480-a80ce32abb90}</destination>
 			<destination>{52f8d336-df70-4358-ba73-0c95b48bd9cc}</destination>
+			<destination>{ed7237b5-283d-4378-9a70-a73701638075}</destination>
 		</relationship>
 		<relationship name="banks">
 			<destination>{7f1e322d-744f-414c-b468-349c3d8c3ed2}</destination>
@@ -116,6 +117,11 @@ Possibly add crouch
 	<object class="ParameterProxy" id="{52f8d336-df70-4358-ba73-0c95b48bd9cc}">
 		<relationship name="preset">
 			<destination>{5322bac7-94aa-4eee-8343-d42d0e194716}</destination>
+		</relationship>
+	</object>
+	<object class="ParameterProxy" id="{ed7237b5-283d-4378-9a70-a73701638075}">
+		<relationship name="preset">
+			<destination>{f5381125-d71e-4cee-8531-98e65893bf4b}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{c40c113e-6db4-4532-b244-fd94f94dc61b}">
@@ -306,6 +312,7 @@ Possibly add crouch
 		</property>
 		<relationship name="automationCurves">
 			<destination>{e1fdf0fa-21b3-475d-a473-c8558a9f4ede}</destination>
+			<destination>{02dfcdc6-96d9-48bf-8a38-d9472961139c}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusEffectChain" id="{d3e3d3bf-7d6f-43ed-8028-c2139e5b4248}">
@@ -371,11 +378,13 @@ Possibly add crouch
 		</property>
 		<relationship name="automationCurves">
 			<destination>{02aa2f4a-e0f8-4593-854c-b3dc06c56c5e}</destination>
+			<destination>{493442a8-de8e-43f5-8850-876d72f01eb2}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusEffectChain" id="{203cc9f2-0ff1-458d-87a2-9becc421e808}">
 		<relationship name="effects">
 			<destination>{3ffb9402-6f6c-4746-8a51-cfc41f10223e}</destination>
+			<destination>{7cf7085f-8294-4a06-b57e-b346afcb169f}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{00904aac-6f21-4c9e-8ee8-d95097c854a4}" />
@@ -390,8 +399,28 @@ Possibly add crouch
 			<destination>{c541bb7c-6400-48dc-abdb-1c07d8d986d1}</destination>
 		</relationship>
 	</object>
+	<object class="AutomationCurve" id="{02dfcdc6-96d9-48bf-8a38-d9472961139c}">
+		<relationship name="parameter">
+			<destination>{f5381125-d71e-4cee-8531-98e65893bf4b}</destination>
+		</relationship>
+		<relationship name="automationPoints">
+			<destination>{f7617152-29fd-4be9-9f24-92c79b1cba8c}</destination>
+			<destination>{759080b3-9827-48b4-b658-62acc322872f}</destination>
+			<destination>{d02ab16b-e1ef-43a1-8fb3-e80938753931}</destination>
+		</relationship>
+	</object>
 	<object class="MixerBusFader" id="{ed84f3b3-0947-4de2-9cd2-8834ef54420e}" />
-	<object class="SpatialiserEffect" id="{f60b2578-d9aa-45e3-861b-2eeb5caa7a2d}" />
+	<object class="SpatialiserEffect" id="{f60b2578-d9aa-45e3-861b-2eeb5caa7a2d}">
+		<property name="minimumDistance">
+			<value>2.4000001</value>
+		</property>
+		<property name="maximumDistance">
+			<value>8</value>
+		</property>
+		<property name="overrideRange">
+			<value>true</value>
+		</property>
+	</object>
 	<object class="AutomationCurve" id="{02aa2f4a-e0f8-4593-854c-b3dc06c56c5e}">
 		<relationship name="parameter">
 			<destination>{5322bac7-94aa-4eee-8343-d42d0e194716}</destination>
@@ -401,7 +430,28 @@ Possibly add crouch
 			<destination>{e2e04195-59fd-49f5-9b21-5234ed009c43}</destination>
 		</relationship>
 	</object>
+	<object class="AutomationCurve" id="{493442a8-de8e-43f5-8850-876d72f01eb2}">
+		<relationship name="parameter">
+			<destination>{f5381125-d71e-4cee-8531-98e65893bf4b}</destination>
+		</relationship>
+		<relationship name="automationPoints">
+			<destination>{6ec573d1-b06a-4b72-95da-0cd813e85826}</destination>
+			<destination>{2285dd83-3cfe-49a9-a176-51c9b6baa971}</destination>
+			<destination>{be88f1e4-6cfa-420c-a494-ab93a78df85b}</destination>
+		</relationship>
+	</object>
 	<object class="MixerBusFader" id="{3ffb9402-6f6c-4746-8a51-cfc41f10223e}" />
+	<object class="SpatialiserEffect" id="{7cf7085f-8294-4a06-b57e-b346afcb169f}">
+		<property name="minimumDistance">
+			<value>2.4000001</value>
+		</property>
+		<property name="maximumDistance">
+			<value>8</value>
+		</property>
+		<property name="overrideRange">
+			<value>true</value>
+		</property>
+	</object>
 	<object class="AutomationPoint" id="{4f0d801c-0d95-4e8d-ba51-6c29cd73782b}">
 		<property name="position">
 			<value>0</value>
@@ -418,6 +468,30 @@ Possibly add crouch
 			<value>-80</value>
 		</property>
 	</object>
+	<object class="AutomationPoint" id="{f7617152-29fd-4be9-9f24-92c79b1cba8c}">
+		<property name="position">
+			<value>0</value>
+		</property>
+		<property name="value">
+			<value>3.81469727e-06</value>
+		</property>
+	</object>
+	<object class="AutomationPoint" id="{759080b3-9827-48b4-b658-62acc322872f}">
+		<property name="position">
+			<value>2</value>
+		</property>
+		<property name="value">
+			<value>0</value>
+		</property>
+	</object>
+	<object class="AutomationPoint" id="{d02ab16b-e1ef-43a1-8fb3-e80938753931}">
+		<property name="position">
+			<value>1</value>
+		</property>
+		<property name="value">
+			<value>-30</value>
+		</property>
+	</object>
 	<object class="AutomationPoint" id="{02457a5f-3a8a-4d59-b528-90151418a966}">
 		<property name="position">
 			<value>0</value>
@@ -429,6 +503,30 @@ Possibly add crouch
 	<object class="AutomationPoint" id="{e2e04195-59fd-49f5-9b21-5234ed009c43}">
 		<property name="position">
 			<value>1</value>
+		</property>
+		<property name="value">
+			<value>0</value>
+		</property>
+	</object>
+	<object class="AutomationPoint" id="{6ec573d1-b06a-4b72-95da-0cd813e85826}">
+		<property name="position">
+			<value>0</value>
+		</property>
+		<property name="value">
+			<value>3.81469727e-06</value>
+		</property>
+	</object>
+	<object class="AutomationPoint" id="{2285dd83-3cfe-49a9-a176-51c9b6baa971}">
+		<property name="position">
+			<value>1</value>
+		</property>
+		<property name="value">
+			<value>-36</value>
+		</property>
+	</object>
+	<object class="AutomationPoint" id="{be88f1e4-6cfa-420c-a494-ab93a78df85b}">
+		<property name="position">
+			<value>2</value>
 		</property>
 		<property name="value">
 			<value>0</value>
