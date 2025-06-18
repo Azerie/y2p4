@@ -18,13 +18,13 @@ public class PlayerControls : MonoBehaviour
     [Tooltip("Acceleration and deceleration")]
     [SerializeField] private float SpeedChangeRate = 10.0f;
 
-    [Space(10)]
-    [Tooltip("The height the player can jump")]
-    [SerializeField] private float JumpHeight = 1.2f;
+    // [Space(10)]
+    // [Tooltip("The height the player can jump")]
+    // [SerializeField] private float JumpHeight = 1.2f;
     [Tooltip("The character uses its own gravity value. The engine default is -9.81f")]
     [SerializeField] private float Gravity = -15.0f;
-    [Tooltip("Time required to pass before being able to jump again. Set to 0f to instantly jump again")]
-    [SerializeField] private float JumpTimeout = 0.1f;
+    // [Tooltip("Time required to pass before being able to jump again. Set to 0f to instantly jump again")]
+    // [SerializeField] private float JumpTimeout = 0.1f;
 
     [Space(10)]
     [Header("Player Grounded")]
@@ -65,8 +65,9 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private float _rotationVelocity;
     [SerializeField] private float _verticalVelocity;
     [SerializeField] private float _terminalVelocity = 53.0f;
-    [SerializeField] private bool _isSprinting;
-    [SerializeField] private bool _isCrouching;
+    [SerializeField] private bool _isSprinting = false;
+    [SerializeField] private bool _isCrouching = false;
+    [SerializeField] private bool _isInKillAnimation = false;
     [SerializeField] private float _jumpTimeoutDelta = 0f;
     [SerializeField] private float _cameraYrotation = 0f;
 
@@ -129,11 +130,11 @@ public class PlayerControls : MonoBehaviour
                 _jumpTimeoutDelta -= Time.deltaTime;
             }
         }
-        else
+/*        else
         {
             // reset the jump timeout timer
             _jumpTimeoutDelta = JumpTimeout;
-        }
+        }*/
 
         // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
         if (_verticalVelocity > -_terminalVelocity)
@@ -214,13 +215,16 @@ public class PlayerControls : MonoBehaviour
         }
     }
 
-    private void OnJump()
+    private void OnSpace()
     {
-        if (isEnabled && Grounded && _jumpTimeoutDelta <= 0.0f)
-        {
-            // the square root of H * -2 * G = how much velocity needed to reach desired height
-            _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
-        }
+        // if (isEnabled && Grounded && _jumpTimeoutDelta <= 0.0f)
+        // {
+        //     // the square root of H * -2 * G = how much velocity needed to reach desired height
+        //     _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+        // }
+
+        // FindObjectOfType<SkillCheck>().DebugFunc();
+        FindObjectOfType<SkillCheck>().EndMinigame();
     }
 
     private void OnInteract()
@@ -285,11 +289,20 @@ public class PlayerControls : MonoBehaviour
         EvidenceJournal.enabled = !EvidenceJournal.enabled;
     }
 
-    public void LookAtEnemy(EnemyBehaviour target)
+    public void StartKillAnimation(EnemyBehaviour target)
     {
+        DisableMovement();
+        _isInKillAnimation = true;
         transform.LookAt(target.transform);
+        transform.rotation = Quaternion.Euler(0, transform.rotation.y, 0);
         Transform head = GetComponentInChildren<Camera>().transform.parent;
         head.transform.LookAt(target.transform.position + new Vector3(0, target.GetHeight(), 0));
+    }
+
+    public void ExitKillAnimation()
+    {
+        EnableMovement();
+        _isInKillAnimation = false;
     }
 
     public void SetCameraSensitivity(float pSensitivity)
@@ -345,5 +358,10 @@ public class PlayerControls : MonoBehaviour
     public bool IsSprinting()
     {
         return _isSprinting;
+    }
+
+    public bool IsInKillAnimation()
+    {
+        return _isInKillAnimation;
     }
 }
