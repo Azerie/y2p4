@@ -116,30 +116,19 @@ public class PlayerControls : MonoBehaviour
 
     private void ApplyGravity()
     {
+        // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
+        if (_verticalVelocity > -_terminalVelocity)
+        {
+            _verticalVelocity += Gravity * Time.deltaTime;
+        }
+        
         if (Grounded)
         {
             // stop our velocity dropping infinitely when grounded
             if (_verticalVelocity < 0.0f)
             {
-                _verticalVelocity = -2f;
+                _verticalVelocity = -0.1f;
             }
-
-            // jump timeout
-            if (_jumpTimeoutDelta >= 0.0f)
-            {
-                _jumpTimeoutDelta -= Time.deltaTime;
-            }
-        }
-/*        else
-        {
-            // reset the jump timeout timer
-            _jumpTimeoutDelta = JumpTimeout;
-        }*/
-
-        // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
-        if (_verticalVelocity > -_terminalVelocity)
-        {
-            _verticalVelocity += Gravity * Time.deltaTime;
         }
     }
 
