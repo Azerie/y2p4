@@ -66,6 +66,7 @@ public class EnemyBehaviour : MonoBehaviour
     private int currentPointIndex = 0;
     private float stateTimer = 0f;
     private bool isPlayerHidden = false;
+    private float lookAroundTimer = 0f;
     private SkillCheck skillCheck;
     public static event UnityAction OnKillAnimationStart;
     public static event UnityAction OnKillAnimationEnd;
@@ -157,6 +158,7 @@ public class EnemyBehaviour : MonoBehaviour
             {
                 _animator.Play(walkingAnimationName);
             }
+            lookAroundTimer = 0;
             PlayFMODEvent(m_AlertSoundEventPath, "Alert");
         }
         else if (newState == State.Roaming)
@@ -284,12 +286,12 @@ public class EnemyBehaviour : MonoBehaviour
                 {
                     _animator.Play(idleAnimationName);
                 }
-                float curRot = Mathf.Sin(Mathf.Max(0, -(stateTimer / AlertToRoamingTime)) * Mathf.PI * 2) * 90; // change this to use a separate timer later
-                // Debug.Log("time: " + (stateTimer / AlertToRoamingTime).ToString() + "rotation: " + curRot);
-                stateTimer -= Time.deltaTime;
-                float newRot = Mathf.Sin(Mathf.Max(0, -(stateTimer / AlertToRoamingTime)) * Mathf.PI * 2) * 90;
+                float curRot = Mathf.Sin(Mathf.Max(0, -(lookAroundTimer / AlertToRoamingTime)) * Mathf.PI * 2) * 90;
+                // Debug.Log("time: " + (lookAroundTimer / AlertToRoamingTime).ToString() + "rotation: " + curRot);
+                lookAroundTimer -= Time.deltaTime;
+                float newRot = Mathf.Sin(Mathf.Max(0, -(lookAroundTimer / AlertToRoamingTime)) * Mathf.PI * 2) * 90;
                 transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0, newRot - curRot, 0));
-                if (stateTimer <= -AlertToRoamingTime)
+                if (lookAroundTimer <= -AlertToRoamingTime)
                 {
                     ChangeState(State.Roaming);
                 }
