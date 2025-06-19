@@ -179,6 +179,7 @@ GameObject:
   - component: {fileID: 4785226270924334386}
   - component: {fileID: 4785226270924334387}
   - component: {fileID: 4785226270924334384}
+  - component: {fileID: 4295249845364534296}
   m_Layer: 3
   m_Name: Body
   m_TagString: Untagged
@@ -274,6 +275,30 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &4295249845364534296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4785226270924334382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf180d91ec3c48d459f217f97e048b0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EventPath:
+    Guid:
+      Data1: 1569252423
+      Data2: 1161411658
+      Data3: -890589511
+      Data4: -1739484412
+    Path: event:/Footsteps/Dynamic footsteps
+  m_Terrain: 0
+  m_WalkRun: 0
+  m_StepDistance: 1.8
+  m_FirstStepDistanceFactor: 0.25
+  m_Debug: 1
 --- !u!1 &4785226271423879062
 GameObject:
   m_ObjectHideFlags: 0
@@ -286,8 +311,6 @@ GameObject:
   - component: {fileID: 4785226271423879067}
   - component: {fileID: 4785226271423879066}
   - component: {fileID: 4785226271423879064}
-  - component: {fileID: 502235630850770467}
-  - component: {fileID: 5950279375866835125}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -436,50 +459,3 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 4785226270245847090}
---- !u!114 &502235630850770467
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4785226271423879062}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf180d91ec3c48d459f217f97e048b0e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EventPath:
-    Guid:
-      Data1: 1569252423
-      Data2: 1161411658
-      Data3: -890589511
-      Data4: -1739484412
-    Path: event:/Footsteps/Dynamic footsteps
-  m_Terrain: 0
-  m_WalkRun: 0
-  m_StepDistance: 1.8
-  m_FirstStepDistanceFactor: 0.25
-  m_Debug: 0
---- !u!136 &5950279375866835125
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4785226271423879062}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.39655757
-  m_Height: 1.1427097
-  m_Direction: 1
-  m_Center: {x: 0, y: 1.379415, z: -0.056063235}

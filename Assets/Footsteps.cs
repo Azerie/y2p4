@@ -44,8 +44,8 @@ public class Footsteps : MonoBehaviour
         m_IsNextStepTheFirstSinceStop = true; // Initialize: next step will be the first
         m_StepRand = Random.Range(0.0f, 0.5f); // Initialize m_StepRand // cite: 1
 
-        playerControls = GetComponent<PlayerControls>(); // cite: 1
-        playerRigidbody = GetComponent<Rigidbody>(); // cite: 1
+        playerControls = transform.parent.GetComponent<PlayerControls>(); // cite: 1
+        playerRigidbody = transform.parent.GetComponent<Rigidbody>(); // cite: 1
 
         if (playerControls == null) // cite: 1
         {
