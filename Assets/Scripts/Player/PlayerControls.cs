@@ -30,11 +30,14 @@ public class PlayerControls : MonoBehaviour
     [Header("Player Grounded")]
     private bool Grounded = true;
     [Tooltip("How far grounded check is offset")]
-    [SerializeField] private float GroundedOffset = -0.14f;
+    [SerializeField] private float GroundedOffset = -0.4f;
     [Tooltip("The radius of the grounded check")]
     [SerializeField] private float GroundedRadius = 0.5f;
     [Tooltip("What layers the character uses as ground")]
     [SerializeField] private LayerMask GroundLayers;
+    [SerializeField] private float maxSlopeAngle = 50f;
+    [SerializeField] private float slopeCheckDistance = 0.5f;
+
 
     [Space(10)]
     [Header("Camera")]
@@ -74,6 +77,8 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private Vector2 moveInput = Vector2.zero;
     [SerializeField] private Vector2 lookInput = Vector2.zero;
     [SerializeField] private bool isEnabled = true;
+    [SerializeField] private Vector3 currentSlopeNormal = Vector3.up;
+
     private Rigidbody _rb;
     private PlayerInteraction _pickupHandler;
     private CapsuleCollider _hitbox;
@@ -183,6 +188,12 @@ public class PlayerControls : MonoBehaviour
 
         // move the player
         _rb.velocity = inputDirection.normalized * _speed + new Vector3(0.0f, _verticalVelocity, 0.0f);
+
+        // if we're on a walkable slope, rotate the gravity to be perpendicular to the slope and movement to be parallel
+        if (Grounded && SlopeCheck())
+        {
+            _rb.velocity = Quaternion.FromToRotation(Vector3.up, currentSlopeNormal) * _rb.velocity;
+        }
     }
 
     private void OnMove(InputValue value)
@@ -256,7 +267,7 @@ public class PlayerControls : MonoBehaviour
                 _isSprinting = false;
                 _isCrouching = true;
             }
-            else if (!Physics.Raycast(transform.position, transform.up, StandingHeight, LayerMask.GetMask("Default")))
+            else if (!Physics.Raycast(transform.position, transform.up, StandingHeight, GroundLayers))
             {
                 _hitbox.height = StandingHeight;
                 _isCrouching = false;
@@ -276,6 +287,23 @@ public class PlayerControls : MonoBehaviour
     private void OnJournal()
     {
         EvidenceJournal.enabled = !EvidenceJournal.enabled;
+    }
+
+    private bool SlopeCheck()
+    {
+        Ray ray = new Ray(transform.position, Vector3.down);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, slopeCheckDistance, GroundLayers))
+        {
+            float angle = Vector3.Angle(Vector3.up, hit.normal);
+            if (angle < maxSlopeAngle)
+            {
+                currentSlopeNormal = hit.normal;
+                return true;
+            }
+        }
+        return false;
     }
 
     public void StartKillAnimation(EnemyBehaviour target)
