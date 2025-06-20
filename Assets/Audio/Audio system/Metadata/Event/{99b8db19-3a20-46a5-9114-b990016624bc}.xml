@@ -72,9 +72,6 @@
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{999def99-067c-4e49-9210-73c7e5f166e9}">
-		<property name="volume">
-			<value>10</value>
-		</property>
 		<relationship name="effectChain">
 			<destination>{cc07e856-a6fb-4f56-9dc3-124429d0ea2d}</destination>
 		</relationship>
@@ -111,7 +108,7 @@
 			<value>7500</value>
 		</property>
 		<property name="minimumScatterDistance">
-			<value>9.60000038</value>
+			<value>15</value>
 		</property>
 		<property name="maximumScatterDistance">
 			<value>70</value>
