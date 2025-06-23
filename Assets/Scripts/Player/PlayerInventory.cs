@@ -75,8 +75,11 @@ public class PlayerInventory : MonoBehaviour
 
     public void SwapSelectedItem(int diff)
     {
-        int newId = MyUtils.mod(selectedItemId + diff, items.Keys.Count);
-        SetSelectedItem(newId);
+        if(items.Keys.Count >= 2)
+        {
+            int newId = MyUtils.mod(selectedItemId + diff, items.Keys.Count);
+            SetSelectedItem(newId);
+        }
     }
 
     public Item GetSelectedItem()

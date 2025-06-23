@@ -18,23 +18,26 @@ public class PlayerControls : MonoBehaviour
     [Tooltip("Acceleration and deceleration")]
     [SerializeField] private float SpeedChangeRate = 10.0f;
 
-    [Space(10)]
-    [Tooltip("The height the player can jump")]
-    [SerializeField] private float JumpHeight = 1.2f;
+    // [Space(10)]
+    // [Tooltip("The height the player can jump")]
+    // [SerializeField] private float JumpHeight = 1.2f;
     [Tooltip("The character uses its own gravity value. The engine default is -9.81f")]
     [SerializeField] private float Gravity = -15.0f;
-    [Tooltip("Time required to pass before being able to jump again. Set to 0f to instantly jump again")]
-    [SerializeField] private float JumpTimeout = 0.1f;
+    // [Tooltip("Time required to pass before being able to jump again. Set to 0f to instantly jump again")]
+    // [SerializeField] private float JumpTimeout = 0.1f;
 
     [Space(10)]
     [Header("Player Grounded")]
     private bool Grounded = true;
     [Tooltip("How far grounded check is offset")]
-    [SerializeField] private float GroundedOffset = -0.14f;
+    [SerializeField] private float GroundedOffset = -0.4f;
     [Tooltip("The radius of the grounded check")]
     [SerializeField] private float GroundedRadius = 0.5f;
     [Tooltip("What layers the character uses as ground")]
     [SerializeField] private LayerMask GroundLayers;
+    [SerializeField] private float maxSlopeAngle = 50f;
+    [SerializeField] private float slopeCheckDistance = 0.5f;
+
 
     [Space(10)]
     [Header("Camera")]
@@ -65,17 +68,21 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private float _rotationVelocity;
     [SerializeField] private float _verticalVelocity;
     [SerializeField] private float _terminalVelocity = 53.0f;
-    [SerializeField] private bool _isSprinting;
-    [SerializeField] private bool _isCrouching;
+    [SerializeField] private bool _isSprinting = false;
+    [SerializeField] private bool _isCrouching = false;
+    [SerializeField] private bool _isInKillAnimation = false;
     [SerializeField] private float _jumpTimeoutDelta = 0f;
     [SerializeField] private float _cameraYrotation = 0f;
 
     [SerializeField] private Vector2 moveInput = Vector2.zero;
     [SerializeField] private Vector2 lookInput = Vector2.zero;
     [SerializeField] private bool isEnabled = true;
+    [SerializeField] private Vector3 currentSlopeNormal = Vector3.up;
+
     private Rigidbody _rb;
     private PlayerInteraction _pickupHandler;
     private CapsuleCollider _hitbox;
+    private Canvas EvidenceJournal;
 
     void Start()
     {
@@ -84,6 +91,7 @@ public class PlayerControls : MonoBehaviour
         _pickupHandler = GetComponentInChildren<PlayerInteraction>();
         _health = MaxHealth;
         _stamina = MaxStamina;
+        EvidenceJournal = GameObject.Find("EvidenceJournal").GetComponent<Canvas>();
         isEnabled = true;
     }
 
@@ -113,30 +121,19 @@ public class PlayerControls : MonoBehaviour
 
     private void ApplyGravity()
     {
+        // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
+        if (_verticalVelocity > -_terminalVelocity)
+        {
+            _verticalVelocity += Gravity * Time.deltaTime;
+        }
+        
         if (Grounded)
         {
             // stop our velocity dropping infinitely when grounded
             if (_verticalVelocity < 0.0f)
             {
-                _verticalVelocity = -2f;
+                _verticalVelocity = -0.1f;
             }
-
-            // jump timeout
-            if (_jumpTimeoutDelta >= 0.0f)
-            {
-                _jumpTimeoutDelta -= Time.deltaTime;
-            }
-        }
-        else
-        {
-            // reset the jump timeout timer
-            _jumpTimeoutDelta = JumpTimeout;
-        }
-
-        // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
-        if (_verticalVelocity > -_terminalVelocity)
-        {
-            _verticalVelocity += Gravity * Time.deltaTime;
         }
     }
 
@@ -191,6 +188,12 @@ public class PlayerControls : MonoBehaviour
 
         // move the player
         _rb.velocity = inputDirection.normalized * _speed + new Vector3(0.0f, _verticalVelocity, 0.0f);
+
+        // if we're on a walkable slope, rotate the gravity to be perpendicular to the slope and movement to be parallel
+        if (Grounded && SlopeCheck())
+        {
+            _rb.velocity = Quaternion.FromToRotation(Vector3.up, currentSlopeNormal) * _rb.velocity;
+        }
     }
 
     private void OnMove(InputValue value)
@@ -199,23 +202,29 @@ public class PlayerControls : MonoBehaviour
     }
     private void OnSprint()
     {
-        if (_isCrouching)
+        if (isEnabled)
         {
-            OnCrouch();
-        }
-        if (!_isCrouching)
-        {
-            _isSprinting = !_isSprinting;
+            if (_isCrouching)
+            {
+                OnCrouch();
+            }
+            if (!_isCrouching)
+            {
+                _isSprinting = !_isSprinting;
+            }
         }
     }
 
-    private void OnJump()
+    private void OnSpace()
     {
-        if (Grounded && _jumpTimeoutDelta <= 0.0f)
-        {
-            // the square root of H * -2 * G = how much velocity needed to reach desired height
-            _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
-        }
+        // if (isEnabled && Grounded && _jumpTimeoutDelta <= 0.0f)
+        // {
+        //     // the square root of H * -2 * G = how much velocity needed to reach desired height
+        //     _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+        // }
+
+        // FindObjectOfType<SkillCheck>().DebugFunc();
+        FindObjectOfType<SkillCheck>().EndMinigame();
     }
 
     private void OnInteract()
@@ -225,18 +234,21 @@ public class PlayerControls : MonoBehaviour
 
     private void OnLook(InputValue value)
     {
-        _rotationVelocity = value.Get<Vector2>().x * Sensitivity;
+        if (isEnabled)
+        {
+            _rotationVelocity = value.Get<Vector2>().x * Sensitivity;
 
-        // rotate the player left and right
-        transform.Rotate(Vector3.up * _rotationVelocity);
+            // rotate the player left and right
+            _rb.MoveRotation(transform.rotation * Quaternion.Euler(Vector3.up * _rotationVelocity));
 
-        Transform head = GetComponentInChildren<Camera>().transform.parent;
-        _cameraYrotation -= value.Get<Vector2>().y * Sensitivity;
-        _cameraYrotation = Math.Clamp(_cameraYrotation, MinCameraAngle, MaxCameraAngle);
+            Transform head = GetComponentInChildren<Camera>().transform.parent;
+            _cameraYrotation -= value.Get<Vector2>().y * Sensitivity;
+            _cameraYrotation = Math.Clamp(_cameraYrotation, MinCameraAngle, MaxCameraAngle);
 
-        Quaternion newRotation = Quaternion.Euler(_cameraYrotation, 0, 0);
+            Quaternion newRotation = Quaternion.Euler(_cameraYrotation, 0, 0);
 
-        head.localRotation = newRotation;
+            head.localRotation = newRotation;
+        }
     }
 
     private void OnPause()
@@ -247,24 +259,67 @@ public class PlayerControls : MonoBehaviour
 
     private void OnCrouch()
     {
-        // Physics.Raycast(transform.position, transform.up, StandingHeight); // use this later to determine if player can stand up
-        if (!_isCrouching)
+        if (isEnabled)
         {
-            _hitbox.height = CrouchHeight;
-            _isSprinting = false;
-            _isCrouching = true;
-        }
-        else if (!Physics.Raycast(transform.position, transform.up, StandingHeight, LayerMask.GetMask("Default")))
-        {
-            _hitbox.height = StandingHeight;
-            _isCrouching = false;
+            if (!_isCrouching)
+            {
+                _hitbox.height = CrouchHeight;
+                _isSprinting = false;
+                _isCrouching = true;
+            }
+            else if (!Physics.Raycast(transform.position, transform.up, StandingHeight, GroundLayers))
+            {
+                _hitbox.height = StandingHeight;
+                _isCrouching = false;
+            }   
         }
     }
 
     private void OnScroll(InputValue value)
     {
-        // Debug.Log(value.Get<Vector2>());
-        PlayerInventory.GetInstance().SwapSelectedItem(-Mathf.RoundToInt(value.Get<Vector2>().y / 120));
+        if (isEnabled)
+        {
+            // Debug.Log(value.Get<Vector2>());
+            PlayerInventory.GetInstance().SwapSelectedItem(-Mathf.RoundToInt(value.Get<Vector2>().y / 120));        
+        }
+    }
+
+    private void OnJournal()
+    {
+        EvidenceJournal.enabled = !EvidenceJournal.enabled;
+    }
+
+    private bool SlopeCheck()
+    {
+        Ray ray = new Ray(transform.position, Vector3.down);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, slopeCheckDistance, GroundLayers))
+        {
+            float angle = Vector3.Angle(Vector3.up, hit.normal);
+            if (angle < maxSlopeAngle)
+            {
+                currentSlopeNormal = hit.normal;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void StartKillAnimation(EnemyBehaviour target)
+    {
+        DisableMovement();
+        _isInKillAnimation = true;
+        transform.LookAt(target.transform);
+        transform.rotation = Quaternion.Euler(0, transform.rotation.y, 0);
+        Transform head = GetComponentInChildren<Camera>().transform.parent;
+        head.transform.LookAt(target.transform.position + new Vector3(0, target.GetHeight(), 0));
+    }
+
+    public void ExitKillAnimation()
+    {
+        EnableMovement();
+        _isInKillAnimation = false;
     }
 
     public void SetCameraSensitivity(float pSensitivity)
@@ -277,14 +332,19 @@ public class PlayerControls : MonoBehaviour
         return Sensitivity;
     }
 
-    public void DisableMovement()
+    public void DisableMovement() // disables all controls, not just movement
     {
         isEnabled = false;
+        _rb.isKinematic = true;
     }
 
     public void EnableMovement()
     {
         isEnabled = true;
+        if(_rb != null)
+        {
+            _rb.isKinematic = false;
+        }
     }
 
     public float GetHealth()
@@ -307,15 +367,18 @@ public class PlayerControls : MonoBehaviour
         return MaxStamina;
     }
 
-    // ADDED: Public method to get the current move input vector
     public Vector2 GetMoveInput()
     {
         return moveInput;
     }
 
-    // ADDED: Public method to get the current sprint state
     public bool IsSprinting()
     {
         return _isSprinting;
+    }
+
+    public bool IsInKillAnimation()
+    {
+        return _isInKillAnimation;
     }
 }

@@ -179,6 +179,7 @@ GameObject:
   - component: {fileID: 4785226270924334386}
   - component: {fileID: 4785226270924334387}
   - component: {fileID: 4785226270924334384}
+  - component: {fileID: 4295249845364534296}
   m_Layer: 3
   m_Name: Body
   m_TagString: Untagged
@@ -274,6 +275,30 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &4295249845364534296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4785226270924334382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf180d91ec3c48d459f217f97e048b0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EventPath:
+    Guid:
+      Data1: 1569252423
+      Data2: 1161411658
+      Data3: -890589511
+      Data4: -1739484412
+    Path: event:/Footsteps/Dynamic footsteps
+  m_Terrain: 0
+  m_WalkRun: 0
+  m_StepDistance: 1.8
+  m_FirstStepDistanceFactor: 0.25
+  m_Debug: 1
 --- !u!1 &4785226271423879062
 GameObject:
   m_ObjectHideFlags: 0
@@ -326,14 +351,14 @@ MonoBehaviour:
   SprintSpeed: 6
   Sensitivity: 10
   SpeedChangeRate: 10
-  JumpHeight: 1.2
   Gravity: -15
-  JumpTimeout: 0.1
-  GroundedOffset: -0.14
-  GroundedRadius: 0.5
+  GroundedOffset: -0.47
+  GroundedRadius: 0.49
   GroundLayers:
     serializedVersion: 2
     m_Bits: 1
+  maxSlopeAngle: 50
+  slopeCheckDistance: 0.5
   MinCameraAngle: -50
   MaxCameraAngle: 50
   MaxHealth: 100
@@ -350,11 +375,13 @@ MonoBehaviour:
   _terminalVelocity: 53
   _isSprinting: 0
   _isCrouching: 0
+  _isInKillAnimation: 0
   _jumpTimeoutDelta: 0
   _cameraYrotation: 0
   moveInput: {x: 0, y: 0}
   lookInput: {x: 0, y: 0}
   isEnabled: 1
+  currentSlopeNormal: {x: 0, y: 1, z: 0}
 --- !u!54 &4785226271423879066
 Rigidbody:
   m_ObjectHideFlags: 0

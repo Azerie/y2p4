@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class EnemyBehaviour : MonoBehaviour
@@ -30,30 +31,54 @@ public class EnemyBehaviour : MonoBehaviour
     [SerializeField] private float RoamingSpeed = 3f;
     [SerializeField] private float AlertSpeed = 4f;
     [SerializeField] private float ChasingSpeed = 6f;
-    [Tooltip("How much slower the detection is at maximum range")]
-    [SerializeField] private float MinDetectionCoef = 0.5f;
+    [Tooltip("How much slower the detection is at maximum range while in roaming state")]
+    [SerializeField] private float MinDetectionCoefRoaming = 0.5f;
+    [Tooltip("How much slower the detection is at maximum range while in alert state")]
+    [SerializeField] private float MinDetectionCoefAlert = 0.5f;
+
     [SerializeField] private bool failEnabled = true;
-
     [SerializeField] private string failSceneName = "MainMenu";
+    [SerializeField] private float killAnimationTime = 0.5f;
+    [SerializeField] private float knockoutTime = 2f;
+    [SerializeField] private bool isLethal = true;
+
+    [Header("Animation names")]
+    [SerializeField] private string idleAnimationName = "Idle";
+    [SerializeField] private string walkingAnimationName = "Walking";
+    [SerializeField] private string runningAnimationName = "F_Run";
+    [SerializeField] private string attackAnimationName = "Idle";
+    [SerializeField] private string knockedAnimationName = "Idle";
+
+    [Header("FMOD State Sounds")]
+    [Tooltip("FMOD event path for the alert state sound.")]
+    public FMODUnity.EventReference m_AlertSoundEventPath = new FMODUnity.EventReference();
+    [Tooltip("FMOD event path for the chasing state sound.")]
+    public FMODUnity.EventReference m_ChasingSoundEventPath = new FMODUnity.EventReference();
 
 
 
-    enum State { Roaming, Alert, Chasing }
+    public enum State { Roaming, Alert, Chasing, KillAnimation, SkillCheck, Knocked }
     private State state = State.Roaming;
     private Transform player;
     private Transform mainCamera;
     private float playerHeight;
     private float height;
-    private NavMeshAgent navMeshAgent;
     private int currentPointIndex = 0;
     private float stateTimer = 0f;
     private bool isPlayerHidden = false;
-    // Start is called before the first frame update
-
-    Animator enemyAnimator;
+    private float lookAroundTimer = 0f;
+    private SkillCheck skillCheck;
+    public static event UnityAction OnKillAnimationStart;
+    public static event UnityAction OnKillAnimationEnd;
+    
+    private NavMeshAgent _navMeshAgent;
+    private Animator _animator;
+    private Rigidbody _rb;
+    private Collider _collider;
     void Start()
     {
-        navMeshAgent = GetComponent<NavMeshAgent>();
+        _navMeshAgent = GetComponent<NavMeshAgent>();
+        _collider = GetComponent<Collider>();
 
         player = GameObject.FindGameObjectWithTag("Player").transform;
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").transform;
@@ -61,12 +86,15 @@ public class EnemyBehaviour : MonoBehaviour
         height = GetComponentInChildren<CapsuleCollider>().height - heightOffset;
         HidingPlaceBehaviour.OnPlayerHidden += HidePlayer;
         HidingPlaceBehaviour.OnPlayerRevealed += RevealPlayer;
+        OnKillAnimationStart += HidePlayer;
+        OnKillAnimationEnd += RevealPlayer;
 
-        enemyAnimator = GetComponentInChildren<Animator>();
-        if (enemyAnimator == null)
+        _animator = GetComponentInChildren<Animator>();
+        if (_animator == null)
         {
             Debug.Log("no fk animator");
         }
+        skillCheck = FindObjectOfType<SkillCheck>();
 
         if (points.Count == 0 && pointsParent != null)
         {
@@ -77,7 +105,7 @@ public class EnemyBehaviour : MonoBehaviour
         }
         if (currentPointIndex >= 0 || currentPointIndex < points.Count - 1)
         {
-            navMeshAgent.destination = points[currentPointIndex].position;
+            _navMeshAgent.destination = points[currentPointIndex].position;
         }
 
         ChangeState(State.Roaming);
@@ -98,6 +126,8 @@ public class EnemyBehaviour : MonoBehaviour
     {
         HidingPlaceBehaviour.OnPlayerHidden -= HidePlayer;
         HidingPlaceBehaviour.OnPlayerRevealed -= RevealPlayer;
+        OnKillAnimationStart -= HidePlayer;
+        OnKillAnimationEnd -= RevealPlayer;
     }
 
     private void ChangeState(State newState)
@@ -105,31 +135,82 @@ public class EnemyBehaviour : MonoBehaviour
         if (newState == State.Chasing)
         {
             GetComponentInChildren<MeshRenderer>().material.SetColor("_BaseColor", Color.red);
-            navMeshAgent.speed = ChasingSpeed;
-            navMeshAgent.destination = player.position;
-            enemyAnimator.Play("F_Run");
+            _navMeshAgent.speed = ChasingSpeed;
+            if (player != null)
+            {
+                _navMeshAgent.destination = player.position;
+            }
+            if (_animator != null)
+            {
+                _animator.Play(runningAnimationName);
+            }
+            PlayFMODEvent(m_ChasingSoundEventPath, "Chasing");
         }
         else if (newState == State.Alert)
         {
             GetComponentInChildren<MeshRenderer>().material.SetColor("_BaseColor", Color.yellow);
-            navMeshAgent.speed = AlertSpeed;
-            navMeshAgent.destination = player.position;
-            enemyAnimator.Play("Walking");
-
-            // enemyAnimator.SetBool("IsRunning",true) ;
+            _navMeshAgent.speed = AlertSpeed;
+            if (player != null)
+            {
+                _navMeshAgent.destination = player.position;
+            }
+            if (_animator != null)
+            {
+                _animator.Play(walkingAnimationName);
+            }
+            lookAroundTimer = 0;
+            PlayFMODEvent(m_AlertSoundEventPath, "Alert");
         }
         else if (newState == State.Roaming)
         {
             GetComponentInChildren<MeshRenderer>().material.SetColor("_BaseColor", Color.green);
-            navMeshAgent.speed = RoamingSpeed;
-            navMeshAgent.destination = points[currentPointIndex].position;
-            //  enemyAnimator.SetBool("IsWalking", true);
-            enemyAnimator.Play("Walking");
-
-
+            _navMeshAgent.speed = RoamingSpeed;
+            _navMeshAgent.destination = points[currentPointIndex].position;
+            if (_animator != null)
+            {
+                _animator.Play(walkingAnimationName);
+            }
+        }
+        else if (newState == State.KillAnimation)
+        {
+            _navMeshAgent.destination = transform.position;
+            OnKillAnimationStart();
+            if (_animator != null)
+            {
+                _animator.Play(attackAnimationName);
+            }
+        }
+        else if (newState == State.SkillCheck)
+        {
+            skillCheck.StartMinigame();
+        }
+        else if (newState == State.Knocked)
+        {
+            _collider.enabled = false;
+            if (_animator != null)
+            {
+                _animator.Play(knockedAnimationName);
+            }
         }
         state = newState;
         stateTimer = 0;
+    }
+
+    private void PlayFMODEvent(FMODUnity.EventReference eventReference, string eventNameForLog)
+    {
+        if (!string.IsNullOrEmpty(eventReference.Path))
+        {
+            FMOD.Studio.EventInstance stateSoundInstance = FMODUnity.RuntimeManager.CreateInstance(eventReference);
+            // Corrected line: passing gameObject instead of transform
+            FMODUnity.RuntimeManager.AttachInstanceToGameObject(stateSoundInstance, gameObject, _rb);
+            stateSoundInstance.start();
+            stateSoundInstance.release();
+            // Debug.Log($"EnemyBehaviour: Playing {eventNameForLog} sound."); // Optional: uncomment for debugging
+        }
+        else
+        {
+            Debug.LogWarning($"EnemyBehaviour: FMOD Event Path for {eventNameForLog} sound is not set.");
+        }
     }
 
     private void GetNextPoint()
@@ -140,11 +221,11 @@ public class EnemyBehaviour : MonoBehaviour
             currentPointIndex = 0;
         }
         NavMeshPath path = new NavMeshPath();
-        navMeshAgent.CalculatePath(points[currentPointIndex].position, path);
+        _navMeshAgent.CalculatePath(points[currentPointIndex].position, path);
 
         if (path.status == NavMeshPathStatus.PathComplete)
         {
-            navMeshAgent.destination = points[currentPointIndex].position;
+            _navMeshAgent.destination = points[currentPointIndex].position;
         }
         else
         {
@@ -156,14 +237,11 @@ public class EnemyBehaviour : MonoBehaviour
     {
         if (state == State.Chasing)
         {
-            navMeshAgent.destination = player.position;
+            _navMeshAgent.destination = player.position;
         }
-        else if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
+        else if (state == State.Roaming && _navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
         {
-            if (state == State.Roaming)
-            {
-                GetNextPoint();
-            }
+            GetNextPoint();
         }
     }
 
@@ -204,13 +282,16 @@ public class EnemyBehaviour : MonoBehaviour
             }
             else if (IsAtDestination())
             {
-                enemyAnimator.Play("Idle");
-                float curRot = Mathf.Sin(Mathf.Max(0, -(stateTimer / AlertToRoamingTime)) * Mathf.PI * 2) * 90;
-                // Debug.Log("time: " + (stateTimer / AlertToRoamingTime).ToString() + "rotation: " + curRot);
-                stateTimer -= Time.deltaTime;
-                float newRot = Mathf.Sin(Mathf.Max(0, -(stateTimer / AlertToRoamingTime)) * Mathf.PI * 2) * 90;
+                if (_animator != null)
+                {
+                    _animator.Play(idleAnimationName);
+                }
+                float curRot = Mathf.Sin(Mathf.Max(0, -(lookAroundTimer / AlertToRoamingTime)) * Mathf.PI * 2) * 90;
+                // Debug.Log("time: " + (lookAroundTimer / AlertToRoamingTime).ToString() + "rotation: " + curRot);
+                lookAroundTimer -= Time.deltaTime;
+                float newRot = Mathf.Sin(Mathf.Max(0, -(lookAroundTimer / AlertToRoamingTime)) * Mathf.PI * 2) * 90;
                 transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0, newRot - curRot, 0));
-                if (stateTimer <= -AlertToRoamingTime)
+                if (lookAroundTimer <= -AlertToRoamingTime)
                 {
                     ChangeState(State.Roaming);
                 }
@@ -234,6 +315,47 @@ public class EnemyBehaviour : MonoBehaviour
                 }
             }
         }
+        else if (state == State.KillAnimation)
+        {
+            stateTimer += Time.deltaTime;
+            if (stateTimer >= killAnimationTime)
+            {
+                if(isLethal)
+                {
+                    KillPlayer();
+                }
+                else
+                {
+                    ChangeState(State.SkillCheck);
+                }
+            }
+        }
+        else if (state == State.SkillCheck)
+        {
+            if (!skillCheck.IsActive())
+            {
+                Debug.Log("Skillcheck over, Result: " + skillCheck.WasLastCheckPassed());
+                if (skillCheck.WasLastCheckPassed())
+                {
+                    ChangeState(State.Knocked);
+                    player.gameObject.GetComponent<PlayerControls>().ExitKillAnimation();
+                }
+                else
+                {
+                    KillPlayer();
+                }
+            }
+        }
+        else if (state == State.Knocked)
+        {
+            stateTimer += Time.deltaTime;
+            if (stateTimer >= knockoutTime)
+            {
+                _collider.enabled = true;
+                OnKillAnimationEnd();
+                ChangeState(State.Roaming);
+            }
+        }
     }
 
     private bool IsPlayerInVisionCone()
@@ -255,7 +377,7 @@ public class EnemyBehaviour : MonoBehaviour
         return directLine.magnitude < proximityDetectionRange;
     }
 
-    private bool HasLineOfSight()
+    public bool HasLineOfSight()
     {
         RaycastHit hit;
         Vector3 origin = transform.position + new Vector3(0, height, 0);
@@ -272,7 +394,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     private bool CanSeePlayer()
     {
-        return ((state == State.Chasing) || (!isPlayerHidden && HasLineOfSight())) && (IsPlayerInVisionCone() || IsPlayerClose());
+        return !isPlayerHidden && HasLineOfSight() && (IsPlayerInVisionCone() || IsPlayerClose());
     }
 
     private void HidePlayer()
@@ -286,17 +408,18 @@ public class EnemyBehaviour : MonoBehaviour
 
     private bool IsAtDestination()
     {
-        float dist = navMeshAgent.remainingDistance;
-        return dist != Mathf.Infinity && navMeshAgent.pathStatus == NavMeshPathStatus.PathComplete && navMeshAgent.remainingDistance == 0;
+        float dist = _navMeshAgent.remainingDistance;
+        return dist != Mathf.Infinity && _navMeshAgent.pathStatus == NavMeshPathStatus.PathComplete && _navMeshAgent.remainingDistance == 0;
     }
 
     void OnCollisionEnter(Collision collision)
     {
         // Debug.Log("enemy collision");
 
-        if (failEnabled && collision.transform.CompareTag("Player"))
+        if (!isPlayerHidden && failEnabled && collision.transform.CompareTag("Player"))
         {
-            SceneManager.LoadScene(failSceneName);
+            ChangeState(State.KillAnimation);
+            collision.gameObject.GetComponent<PlayerControls>().StartKillAnimation(this);
         }
     }
 
@@ -313,7 +436,21 @@ public class EnemyBehaviour : MonoBehaviour
         }
         float linear0to1 = (detectionRange - dist) / (detectionRange - proximityDetectionRange);
         // Debug.Log("dist: " + dist.ToString() + "linear: " + linear0to1.ToString());
+        float MinDetectionCoef = 0;
+        if (state == State.Roaming) { MinDetectionCoef = MinDetectionCoefRoaming; }
+        else { MinDetectionCoef = MinDetectionCoefAlert; }
 
         return linear0to1 * (1 - MinDetectionCoef) + MinDetectionCoef;
     }
+
+    private void KillPlayer()
+    {
+        OnKillAnimationEnd();
+        SceneManager.LoadScene(failSceneName);
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    public State GetState() { return state; }
+
+    public float GetHeight() { return height; }
 }

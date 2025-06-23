@@ -16,9 +16,15 @@ public class HidingPlaceBehaviour : InteractableBehaviourAbstract
     private float startYRotation;
     private bool isInHidingAnimation;
     private bool hasPlayer = false;
+    private EnemyBehaviour[] enemies;
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+    }
+
+    void Awake()
+    {
+        enemies = GameObject.FindObjectsByType<EnemyBehaviour>(FindObjectsSortMode.None);
     }
 
     void Update()
@@ -48,13 +54,26 @@ public class HidingPlaceBehaviour : InteractableBehaviourAbstract
     {
         if (!hasPlayer)
         {
-            HidePlayer();
+            bool canHide = true;
+            foreach (EnemyBehaviour enemy in enemies)
+            {
+                canHide = canHide && (!enemy.HasLineOfSight() || enemy.GetState() != EnemyBehaviour.State.Chasing);
+            }
+
+            if (canHide)
+            {
+                HidePlayer();
+            }
+            else
+            {
+                Debug.Log("Cannot hide while being chased");
+                // popup "cannot hide while he sees me" text here
+            }
         }
         else
         {
             RevealPlayer();
         }
-        hasPlayer = !hasPlayer;
     }
 
     public void HidePlayer()
@@ -66,6 +85,8 @@ public class HidingPlaceBehaviour : InteractableBehaviourAbstract
         isInHidingAnimation = true;
         GetComponent<Collider>().enabled = false;
         OnPlayerHidden();
+
+        hasPlayer = true;
     }
 
     public void RevealPlayer()
@@ -74,5 +95,7 @@ public class HidingPlaceBehaviour : InteractableBehaviourAbstract
         player.GetComponent<PlayerControls>().EnableMovement();
         // isInHidingAnimation = true;
         OnPlayerRevealed();
+
+        hasPlayer = false;
     }
 }

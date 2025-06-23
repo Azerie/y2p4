@@ -124,7 +124,7 @@ Possibly add crouch
 	</object>
 	<object class="EventMixerMaster" id="{290a8e37-c123-4891-ace8-96d74d4dbf5f}">
 		<property name="volume">
-			<value>-6</value>
+			<value>-9.5</value>
 		</property>
 		<relationship name="effectChain">
 			<destination>{64b0f237-9703-4247-84f9-bae95996c99b}</destination>
@@ -148,6 +148,9 @@ Possibly add crouch
 		</relationship>
 	</object>
 	<object class="MultiSound" id="{8e2e7230-9ac6-43da-b84c-db5c648bd7f1}">
+		<property name="volume">
+			<value>-1</value>
+		</property>
 		<relationship name="sounds">
 			<destination>{17c4f65f-46a1-44bb-bde5-a6bda98f51ec}</destination>
 			<destination>{7edf51d2-4ce9-40fb-b59c-08f36e5f3847}</destination>
@@ -172,6 +175,9 @@ Possibly add crouch
 	<object class="MultiSound" id="{b646e9c6-ce41-4862-9565-b2a8ce2a1ce7}">
 		<property name="start">
 			<value>1</value>
+		</property>
+		<property name="volume">
+			<value>-2</value>
 		</property>
 		<relationship name="sounds">
 			<destination>{97295747-97de-4072-ae37-251b0f3576ea}</destination>

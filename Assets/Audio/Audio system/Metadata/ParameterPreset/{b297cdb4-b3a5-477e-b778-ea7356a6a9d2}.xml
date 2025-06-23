@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{b297cdb4-b3a5-477e-b778-ea7356a6a9d2}">
+		<property name="name">
+			<value>isCrouching</value>
+		</property>
+		<relationship name="folder">
+			<destination>{2e8440f0-d7d0-49ef-9b1c-21c366fc679e}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{f5381125-d71e-4cee-8531-98e65893bf4b}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{f5381125-d71e-4cee-8531-98e65893bf4b}">
+		<property name="parameterType">
+			<value>1</value>
+		</property>
+		<property name="maximum">
+			<value>11</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>
