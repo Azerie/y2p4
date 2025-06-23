@@ -5,11 +5,9 @@ using UnityEngine.Events;
 
 public class SubtitlesManager : MonoBehaviour
 {
-    private Queue<Voiceline> voicelineQueue = new Queue<Voiceline>();
+    private Voiceline currentVoiceline;
     public static SubtitlesManager Instance;
-    public static UnityAction ActiveSubtitleChanged;
-    private float endTime;
-    private bool isQueueEmpty = true;
+    public static UnityAction OnSubtitleChanged;
     private void Awake()
     {
         if (Instance != null)
@@ -21,31 +19,14 @@ public class SubtitlesManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
-    void Update()
+    public static void SetSubtitles(Voiceline line)
     {
-        if (!isQueueEmpty && Time.time > endTime)
-        {
-            Instance.voicelineQueue.Dequeue();
-            Voiceline newLine = Instance.voicelineQueue.Peek();
-            if (newLine != null)
-            {
-                endTime = Time.time + newLine.SubtitlesTime;
-            }
-            else
-            {
-                Instance.isQueueEmpty = true;
-            }
-        }
-    }
-    public static void AddSubtitles(Voiceline line)
-    {
-        Instance.voicelineQueue.Enqueue(line);
-        Instance.isQueueEmpty = false;
+        Instance.currentVoiceline = line;
     }
 
     public static Voiceline GetCurrentSubtitles()
     {
-        return Instance.voicelineQueue.Peek();
+        return Instance.currentVoiceline;
     }
     
     public static SubtitlesManager GetInstance()

@@ -9,11 +9,17 @@ public class SubtitlesUI : MonoBehaviour
     [SerializeField] private TMP_Text subtitlesField;
     private float endTime;
     private bool isActive = false;
+    void Start()
+    {
+        SetSubtitles("");
+        SubtitlesManager.OnSubtitleChanged += UpdateSubtitles;
+    }
     void Update()
     {
         if (isActive && Time.time > endTime)
         {
             subtitlesField.enabled = false;
+            isActive = false;
         }
     }
     private void SetSubtitles(string text, float disappearingTime = defaultDisappearingTime)
@@ -22,5 +28,9 @@ public class SubtitlesUI : MonoBehaviour
         isActive = true;
         subtitlesField.text = text;
         subtitlesField.enabled = true;
+    }
+    private void UpdateSubtitles()
+    {
+        SetSubtitles(SubtitlesManager.GetCurrentSubtitles().SubtitlesText);
     }
 }
