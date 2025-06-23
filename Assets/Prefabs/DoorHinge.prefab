@@ -119,11 +119,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dee629517dd90c3968a0831044a9d6a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   requiredItem: {fileID: 11400000, guid: 29e0c082fa4b5b9aebe5fe2728b79d4b, type: 2}
   angle: 120
   openingSpeed: 4
-  doorCollider: {fileID: 290576150410793401}
+  doorCollider: {fileID: 0}
   secondDoorCollider: {fileID: 4651774836399050925}
+  disableLenght: 1
 --- !u!208 &6411875841806586705
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -241,10 +249,5 @@ PrefabInstance:
 --- !u!4 &212724470929641748 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3044520843504655779, guid: 96c385ee737aa7f40b73992ef3894ab7, type: 3}
-  m_PrefabInstance: {fileID: 2932952029684124855}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &290576150410793401 stripped
-BoxCollider:
-  m_CorrespondingSourceObject: {fileID: 3223351569965309198, guid: 96c385ee737aa7f40b73992ef3894ab7, type: 3}
   m_PrefabInstance: {fileID: 2932952029684124855}
   m_PrefabAsset: {fileID: 0}
