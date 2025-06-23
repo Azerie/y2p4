@@ -16,9 +16,8 @@ public class DoorBehaviour : InteractableBehaviourAbstract
     protected Quaternion openRotation;
     protected Quaternion targetRotation;
 
-    public Collider doorCollider;
-    public Collider secondDoorCollider;
-    public float disableLenght = 1;
+    private Collider doorCollider;
+    private float disableTime = 1;
 
     void Start()
     {
@@ -34,6 +33,7 @@ public class DoorBehaviour : InteractableBehaviourAbstract
         {
             GetComponent<NavMeshObstacle>().enabled = true;
         }
+        doorCollider = GetComponent<Collider>();
     }
 
     void Update()
@@ -74,9 +74,8 @@ public class DoorBehaviour : InteractableBehaviourAbstract
         isOpen = true;
 
         doorCollider.enabled = false;
-        secondDoorCollider.enabled = false;
 
-        StartCoroutine(ReenableColliderAfterDelay(disableLenght));
+        StartCoroutine(ReenableColliderAfterDelay(disableTime));
 
         // this part is for editor buttons to work properly
         GetComponent<NavMeshObstacle>().enabled = false;
@@ -122,10 +121,6 @@ public class DoorBehaviour : InteractableBehaviourAbstract
         if(doorCollider != null)
         {
             doorCollider.enabled = true;
-        }
-        if(secondDoorCollider != null)
-        {
-            secondDoorCollider.enabled = true;
         }
     }
 }
