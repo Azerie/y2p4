@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class EvidenceManager : MonoBehaviour
 {
-    private List<string> evidenceJournal = new List<string>();
+    private List<Collectable> evidenceJournal = new List<Collectable>();
     public static UnityAction EvidenceJournalChanged;
     public static EvidenceManager Instance;
 
@@ -31,15 +31,15 @@ public class EvidenceManager : MonoBehaviour
     {
         return Instance;
     }
-    public List<string> GetJournal() { return evidenceJournal; }
+    public List<Collectable> GetJournal() { return evidenceJournal; }
 
-    public void AddLine(string line)
+    public void AddEntry(Collectable line)
     {
         evidenceJournal.Add(line);
         EvidenceJournalChanged?.Invoke();
     }
 
-    public void RemoveLine(string line)
+    public void RemoveEntry(Collectable line)
     {
         if (evidenceJournal.Contains(line))
         {
@@ -50,7 +50,7 @@ public class EvidenceManager : MonoBehaviour
 
     public void ClearJournal()
     {
-        evidenceJournal = new List<string>();
+        evidenceJournal = new List<Collectable>();
         EvidenceJournalChanged?.Invoke();
     }
 
