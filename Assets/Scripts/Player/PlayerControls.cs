@@ -86,7 +86,7 @@ public class PlayerControls : MonoBehaviour
     private Rigidbody _rb;
     private PlayerInteraction _pickupHandler;
     private CapsuleCollider _hitbox;
-    private Transform head;
+    [SerializeField] private Transform head;
     private Canvas EvidenceJournal;
 
     void Start()
@@ -98,7 +98,7 @@ public class PlayerControls : MonoBehaviour
         _stamina = MaxStamina;
         EvidenceJournal = GameObject.Find("EvidenceJournal").GetComponent<Canvas>();
         isEnabled = true;
-        Transform head = GetComponentInChildren<Camera>().transform.parent;
+        head = GetComponentInChildren<PlayerInteraction>().transform;
     }
 
     private void Awake()
@@ -119,7 +119,7 @@ public class PlayerControls : MonoBehaviour
         {
             float step = KillAnimationRotationSpeed * Time.deltaTime;
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, step);
-            head.transform.rotation = Quaternion.RotateTowards(head.transform.rotation, targetHeadRotation, step);
+            // head.transform.rotation = Quaternion.RotateTowards(head.transform.rotation, targetHeadRotation, step);
         }
         // Debug.DrawRay(transform.position, transform.up, Color.red, StandingHeight);
     }

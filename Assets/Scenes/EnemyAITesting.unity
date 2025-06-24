@@ -2277,6 +2277,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stairs 1 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 464779271429085152, guid: aa5a4ff932fb55b4aa01ca532e10540f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 952769588155551066, guid: aa5a4ff932fb55b4aa01ca532e10540f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.39
@@ -2524,6 +2528,7 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  pickupVoiceline: {fileID: 0}
   visualToEnable: {fileID: 298004368}
   visualToDisable: {fileID: 1778582973}
 --- !u!65 &1235991030
@@ -2601,6 +2606,7 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  pickupVoiceline: {fileID: 0}
   visualToEnable: {fileID: 920401416}
   visualToDisable: {fileID: 1055600876}
 --- !u!65 &1287124068
@@ -2740,6 +2746,10 @@ PrefabInstance:
     - target: {fileID: 464779271429085152, guid: aa5a4ff932fb55b4aa01ca532e10540f, type: 3}
       propertyPath: m_Name
       value: Stairs 1 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 464779271429085152, guid: aa5a4ff932fb55b4aa01ca532e10540f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 952769588155551066, guid: aa5a4ff932fb55b4aa01ca532e10540f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3444,6 +3454,10 @@ PrefabInstance:
     - target: {fileID: 464779271429085152, guid: aa5a4ff932fb55b4aa01ca532e10540f, type: 3}
       propertyPath: m_Name
       value: Stairs 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 464779271429085152, guid: aa5a4ff932fb55b4aa01ca532e10540f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 952769588155551066, guid: aa5a4ff932fb55b4aa01ca532e10540f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4684,10 +4698,30 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4785226271423879062, guid: 7d317c7a3d20dd14e9acf109a0b78fdd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1964555519}
     - targetCorrespondingSourceObject: {fileID: 4785226270245847088, guid: 7d317c7a3d20dd14e9acf109a0b78fdd, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1702203956}
   m_SourcePrefab: {fileID: 100100000, guid: 7d317c7a3d20dd14e9acf109a0b78fdd, type: 3}
+--- !u!1 &1964555518 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4785226271423879062, guid: 7d317c7a3d20dd14e9acf109a0b78fdd, type: 3}
+  m_PrefabInstance: {fileID: 1964555517}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1964555519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1964555518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45894263265742a22851b3d60ec77987, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2002426420
 GameObject:
   m_ObjectHideFlags: 0
@@ -4759,12 +4793,10 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  pickupVoiceline: {fileID: 0}
   requiredItem: {fileID: 11400000, guid: 66b29e26f7efafc7ca2ea4fe7889098e, type: 2}
   angle: 120
   openingSpeed: 1
-  doorCollider: {fileID: 0}
-  secondDoorCollider: {fileID: 0}
-  disableLenght: 1
 --- !u!65 &2002426424
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5404,6 +5436,7 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  pickupVoiceline: {fileID: 0}
 --- !u!33 &886242401721693107
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -5451,6 +5484,7 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  pickupVoiceline: {fileID: 0}
   itemToGive: {fileID: 11400000, guid: 670ad85c680a79959a9ba8d280818bb9, type: 2}
 --- !u!114 &1191101941929862373
 MonoBehaviour:
@@ -5669,6 +5703,7 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  pickupVoiceline: {fileID: 0}
 --- !u!23 &1727122194191562636
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5730,6 +5765,7 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  pickupVoiceline: {fileID: 0}
 --- !u!1 &1835539631715790057
 GameObject:
   m_ObjectHideFlags: 0
@@ -5805,6 +5841,7 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  pickupVoiceline: {fileID: 0}
 --- !u!33 &2163595137037100141
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -6202,6 +6239,7 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  pickupVoiceline: {fileID: 0}
 --- !u!65 &3099753668223929957
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6459,6 +6497,7 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  pickupVoiceline: {fileID: 0}
 --- !u!1 &3723193402902516957
 GameObject:
   m_ObjectHideFlags: 0
@@ -6526,6 +6565,7 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  pickupVoiceline: {fileID: 0}
 --- !u!65 &4132489787919347973
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6602,6 +6642,7 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  pickupVoiceline: {fileID: 0}
 --- !u!23 &4188656780893335348
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7199,6 +7240,7 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  pickupVoiceline: {fileID: 0}
 --- !u!1 &5218365044905214598
 GameObject:
   m_ObjectHideFlags: 0
@@ -7238,6 +7280,7 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  pickupVoiceline: {fileID: 0}
 --- !u!114 &5295238937016198391
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7257,6 +7300,7 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  pickupVoiceline: {fileID: 0}
 --- !u!23 &5343496204396379238
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7355,6 +7399,7 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  pickupVoiceline: {fileID: 0}
 --- !u!1 &5518317996339639826
 GameObject:
   m_ObjectHideFlags: 0
@@ -7527,6 +7572,7 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  pickupVoiceline: {fileID: 0}
 --- !u!1 &5734829081106848427
 GameObject:
   m_ObjectHideFlags: 0
@@ -7640,6 +7686,7 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  pickupVoiceline: {fileID: 0}
 --- !u!33 &6111785652270271616
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -7696,6 +7743,7 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  pickupVoiceline: {fileID: 0}
 --- !u!4 &6315677087337030131
 Transform:
   m_ObjectHideFlags: 0
@@ -7853,6 +7901,7 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  pickupVoiceline: {fileID: 0}
 --- !u!65 &6736192648036931139
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7990,6 +8039,7 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  pickupVoiceline: {fileID: 0}
 --- !u!114 &7057520097956809119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8009,6 +8059,7 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  pickupVoiceline: {fileID: 0}
 --- !u!65 &7058592704293776430
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8177,6 +8228,7 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  pickupVoiceline: {fileID: 0}
 --- !u!33 &7632215496921216227
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -8574,6 +8626,7 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  pickupVoiceline: {fileID: 0}
 --- !u!33 &9096284998140297884
 MeshFilter:
   m_ObjectHideFlags: 0
