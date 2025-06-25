@@ -59,6 +59,7 @@ public class PlayerControls : MonoBehaviour
 
     [Space(10)]
     [SerializeField] private string FailScene;
+    [SerializeField] private float KillAnimationRotationSpeed = 60f;
 
     [Space(10)]
     [Header("Debug values")]
@@ -78,10 +79,14 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private Vector2 lookInput = Vector2.zero;
     [SerializeField] private bool isEnabled = true;
     [SerializeField] private Vector3 currentSlopeNormal = Vector3.up;
+    [SerializeField] private Quaternion targetRotation;
+    [SerializeField] private Quaternion targetHeadRotation;
+
 
     private Rigidbody _rb;
     private PlayerInteraction _pickupHandler;
     private CapsuleCollider _hitbox;
+    [SerializeField] private Transform head;
     private Canvas EvidenceJournal;
 
     void Start()
@@ -93,6 +98,7 @@ public class PlayerControls : MonoBehaviour
         _stamina = MaxStamina;
         EvidenceJournal = GameObject.Find("EvidenceJournal").GetComponent<Canvas>();
         isEnabled = true;
+        head = GetComponentInChildren<PlayerInteraction>().transform;
     }
 
     private void Awake()
@@ -109,6 +115,12 @@ public class PlayerControls : MonoBehaviour
             Move();
         }
 
+        if (IsInKillAnimation())
+        {
+            float step = KillAnimationRotationSpeed * Time.deltaTime;
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, step);
+            // head.transform.rotation = Quaternion.RotateTowards(head.transform.rotation, targetHeadRotation, step);
+        }
         // Debug.DrawRay(transform.position, transform.up, Color.red, StandingHeight);
     }
 
@@ -310,10 +322,14 @@ public class PlayerControls : MonoBehaviour
     {
         DisableMovement();
         _isInKillAnimation = true;
-        transform.LookAt(target.transform);
-        transform.rotation = Quaternion.Euler(0, transform.rotation.y, 0);
-        Transform head = GetComponentInChildren<Camera>().transform.parent;
-        head.transform.LookAt(target.transform.position + new Vector3(0, target.GetHeight(), 0));
+        // transform.LookAt(target.transform);
+        Vector3 relativePos = target.transform.position - transform.position;
+        targetRotation = Quaternion.LookRotation(relativePos);
+        targetRotation = Quaternion.Euler(0, targetRotation.eulerAngles.y, 0);
+
+        targetHeadRotation = Quaternion.LookRotation(relativePos + new Vector3(0, target.GetHeight(), 0));
+        targetHeadRotation = Quaternion.Euler(targetHeadRotation.eulerAngles.x, 0, 0);
+        // head.transform.LookAt(target.transform.position + new Vector3(0, target.GetHeight(), 0));
     }
 
     public void ExitKillAnimation()

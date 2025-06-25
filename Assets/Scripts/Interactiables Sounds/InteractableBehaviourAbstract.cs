@@ -6,6 +6,7 @@ using UnityEngine;
 public abstract class InteractableBehaviourAbstract : MonoBehaviour
 {
     [SerializeField] private EventReference pickupSound;
+    [SerializeField] private Voiceline pickupVoiceline;
 
     protected bool isMarkedForDestruction = false;
     public virtual void OnInteract()
@@ -15,7 +16,12 @@ public abstract class InteractableBehaviourAbstract : MonoBehaviour
             RuntimeManager.PlayOneShot(pickupSound, transform.position);
         }
     }
-    public bool IsMarkedForDestruction() {
+    public bool IsMarkedForDestruction()
+    {
         return isMarkedForDestruction;
+    }
+    public Voiceline GetVoiceline()
+    {
+        return pickupVoiceline;
     }
 }
