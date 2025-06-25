@@ -121,17 +121,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupSound:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: 1097998013
+      Data2: 1117060759
+      Data3: -1122358131
+      Data4: 357945621
+    Path: event:/EMPTY PLACEHOLDER EVENT
   requiredItem: {fileID: 11400000, guid: 29e0c082fa4b5b9aebe5fe2728b79d4b, type: 2}
   angle: 120
   openingSpeed: 4
-  doorCollider: {fileID: 0}
-  secondDoorCollider: {fileID: 4651774836399050925}
-  disableLenght: 1
+  openSound:
+    Guid:
+      Data1: 1192659807
+      Data2: 1331831758
+      Data3: -82773101
+      Data4: 1736592067
+    Path: event:/Interactables/Door unlock
+  closeSound:
+    Guid:
+      Data1: -715340970
+      Data2: 1258444067
+      Data3: -164909177
+      Data4: 1797456017
+    Path: event:/Interactables/Door lock
+  lockedSound:
+    Guid:
+      Data1: 506441257
+      Data2: 1285524548
+      Data3: 583527354
+      Data4: -1713851840
+    Path: event:/Interactables/Door locked
 --- !u!208 &6411875841806586705
 NavMeshObstacle:
   m_ObjectHideFlags: 0

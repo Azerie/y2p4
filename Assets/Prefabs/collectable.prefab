@@ -121,11 +121,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupSound:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: -1564629271
+      Data2: 1238738724
+      Data3: 1303637648
+      Data4: -178225152
+    Path: event:/Interactables/Evidence pickup
   collectableInfo: {fileID: 11400000, guid: 239faaf086eb2d686bf5fff0df350536, type: 2}
 --- !u!1001 &970398823706182236
 PrefabInstance:

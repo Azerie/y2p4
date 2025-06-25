@@ -130,7 +130,7 @@ Possibly add crouch
 	</object>
 	<object class="EventMixerMaster" id="{290a8e37-c123-4891-ace8-96d74d4dbf5f}">
 		<property name="volume">
-			<value>-9.5</value>
+			<value>-15</value>
 		</property>
 		<relationship name="effectChain">
 			<destination>{64b0f237-9703-4247-84f9-bae95996c99b}</destination>
