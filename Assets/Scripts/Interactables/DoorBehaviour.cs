@@ -1,3 +1,4 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,11 @@ public class DoorBehaviour : InteractableBehaviourAbstract
     [SerializeField] private int angle;
     [Tooltip("How fast the door opens")]
     [SerializeField] private float openingSpeed = 1f;
+    [SerializeField] private EventReference openSound;
+    [SerializeField] private EventReference closeSound;
+    [SerializeField] private EventReference lockedSound;
+
+
     private bool isOpen = false;
     protected Quaternion closedRotation;
     protected Quaternion openRotation;
@@ -44,13 +50,17 @@ public class DoorBehaviour : InteractableBehaviourAbstract
     public override void OnInteract()
     {
         // Debug.Log("interacted");
-        if(requiredItem != null) {
+        if (requiredItem != null) {
             if (PlayerInventory.GetInstance().HasItem(requiredItem))
             {
                 Use();
                 PlayerInventory.GetInstance().RemoveItem(requiredItem);
                 requiredItem = null;
                 GetComponent<NavMeshObstacle>().enabled = false;
+            }
+            else
+            {
+                RuntimeManager.PlayOneShot(lockedSound, transform.position);
             }
         } 
         else {
@@ -70,6 +80,11 @@ public class DoorBehaviour : InteractableBehaviourAbstract
 
     public void Open()
     {
+        Debug.Log("Door opened");
+        if (!openSound.IsNull)
+        {
+            RuntimeManager.PlayOneShot(openSound, transform.position);
+        }
         targetRotation = openRotation;
         isOpen = true;
 
@@ -85,6 +100,12 @@ public class DoorBehaviour : InteractableBehaviourAbstract
 
     public void Close()
     {
+        Debug.Log("Door closed");
+
+        if (!closeSound.IsNull)
+        {
+            RuntimeManager.PlayOneShot(closeSound, transform.position);
+        }
         targetRotation = closedRotation;
         isOpen = false;
     }

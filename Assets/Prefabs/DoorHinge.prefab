@@ -119,11 +119,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dee629517dd90c3968a0831044a9d6a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupSound:
+    Guid:
+      Data1: 1097998013
+      Data2: 1117060759
+      Data3: -1122358131
+      Data4: 357945621
+    Path: event:/EMPTY PLACEHOLDER EVENT
   requiredItem: {fileID: 11400000, guid: 29e0c082fa4b5b9aebe5fe2728b79d4b, type: 2}
   angle: 120
   openingSpeed: 4
-  doorCollider: {fileID: 290576150410793401}
+  openSound:
+    Guid:
+      Data1: 1192659807
+      Data2: 1331831758
+      Data3: -82773101
+      Data4: 1736592067
+    Path: event:/Interactables/Door unlock
+  closeSound:
+    Guid:
+      Data1: -715340970
+      Data2: 1258444067
+      Data3: -164909177
+      Data4: 1797456017
+    Path: event:/Interactables/Door lock
+  lockedSound:
+    Guid:
+      Data1: 506441257
+      Data2: 1285524548
+      Data3: 583527354
+      Data4: -1713851840
+    Path: event:/Interactables/Door locked
+  doorCollider: {fileID: 0}
   secondDoorCollider: {fileID: 4651774836399050925}
+  disableLenght: 1
 --- !u!208 &6411875841806586705
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -233,7 +262,8 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3223351569965309198, guid: 96c385ee737aa7f40b73992ef3894ab7, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -241,10 +271,5 @@ PrefabInstance:
 --- !u!4 &212724470929641748 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3044520843504655779, guid: 96c385ee737aa7f40b73992ef3894ab7, type: 3}
-  m_PrefabInstance: {fileID: 2932952029684124855}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &290576150410793401 stripped
-BoxCollider:
-  m_CorrespondingSourceObject: {fileID: 3223351569965309198, guid: 96c385ee737aa7f40b73992ef3894ab7, type: 3}
   m_PrefabInstance: {fileID: 2932952029684124855}
   m_PrefabAsset: {fileID: 0}

@@ -49,6 +49,7 @@ Possibly add crouch
 		<relationship name="parameters">
 			<destination>{01c960fc-eef0-4c78-a24d-f2c10ec31b3f}</destination>
 			<destination>{bd7851de-cb3c-4046-9a83-d14bc6fc2eec}</destination>
+			<destination>{e21a5a68-0123-4a7d-89c9-92d639f4c216}</destination>
 		</relationship>
 		<relationship name="banks">
 			<destination>{7f1e322d-744f-414c-b468-349c3d8c3ed2}</destination>
@@ -120,6 +121,11 @@ Possibly add crouch
 	<object class="ParameterProxy" id="{bd7851de-cb3c-4046-9a83-d14bc6fc2eec}">
 		<relationship name="preset">
 			<destination>{5322bac7-94aa-4eee-8343-d42d0e194716}</destination>
+		</relationship>
+	</object>
+	<object class="ParameterProxy" id="{e21a5a68-0123-4a7d-89c9-92d639f4c216}">
+		<relationship name="preset">
+			<destination>{f5381125-d71e-4cee-8531-98e65893bf4b}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{290a8e37-c123-4891-ace8-96d74d4dbf5f}">
