@@ -118,4 +118,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf6441e54b4a24edbb2b60e97e9076a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   collectableInfo: {fileID: 11400000, guid: 239faaf086eb2d686bf5fff0df350536, type: 2}

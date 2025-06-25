@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6c3ee6d3806270a29037880a9b22941, type: 3}
+  m_Name: candle note
+  m_EditorClassIdentifier: 
+  collectableName: 
+  journalEntry: ' Entry 214 September 23rd  3:00 AM                                             
+    Something weird just happened.  I was just trying to sleep when there was some
+    light creeping into my room. I think Klaas lit some candles or something. I heard
+    him talking to his son. I''m not sure what it was about, but I heard some weird
+    noises after, almost as if something opened. I think I''m  just going a bit crazy
+    it has been a stressful few days. I just need to rest some more. '
+  icon: {fileID: 0}
