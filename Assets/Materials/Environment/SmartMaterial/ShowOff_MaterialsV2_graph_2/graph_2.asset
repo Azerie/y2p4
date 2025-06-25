@@ -20,9 +20,9 @@ MonoBehaviour:
   GUID: 59c77428-0766-4ae3-a5e5-59a61498d97e
   Index: 2
   Input:
-  - rid: 51030904777998350
-  - rid: 51030904777998351
-  - rid: 51030904777998352
+  - rid: 51030904777998373
+  - rid: 51030904777998374
+  - rid: 51030904777998375
   Output:
   - Index: 0
     VirtualOutputIndex: 7
@@ -149,9 +149,8 @@ MonoBehaviour:
   GenerateAllOutputs: 0
   GenerateAllMipmaps: 1
   OutputMaterial: {fileID: 2100000, guid: cb2ae39ca2a0e8349a171aeae94174d2, type: 2}
-  DefaultPreset: " <sbspreset pkgurl=\"pkg://DiamondShape_Floor\" label=\"\" >\n 
-    <presetinput identifier=\"$outputsize\" uid=\"2698895008\" type=\"8\" value=\"10,10\"
-    />\n </sbspreset>\n"
+  DefaultPreset: " <sbspreset pkgurl=\"pkg://DiamondShape_Floor\" label=\"\" >\n
+    </sbspreset>\n"
   MaterialShader: HDRP/Lit
   RenderTextures: 0
   OutputRemaped: 0
@@ -159,7 +158,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 51030904777998350
+    - rid: 51030904777998373
       type: {class: SubstanceInputInt2, ns: Adobe.Substance.Input, asm: Adobe.Substance}
       data:
         Index: 0
@@ -178,7 +177,7 @@ MonoBehaviour:
           SliderClamp: 0
           EnumValueCount: 0
           EnumValues: []
-    - rid: 51030904777998351
+    - rid: 51030904777998374
       type: {class: SubstanceInputInt, ns: Adobe.Substance.Input, asm: Adobe.Substance}
       data:
         Index: 1
@@ -200,7 +199,7 @@ MonoBehaviour:
           LabelTrue: 
           EnumValueCount: 0
           EnumValues: []
-    - rid: 51030904777998352
+    - rid: 51030904777998375
       type: {class: SubstanceInputFloat, ns: Adobe.Substance.Input, asm: Adobe.Substance}
       data:
         Index: 2
