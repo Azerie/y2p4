@@ -45,7 +45,7 @@ public class DoorBehaviour : InteractableBehaviourAbstract
     {
         // Debug.Log("interacted");
         if(requiredItem != null) {
-            if (PlayerInventory.GetInstance().HasItem(requiredItem))
+            if (PlayerInventory.GetInstance().GetSelectedItem() == requiredItem)
             {
                 Use();
                 PlayerInventory.GetInstance().RemoveItem(requiredItem);
