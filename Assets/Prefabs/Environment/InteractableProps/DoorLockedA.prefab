@@ -94,7 +94,6 @@ GameObject:
   - component: {fileID: 7693726046064606010}
   - component: {fileID: 6346505471346100492}
   - component: {fileID: 2194181048082523350}
-  - component: {fileID: 8467735616744437560}
   m_Layer: 0
   m_Name: DoorLockedA
   m_TagString: Untagged
@@ -170,27 +169,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &8467735616744437560
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3954444878430785599}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.047107328, y: 2.2967927, z: 1.2294292}
-  m_Center: {x: -0.0003532041, y: 1.1483964, z: 0.60150445}
 --- !u!1 &6277338905853456631
 GameObject:
   m_ObjectHideFlags: 0

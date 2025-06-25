@@ -92,7 +92,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 45958411535100106}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 786a0143be3079418ace2f6a3b388bf6, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -118,6 +118,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f215093bbaf96ef4ca1b248882c14238, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &256827400450800265
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,7 +217,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 256827400450800265}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 786a0143be3079418ace2f6a3b388bf6, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -236,6 +243,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f215093bbaf96ef4ca1b248882c14238, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &270771995140716076
 GameObject:
   m_ObjectHideFlags: 0
@@ -328,7 +342,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 270771995140716076}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 786a0143be3079418ace2f6a3b388bf6, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -354,6 +368,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f215093bbaf96ef4ca1b248882c14238, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &271942663862458705
 GameObject:
   m_ObjectHideFlags: 0
@@ -483,7 +504,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 858387750576349915}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 786a0143be3079418ace2f6a3b388bf6, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -509,6 +530,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f215093bbaf96ef4ca1b248882c14238, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &889088376529989570
 GameObject:
   m_ObjectHideFlags: 0
@@ -601,7 +629,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 889088376529989570}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 786a0143be3079418ace2f6a3b388bf6, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -627,6 +655,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f215093bbaf96ef4ca1b248882c14238, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &1340203389177103691
 GameObject:
   m_ObjectHideFlags: 0
@@ -745,6 +780,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4441c0e4ded8db9a6a761b0114924d2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   itemToGive: {fileID: 11400000, guid: 670ad85c680a79959a9ba8d280818bb9, type: 2}
 --- !u!1 &1395892478703722445
 GameObject:
@@ -838,7 +880,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1395892478703722445}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 786a0143be3079418ace2f6a3b388bf6, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -864,6 +906,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f215093bbaf96ef4ca1b248882c14238, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &1475309045529239007
 GameObject:
   m_ObjectHideFlags: 0
@@ -1040,7 +1089,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1513731953563577272}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 786a0143be3079418ace2f6a3b388bf6, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1066,6 +1115,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f215093bbaf96ef4ca1b248882c14238, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &1835539631015731306
 GameObject:
   m_ObjectHideFlags: 0
@@ -1158,7 +1214,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1835539631015731306}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 786a0143be3079418ace2f6a3b388bf6, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1184,6 +1240,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f215093bbaf96ef4ca1b248882c14238, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &1948036754166658925
 GameObject:
   m_ObjectHideFlags: 0
@@ -1561,7 +1624,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2676954610735437066}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 786a0143be3079418ace2f6a3b388bf6, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1587,6 +1650,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f215093bbaf96ef4ca1b248882c14238, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &2776476215595077328
 GameObject:
   m_ObjectHideFlags: 0
@@ -1762,7 +1832,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2875151352450082076}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 786a0143be3079418ace2f6a3b388bf6, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1788,6 +1858,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f215093bbaf96ef4ca1b248882c14238, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &3449162662793177617
 GameObject:
   m_ObjectHideFlags: 0
@@ -1880,7 +1957,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3449162662793177617}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 786a0143be3079418ace2f6a3b388bf6, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1906,6 +1983,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f215093bbaf96ef4ca1b248882c14238, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &3723193401665853534
 GameObject:
   m_ObjectHideFlags: 0
@@ -1998,7 +2082,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3723193401665853534}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 786a0143be3079418ace2f6a3b388bf6, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -2024,6 +2108,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f215093bbaf96ef4ca1b248882c14238, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &4257224804079551314
 GameObject:
   m_ObjectHideFlags: 0
@@ -2116,7 +2207,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4257224804079551314}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 786a0143be3079418ace2f6a3b388bf6, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -2142,6 +2233,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f215093bbaf96ef4ca1b248882c14238, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &4466953630164522275
 GameObject:
   m_ObjectHideFlags: 0
@@ -2485,7 +2583,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4527984525408175057}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 786a0143be3079418ace2f6a3b388bf6, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -2511,6 +2609,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f215093bbaf96ef4ca1b248882c14238, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &4890816518715097156
 GameObject:
   m_ObjectHideFlags: 0
@@ -2603,7 +2708,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4890816518715097156}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 786a0143be3079418ace2f6a3b388bf6, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -2629,6 +2734,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f215093bbaf96ef4ca1b248882c14238, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &5218365045606321669
 GameObject:
   m_ObjectHideFlags: 0
@@ -2721,7 +2833,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5218365045606321669}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 786a0143be3079418ace2f6a3b388bf6, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -2747,6 +2859,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f215093bbaf96ef4ca1b248882c14238, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &5518317994892212881
 GameObject:
   m_ObjectHideFlags: 0
@@ -2839,7 +2958,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5518317994892212881}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 786a0143be3079418ace2f6a3b388bf6, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -2865,6 +2984,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f215093bbaf96ef4ca1b248882c14238, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &5633062820735848813
 GameObject:
   m_ObjectHideFlags: 0
@@ -2957,7 +3083,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5633062820735848813}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 786a0143be3079418ace2f6a3b388bf6, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -2983,6 +3109,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f215093bbaf96ef4ca1b248882c14238, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &5734829082009277992
 GameObject:
   m_ObjectHideFlags: 0
@@ -3075,7 +3208,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5734829082009277992}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 786a0143be3079418ace2f6a3b388bf6, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -3101,6 +3234,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f215093bbaf96ef4ca1b248882c14238, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &6562635040622309904
 GameObject:
   m_ObjectHideFlags: 0
@@ -3232,7 +3372,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6593673160167651274}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 786a0143be3079418ace2f6a3b388bf6, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -3258,6 +3398,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f215093bbaf96ef4ca1b248882c14238, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &6753817565053277695
 GameObject:
   m_ObjectHideFlags: 0

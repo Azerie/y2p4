@@ -348,8 +348,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MoveSpeed: 3
-  SprintSpeed: 6
-  Sensitivity: 10
+  SprintSpeed: 4
+  Sensitivity: 0.2
   SpeedChangeRate: 10
   Gravity: -15
   GroundedOffset: -0.47
@@ -363,7 +363,7 @@ MonoBehaviour:
   MaxCameraAngle: 50
   MaxHealth: 100
   MaxStamina: 5
-  StaminaRecoveryRate: 3
+  StaminaRecoveryRate: 2
   StandingHeight: 2
   CrouchHeight: 1
   FailScene: 
