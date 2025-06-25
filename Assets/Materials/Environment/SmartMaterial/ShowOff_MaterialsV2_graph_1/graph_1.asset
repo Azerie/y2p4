@@ -20,9 +20,9 @@ MonoBehaviour:
   GUID: 95d0b368-1216-4dcc-a3d9-1cee4afe1213
   Index: 1
   Input:
-  - rid: 51030904777998347
-  - rid: 51030904777998348
-  - rid: 51030904777998349
+  - rid: 51030904777998394
+  - rid: 51030904777998395
+  - rid: 51030904777998396
   Output:
   - Index: 0
     VirtualOutputIndex: 7
@@ -145,9 +145,7 @@ MonoBehaviour:
   GenerateAllOutputs: 0
   GenerateAllMipmaps: 1
   OutputMaterial: {fileID: 2100000, guid: 02e4401dc794ef240bf53363bf0ccb97, type: 2}
-  DefaultPreset: " <sbspreset pkgurl=\"pkg://BrickShape_Floor\" label=\"\" >\n  <presetinput
-    identifier=\"$outputsize\" uid=\"389322641\" type=\"8\" value=\"10,10\" />\n
-    </sbspreset>\n"
+  DefaultPreset: " <sbspreset pkgurl=\"pkg://BrickShape_Floor\" label=\"\" >\n </sbspreset>\n"
   MaterialShader: HDRP/Lit
   RenderTextures: 0
   OutputRemaped: 0
@@ -155,7 +153,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 51030904777998347
+    - rid: 51030904777998394
       type: {class: SubstanceInputInt2, ns: Adobe.Substance.Input, asm: Adobe.Substance}
       data:
         Index: 0
@@ -174,7 +172,7 @@ MonoBehaviour:
           SliderClamp: 0
           EnumValueCount: 0
           EnumValues: []
-    - rid: 51030904777998348
+    - rid: 51030904777998395
       type: {class: SubstanceInputInt, ns: Adobe.Substance.Input, asm: Adobe.Substance}
       data:
         Index: 1
@@ -196,7 +194,7 @@ MonoBehaviour:
           LabelTrue: 
           EnumValueCount: 0
           EnumValues: []
-    - rid: 51030904777998349
+    - rid: 51030904777998396
       type: {class: SubstanceInputFloat, ns: Adobe.Substance.Input, asm: Adobe.Substance}
       data:
         Index: 2
