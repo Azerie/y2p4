@@ -120,11 +120,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupSound:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: 2110714054
+      Data2: 1241465236
+      Data3: -509685876
+      Data4: -1110930835
+    Path: event:/Interactables/Clock handle BIG
+  pickupVoiceline: {fileID: 0}
 --- !u!1 &256827400450800265
 GameObject:
   m_ObjectHideFlags: 0
@@ -245,11 +246,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupSound:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: 2110714054
+      Data2: 1241465236
+      Data3: -509685876
+      Data4: -1110930835
+    Path: event:/Interactables/Clock handle BIG
+  pickupVoiceline: {fileID: 0}
 --- !u!1 &270771995140716076
 GameObject:
   m_ObjectHideFlags: 0
@@ -370,11 +372,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupSound:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: 2110714054
+      Data2: 1241465236
+      Data3: -509685876
+      Data4: -1110930835
+    Path: event:/Interactables/Clock handle BIG
+  pickupVoiceline: {fileID: 0}
 --- !u!1 &271942663862458705
 GameObject:
   m_ObjectHideFlags: 0
@@ -532,11 +535,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupSound:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: 2110714054
+      Data2: 1241465236
+      Data3: -509685876
+      Data4: -1110930835
+    Path: event:/Interactables/Clock handle BIG
+  pickupVoiceline: {fileID: 0}
 --- !u!1 &889088376529989570
 GameObject:
   m_ObjectHideFlags: 0
@@ -657,11 +661,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupSound:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: -1472906603
+      Data2: 1325452864
+      Data3: 710076343
+      Data4: 1677821969
+    Path: event:/Interactables/Clock handle SMALL
+  pickupVoiceline: {fileID: 0}
 --- !u!1 &1340203389177103691
 GameObject:
   m_ObjectHideFlags: 0
@@ -787,6 +792,7 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  pickupVoiceline: {fileID: 0}
   itemToGive: {fileID: 11400000, guid: 670ad85c680a79959a9ba8d280818bb9, type: 2}
 --- !u!1 &1395892478703722445
 GameObject:
@@ -908,11 +914,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupSound:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: -1472906603
+      Data2: 1325452864
+      Data3: 710076343
+      Data4: 1677821969
+    Path: event:/Interactables/Clock handle SMALL
+  pickupVoiceline: {fileID: 0}
 --- !u!1 &1475309045529239007
 GameObject:
   m_ObjectHideFlags: 0
@@ -1117,11 +1124,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupSound:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: -1472906603
+      Data2: 1325452864
+      Data3: 710076343
+      Data4: 1677821969
+    Path: event:/Interactables/Clock handle SMALL
+  pickupVoiceline: {fileID: 0}
 --- !u!1 &1835539631015731306
 GameObject:
   m_ObjectHideFlags: 0
@@ -1242,11 +1250,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupSound:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: 2110714054
+      Data2: 1241465236
+      Data3: -509685876
+      Data4: -1110930835
+    Path: event:/Interactables/Clock handle BIG
+  pickupVoiceline: {fileID: 0}
 --- !u!1 &1948036754166658925
 GameObject:
   m_ObjectHideFlags: 0
@@ -1652,11 +1661,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupSound:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: 2110714054
+      Data2: 1241465236
+      Data3: -509685876
+      Data4: -1110930835
+    Path: event:/Interactables/Clock handle BIG
+  pickupVoiceline: {fileID: 0}
 --- !u!1 &2776476215595077328
 GameObject:
   m_ObjectHideFlags: 0
@@ -1860,11 +1870,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupSound:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: -1472906603
+      Data2: 1325452864
+      Data3: 710076343
+      Data4: 1677821969
+    Path: event:/Interactables/Clock handle SMALL
+  pickupVoiceline: {fileID: 0}
 --- !u!1 &3449162662793177617
 GameObject:
   m_ObjectHideFlags: 0
@@ -1985,11 +1996,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupSound:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: 2110714054
+      Data2: 1241465236
+      Data3: -509685876
+      Data4: -1110930835
+    Path: event:/Interactables/Clock handle BIG
+  pickupVoiceline: {fileID: 0}
 --- !u!1 &3723193401665853534
 GameObject:
   m_ObjectHideFlags: 0
@@ -2110,11 +2122,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupSound:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: 2110714054
+      Data2: 1241465236
+      Data3: -509685876
+      Data4: -1110930835
+    Path: event:/Interactables/Clock handle BIG
+  pickupVoiceline: {fileID: 0}
 --- !u!1 &4257224804079551314
 GameObject:
   m_ObjectHideFlags: 0
@@ -2235,11 +2248,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupSound:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: -1472906603
+      Data2: 1325452864
+      Data3: 710076343
+      Data4: 1677821969
+    Path: event:/Interactables/Clock handle SMALL
+  pickupVoiceline: {fileID: 0}
 --- !u!1 &4466953630164522275
 GameObject:
   m_ObjectHideFlags: 0
@@ -2611,11 +2625,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupSound:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: -1472906603
+      Data2: 1325452864
+      Data3: 710076343
+      Data4: 1677821969
+    Path: event:/Interactables/Clock handle SMALL
+  pickupVoiceline: {fileID: 0}
 --- !u!1 &4890816518715097156
 GameObject:
   m_ObjectHideFlags: 0
@@ -2736,11 +2751,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupSound:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: 1612946775
+      Data2: 1260002893
+      Data3: 1675574917
+      Data4: -1204922630
+    Path: event:/Interactables/Clock handle CORRECT
+  pickupVoiceline: {fileID: 0}
 --- !u!1 &5218365045606321669
 GameObject:
   m_ObjectHideFlags: 0
@@ -2861,11 +2877,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupSound:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: 1612946775
+      Data2: 1260002893
+      Data3: 1675574917
+      Data4: -1204922630
+    Path: event:/Interactables/Clock handle CORRECT
+  pickupVoiceline: {fileID: 0}
 --- !u!1 &5518317994892212881
 GameObject:
   m_ObjectHideFlags: 0
@@ -2986,11 +3003,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupSound:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: 2110714054
+      Data2: 1241465236
+      Data3: -509685876
+      Data4: -1110930835
+    Path: event:/Interactables/Clock handle BIG
+  pickupVoiceline: {fileID: 0}
 --- !u!1 &5633062820735848813
 GameObject:
   m_ObjectHideFlags: 0
@@ -3111,11 +3129,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupSound:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: -1472906603
+      Data2: 1325452864
+      Data3: 710076343
+      Data4: 1677821969
+    Path: event:/Interactables/Clock handle SMALL
+  pickupVoiceline: {fileID: 0}
 --- !u!1 &5734829082009277992
 GameObject:
   m_ObjectHideFlags: 0
@@ -3236,11 +3255,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupSound:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: 2110714054
+      Data2: 1241465236
+      Data3: -509685876
+      Data4: -1110930835
+    Path: event:/Interactables/Clock handle BIG
+  pickupVoiceline: {fileID: 0}
 --- !u!1 &6562635040622309904
 GameObject:
   m_ObjectHideFlags: 0
@@ -3401,11 +3421,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupSound:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: 2110714054
+      Data2: 1241465236
+      Data3: -509685876
+      Data4: -1110930835
+    Path: event:/Interactables/Clock handle BIG
+  pickupVoiceline: {fileID: 0}
 --- !u!1 &6753817565053277695
 GameObject:
   m_ObjectHideFlags: 0
