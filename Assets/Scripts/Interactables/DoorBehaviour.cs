@@ -80,7 +80,7 @@ public class DoorBehaviour : InteractableBehaviourAbstract
 
     public void Open()
     {
-        Debug.Log("Door opened");
+        // Debug.Log("Door opened");
         if (!openSound.IsNull)
         {
             RuntimeManager.PlayOneShot(openSound, transform.position);
@@ -99,7 +99,7 @@ public class DoorBehaviour : InteractableBehaviourAbstract
 
     public void Close()
     {
-        Debug.Log("Door closed");
+        // Debug.Log("Door closed");
 
         if (!closeSound.IsNull)
         {

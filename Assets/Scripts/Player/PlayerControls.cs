@@ -72,7 +72,7 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private bool _isSprinting = false;
     [SerializeField] private bool _isCrouching = false;
     [SerializeField] private bool _isInKillAnimation = false;
-    [SerializeField] private float _jumpTimeoutDelta = 0f;
+    // [SerializeField] private float _jumpTimeoutDelta = 0f;
     [SerializeField] private float _cameraYrotation = 0f;
 
     [SerializeField] private Vector2 moveInput = Vector2.zero;
@@ -87,6 +87,7 @@ public class PlayerControls : MonoBehaviour
     private PlayerInteraction _pickupHandler;
     private CapsuleCollider _hitbox;
     [SerializeField] private Transform head;
+    [SerializeField] private SkillCheck skillcheck;
     private Canvas EvidenceJournal;
 
     void Start()
@@ -96,13 +97,14 @@ public class PlayerControls : MonoBehaviour
         _pickupHandler = GetComponentInChildren<PlayerInteraction>();
         _health = MaxHealth;
         _stamina = MaxStamina;
-        EvidenceJournal = GameObject.Find("EvidenceJournal").GetComponent<Canvas>();
         isEnabled = true;
         head = GetComponentInChildren<PlayerInteraction>().transform;
     }
 
     private void Awake()
     {
+        EvidenceJournal = GameObject.Find("EvidenceJournal").GetComponent<Canvas>();
+        skillcheck = FindObjectOfType<SkillCheck>();
         Cursor.visible = false;
     }
 
@@ -144,7 +146,7 @@ public class PlayerControls : MonoBehaviour
             // stop our velocity dropping infinitely when grounded
             if (_verticalVelocity < 0.0f)
             {
-                _verticalVelocity = -0.1f;
+                _verticalVelocity = -2f;
             }
         }
     }
@@ -236,7 +238,7 @@ public class PlayerControls : MonoBehaviour
         // }
 
         // FindObjectOfType<SkillCheck>().DebugFunc();
-        FindObjectOfType<SkillCheck>().EndMinigame();
+        skillcheck.EndMinigame();
     }
 
     private void OnInteract()
@@ -251,7 +253,8 @@ public class PlayerControls : MonoBehaviour
             _rotationVelocity = value.Get<Vector2>().x * Sensitivity;
 
             // rotate the player left and right
-            _rb.MoveRotation(transform.rotation * Quaternion.Euler(Vector3.up * _rotationVelocity));
+            // _rb.MoveRotation(transform.rotation * Quaternion.Euler(Vector3.up * _rotationVelocity));
+            transform.rotation = transform.rotation * Quaternion.Euler(Vector3.up * _rotationVelocity);
 
             Transform head = GetComponentInChildren<Camera>().transform.parent;
             _cameraYrotation -= value.Get<Vector2>().y * Sensitivity;
@@ -276,12 +279,16 @@ public class PlayerControls : MonoBehaviour
             if (!_isCrouching)
             {
                 _hitbox.height = CrouchHeight;
+                _hitbox.center = new Vector3(0, CrouchHeight / 2, 0);
+                head.localPosition = new Vector3(0, head.position.y + CrouchHeight - StandingHeight, 0);
                 _isSprinting = false;
                 _isCrouching = true;
             }
             else if (!Physics.Raycast(transform.position, transform.up, StandingHeight, GroundLayers))
             {
                 _hitbox.height = StandingHeight;
+                _hitbox.center = new Vector3(0, StandingHeight / 2, 0);
+                head.localPosition = new Vector3(0, head.position.y + StandingHeight - CrouchHeight, 0);
                 _isCrouching = false;
             }   
         }

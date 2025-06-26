@@ -6,12 +6,24 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private string menuSceneName = "MainMenu";
+    [SerializeField] private Canvas mainCanvas;
     private PlayerControls playerControls;
     void Awake()
     {
         playerControls = FindObjectOfType<PlayerControls>();
         Resume();
     }
+    public void SwapToSecondaryCanvas(Canvas newCanvas)
+    {
+        mainCanvas.enabled = false;
+        newCanvas.enabled = true;
+    }
+    public void SwapFromSecondaryCanvas(Canvas oldCanvas)
+    {
+        mainCanvas.enabled = true;
+        oldCanvas.enabled = false;
+    }
+
     public void Resume()
     {
         Time.timeScale = 1;

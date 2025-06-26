@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using FMODUnity;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
@@ -41,6 +42,8 @@ public class EnemyBehaviour : MonoBehaviour
     [SerializeField] private float killAnimationTime = 0.5f;
     [SerializeField] private float knockoutTime = 2f;
     [SerializeField] private bool isLethal = true;
+    [SerializeField] private List<float> stationaryTimes = new List<float>();
+
 
     [Header("Animation names")]
     [SerializeField] private string idleAnimationName = "Idle";
@@ -51,9 +54,9 @@ public class EnemyBehaviour : MonoBehaviour
 
     [Header("FMOD State Sounds")]
     [Tooltip("FMOD event path for the alert state sound.")]
-    public FMODUnity.EventReference m_AlertSoundEventPath = new FMODUnity.EventReference();
+    public EventReference m_AlertSoundEventPath = new EventReference();
     [Tooltip("FMOD event path for the chasing state sound.")]
-    public FMODUnity.EventReference m_ChasingSoundEventPath = new FMODUnity.EventReference();
+    public EventReference m_ChasingSoundEventPath = new EventReference();
 
 
 
@@ -67,9 +70,11 @@ public class EnemyBehaviour : MonoBehaviour
     private float stateTimer = 0f;
     private bool isPlayerHidden = false;
     private float lookAroundTimer = 0f;
+    private float currentStationaryTime;
     private SkillCheck skillCheck;
     public static event UnityAction OnKillAnimationStart;
     public static event UnityAction OnKillAnimationEnd;
+    public event UnityAction OnStateChange;
     
     private NavMeshAgent _navMeshAgent;
     private Animator _animator;
@@ -115,7 +120,6 @@ public class EnemyBehaviour : MonoBehaviour
     void Update()
     {
         UpdateState();
-        UpdateDestination();
 
         // Debug.Log(GetDetectionTimeCoef());
         // Debug.Log("Can detect player? " + CanDetectPlayer());
@@ -132,6 +136,11 @@ public class EnemyBehaviour : MonoBehaviour
 
     private void ChangeState(State newState)
     {
+        if (newState != state)
+        {
+            OnStateChange?.Invoke();
+        }
+        
         if (newState == State.Chasing)
         {
             GetComponentInChildren<MeshRenderer>().material.SetColor("_BaseColor", Color.red);
@@ -144,7 +153,7 @@ public class EnemyBehaviour : MonoBehaviour
             {
                 _animator.Play(runningAnimationName);
             }
-            PlayFMODEvent(m_ChasingSoundEventPath, "Chasing");
+            RuntimeManager.PlayOneShotAttached(m_ChasingSoundEventPath, gameObject);
         }
         else if (newState == State.Alert)
         {
@@ -159,7 +168,7 @@ public class EnemyBehaviour : MonoBehaviour
                 _animator.Play(walkingAnimationName);
             }
             lookAroundTimer = 0;
-            PlayFMODEvent(m_AlertSoundEventPath, "Alert");
+            RuntimeManager.PlayOneShotAttached(m_AlertSoundEventPath, gameObject);
         }
         else if (newState == State.Roaming)
         {
@@ -170,6 +179,7 @@ public class EnemyBehaviour : MonoBehaviour
             {
                 _animator.Play(walkingAnimationName);
             }
+            lookAroundTimer = 0;
         }
         else if (newState == State.KillAnimation)
         {
@@ -196,25 +206,13 @@ public class EnemyBehaviour : MonoBehaviour
         stateTimer = 0;
     }
 
-    private void PlayFMODEvent(FMODUnity.EventReference eventReference, string eventNameForLog)
-    {
-        if (!string.IsNullOrEmpty(eventReference.Path))
-        {
-            FMOD.Studio.EventInstance stateSoundInstance = FMODUnity.RuntimeManager.CreateInstance(eventReference);
-            // Corrected line: passing gameObject instead of transform
-            FMODUnity.RuntimeManager.AttachInstanceToGameObject(stateSoundInstance, gameObject, _rb);
-            stateSoundInstance.start();
-            stateSoundInstance.release();
-            // Debug.Log($"EnemyBehaviour: Playing {eventNameForLog} sound."); // Optional: uncomment for debugging
-        }
-        else
-        {
-            Debug.LogWarning($"EnemyBehaviour: FMOD Event Path for {eventNameForLog} sound is not set.");
-        }
-    }
-
     private void GetNextPoint()
     {
+        if (_animator != null)
+        {
+            _animator.Play(walkingAnimationName);
+        }
+
         currentPointIndex++;
         if (currentPointIndex > points.Count - 1)
         {
@@ -226,20 +224,16 @@ public class EnemyBehaviour : MonoBehaviour
         if (path.status == NavMeshPathStatus.PathComplete)
         {
             _navMeshAgent.destination = points[currentPointIndex].position;
+            if (stationaryTimes.Count - 1 >= currentPointIndex)
+            {
+                currentStationaryTime = stationaryTimes[currentPointIndex];
+            }
+            else
+            {
+                currentStationaryTime = 0;
+            }
         }
         else
-        {
-            GetNextPoint();
-        }
-    }
-
-    private void UpdateDestination()
-    {
-        if (state == State.Chasing)
-        {
-            _navMeshAgent.destination = player.position;
-        }
-        else if (state == State.Roaming && _navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
         {
             GetNextPoint();
         }
@@ -249,6 +243,7 @@ public class EnemyBehaviour : MonoBehaviour
     {
         if (state == State.Chasing)
         {
+            _navMeshAgent.destination = player.position;
             if (CanSeePlayer())
             {
                 if (stateTimer < 0)
@@ -280,7 +275,8 @@ public class EnemyBehaviour : MonoBehaviour
                     ChangeState(State.Chasing);
                 }
             }
-            else if (IsAtDestination())
+
+            if (IsAtDestination())
             {
                 if (_animator != null)
                 {
@@ -299,6 +295,21 @@ public class EnemyBehaviour : MonoBehaviour
         }
         else if (state == State.Roaming)
         {
+            if ((_navMeshAgent.destination - transform.position).magnitude < 0.1f)
+            {
+                if (_animator != null)
+                {
+                    _animator.Play(idleAnimationName);
+                }
+                lookAroundTimer -= Time.deltaTime;
+                // Debug.Log("idle timer: " + lookAroundTimer.ToString() + " required idle time: " + currentStationaryTime.ToString());
+                if (lookAroundTimer <= -currentStationaryTime)
+                {
+                    GetNextPoint();
+                    lookAroundTimer = 0;
+                }
+            }
+
             if (CanSeePlayer())
             {
                 stateTimer += Time.deltaTime * GetDetectionTimeCoef();
