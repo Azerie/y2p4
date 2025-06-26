@@ -566,6 +566,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DoorHinge
       objectReference: {fileID: 0}
+    - target: {fileID: 8627143387904955862, guid: 2c5bd57925be7784288691768eb80883, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8792720403092118554, guid: 2c5bd57925be7784288691768eb80883, type: 3}
       propertyPath: requiredItem
       value: 
@@ -1641,6 +1645,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8519062213056255415, guid: bfe1492213abf4c44a7a351d87906e93, type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8519062213056255415, guid: bfe1492213abf4c44a7a351d87906e93, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8519062213056255415, guid: bfe1492213abf4c44a7a351d87906e93, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8519062213056255415, guid: bfe1492213abf4c44a7a351d87906e93, type: 3}
+      propertyPath: m_LocalScale.z
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8519062213056255415, guid: bfe1492213abf4c44a7a351d87906e93, type: 3}
@@ -5101,14 +5117,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4785226271423879066, guid: 7d317c7a3d20dd14e9acf109a0b78fdd, type: 3}
-      propertyPath: m_Constraints
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 4785226271423879067, guid: 7d317c7a3d20dd14e9acf109a0b78fdd, type: 3}
-      propertyPath: Sensitivity
-      value: 0.2
-      objectReference: {fileID: 0}
     - target: {fileID: 4785226271423879069, guid: 7d317c7a3d20dd14e9acf109a0b78fdd, type: 3}
       propertyPath: promptReminder
       value: 
@@ -5197,6 +5205,27 @@ MonoBehaviour:
   requiredItem: {fileID: 11400000, guid: 66b29e26f7efafc7ca2ea4fe7889098e, type: 2}
   angle: 120
   openingSpeed: 1
+  openSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  closeSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  lockedSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!65 &2002426424
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7896,6 +7925,26 @@ PrefabInstance:
       propertyPath: points.Array.data[3]
       value: 
       objectReference: {fileID: 163072816}
+    - target: {fileID: 3532642181388419142, guid: e8402fc969eeac35eb145db69f597900, type: 3}
+      propertyPath: stationaryTimes.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3532642181388419142, guid: e8402fc969eeac35eb145db69f597900, type: 3}
+      propertyPath: stationaryTimes.Array.data[0]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3532642181388419142, guid: e8402fc969eeac35eb145db69f597900, type: 3}
+      propertyPath: stationaryTimes.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3532642181388419142, guid: e8402fc969eeac35eb145db69f597900, type: 3}
+      propertyPath: stationaryTimes.Array.data[2]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3532642181388419142, guid: e8402fc969eeac35eb145db69f597900, type: 3}
+      propertyPath: stationaryTimes.Array.data[3]
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4011043403573591943, guid: e8402fc969eeac35eb145db69f597900, type: 3}
       propertyPath: m_Name
       value: Enemy
