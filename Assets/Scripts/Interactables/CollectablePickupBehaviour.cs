@@ -9,7 +9,7 @@ public class CollectablePickupBehaviour : InteractableBehaviourAbstract
     public override void OnInteract()
     {
         base.OnInteract();
-        EvidenceManager.GetInstance().AddLine(collectableInfo.JournalEntry);
+        EvidenceManager.GetInstance().AddEntry(collectableInfo);
         Destroy(gameObject);
     }
 }
