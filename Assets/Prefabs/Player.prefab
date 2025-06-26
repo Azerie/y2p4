@@ -293,7 +293,7 @@ MonoBehaviour:
       Data2: 1161411658
       Data3: -890589511
       Data4: -1739484412
-    Path: event:/Footsteps/Dynamic footsteps
+    Path: event:/Footsteps Player/Dynamic footsteps
   m_Terrain: 0
   m_WalkRun: 0
   m_StepDistance: 1.8

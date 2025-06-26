@@ -311,6 +311,7 @@ GameObject:
   - component: {fileID: 5330619309286010709}
   - component: {fileID: 1716299233825549008}
   - component: {fileID: 5206373171905785994}
+  - component: {fileID: 4193247542461647708}
   m_Layer: 0
   m_Name: CandleHolderWithCandle
   m_TagString: Untagged
@@ -386,6 +387,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4193247542461647708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5819690279101888956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -1318630230
+      Data2: 1265131560
+      Data3: 26597307
+      Data4: 695951792
+    Path: event:/Enviroment/Candle Enviroment
+  Event: 
+  EventPlayTrigger: 1
+  EventStopTrigger: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 1
+  OverrideMinDistance: 1.1895733
+  OverrideMaxDistance: 1.7806301
 --- !u!1001 &3749539719400341850
 PrefabInstance:
   m_ObjectHideFlags: 0
