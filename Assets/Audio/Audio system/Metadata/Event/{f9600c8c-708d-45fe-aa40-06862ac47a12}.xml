@@ -2,13 +2,13 @@
 <objects serializationModel="Studio.02.03.00">
 	<object class="Event" id="{f9600c8c-708d-45fe-aa40-06862ac47a12}">
 		<property name="name">
-			<value>Torch</value>
+			<value>Fireplace</value>
 		</property>
 		<property name="outputFormat">
 			<value>2</value>
 		</property>
 		<relationship name="folder">
-			<destination>{cd8dc66a-cfa2-4c89-adf0-0126ccff801f}</destination>
+			<destination>{cb296034-e4f1-45d3-9e0a-495ca11323ba}</destination>
 		</relationship>
 		<relationship name="mixer">
 			<destination>{2bdb4b44-9b21-43e8-8876-9f9d1ae0b849}</destination>
