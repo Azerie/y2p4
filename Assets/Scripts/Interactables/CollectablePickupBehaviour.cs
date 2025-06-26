@@ -9,6 +9,7 @@ public class CollectablePickupBehaviour : InteractableBehaviourAbstract
     public override void OnInteract()
     {
         EvidenceManager.GetInstance().AddEntry(collectableInfo);
+        isMarkedForDestruction = true;
         Destroy(gameObject);
     }
 }

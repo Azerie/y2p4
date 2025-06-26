@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using FMODUnity;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
@@ -51,9 +52,9 @@ public class EnemyBehaviour : MonoBehaviour
 
     [Header("FMOD State Sounds")]
     [Tooltip("FMOD event path for the alert state sound.")]
-    public FMODUnity.EventReference m_AlertSoundEventPath = new FMODUnity.EventReference();
+    public EventReference m_AlertSoundEventPath = new EventReference();
     [Tooltip("FMOD event path for the chasing state sound.")]
-    public FMODUnity.EventReference m_ChasingSoundEventPath = new FMODUnity.EventReference();
+    public EventReference m_ChasingSoundEventPath = new EventReference();
 
 
 
@@ -144,7 +145,7 @@ public class EnemyBehaviour : MonoBehaviour
             {
                 _animator.Play(runningAnimationName);
             }
-            PlayFMODEvent(m_ChasingSoundEventPath, "Chasing");
+            RuntimeManager.PlayOneShotAttached(m_ChasingSoundEventPath, gameObject);
         }
         else if (newState == State.Alert)
         {
@@ -159,7 +160,7 @@ public class EnemyBehaviour : MonoBehaviour
                 _animator.Play(walkingAnimationName);
             }
             lookAroundTimer = 0;
-            PlayFMODEvent(m_AlertSoundEventPath, "Alert");
+            RuntimeManager.PlayOneShotAttached(m_AlertSoundEventPath, gameObject);
         }
         else if (newState == State.Roaming)
         {
@@ -194,23 +195,6 @@ public class EnemyBehaviour : MonoBehaviour
         }
         state = newState;
         stateTimer = 0;
-    }
-
-    private void PlayFMODEvent(FMODUnity.EventReference eventReference, string eventNameForLog)
-    {
-        if (!string.IsNullOrEmpty(eventReference.Path))
-        {
-            FMOD.Studio.EventInstance stateSoundInstance = FMODUnity.RuntimeManager.CreateInstance(eventReference);
-            // Corrected line: passing gameObject instead of transform
-            FMODUnity.RuntimeManager.AttachInstanceToGameObject(stateSoundInstance, gameObject, _rb);
-            stateSoundInstance.start();
-            stateSoundInstance.release();
-            // Debug.Log($"EnemyBehaviour: Playing {eventNameForLog} sound."); // Optional: uncomment for debugging
-        }
-        else
-        {
-            Debug.LogWarning($"EnemyBehaviour: FMOD Event Path for {eventNameForLog} sound is not set.");
-        }
     }
 
     private void GetNextPoint()
