@@ -42,6 +42,8 @@ public class EnemyBehaviour : MonoBehaviour
     [SerializeField] private float killAnimationTime = 0.5f;
     [SerializeField] private float knockoutTime = 2f;
     [SerializeField] private bool isLethal = true;
+    [SerializeField] private List<float> stationaryTimes = new List<float>();
+
 
     [Header("Animation names")]
     [SerializeField] private string idleAnimationName = "Idle";
@@ -68,6 +70,7 @@ public class EnemyBehaviour : MonoBehaviour
     private float stateTimer = 0f;
     private bool isPlayerHidden = false;
     private float lookAroundTimer = 0f;
+    private float currentStationaryTime;
     private SkillCheck skillCheck;
     public static event UnityAction OnKillAnimationStart;
     public static event UnityAction OnKillAnimationEnd;
@@ -116,7 +119,6 @@ public class EnemyBehaviour : MonoBehaviour
     void Update()
     {
         UpdateState();
-        UpdateDestination();
 
         // Debug.Log(GetDetectionTimeCoef());
         // Debug.Log("Can detect player? " + CanDetectPlayer());
@@ -171,6 +173,7 @@ public class EnemyBehaviour : MonoBehaviour
             {
                 _animator.Play(walkingAnimationName);
             }
+            lookAroundTimer = 0;
         }
         else if (newState == State.KillAnimation)
         {
@@ -199,6 +202,11 @@ public class EnemyBehaviour : MonoBehaviour
 
     private void GetNextPoint()
     {
+        if (_animator != null)
+        {
+            _animator.Play(walkingAnimationName);
+        }
+
         currentPointIndex++;
         if (currentPointIndex > points.Count - 1)
         {
@@ -210,20 +218,16 @@ public class EnemyBehaviour : MonoBehaviour
         if (path.status == NavMeshPathStatus.PathComplete)
         {
             _navMeshAgent.destination = points[currentPointIndex].position;
+            if (stationaryTimes.Count - 1 >= currentPointIndex)
+            {
+                currentStationaryTime = stationaryTimes[currentPointIndex];
+            }
+            else
+            {
+                currentStationaryTime = 0;
+            }
         }
         else
-        {
-            GetNextPoint();
-        }
-    }
-
-    private void UpdateDestination()
-    {
-        if (state == State.Chasing)
-        {
-            _navMeshAgent.destination = player.position;
-        }
-        else if (state == State.Roaming && _navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
         {
             GetNextPoint();
         }
@@ -233,6 +237,7 @@ public class EnemyBehaviour : MonoBehaviour
     {
         if (state == State.Chasing)
         {
+            _navMeshAgent.destination = player.position;
             if (CanSeePlayer())
             {
                 if (stateTimer < 0)
@@ -264,7 +269,8 @@ public class EnemyBehaviour : MonoBehaviour
                     ChangeState(State.Chasing);
                 }
             }
-            else if (IsAtDestination())
+
+            if (IsAtDestination())
             {
                 if (_animator != null)
                 {
@@ -283,6 +289,21 @@ public class EnemyBehaviour : MonoBehaviour
         }
         else if (state == State.Roaming)
         {
+            if ((_navMeshAgent.destination - transform.position).magnitude < 0.1f)
+            {
+                if (_animator != null)
+                {
+                    _animator.Play(idleAnimationName);
+                }
+                lookAroundTimer -= Time.deltaTime;
+                // Debug.Log("idle timer: " + lookAroundTimer.ToString() + " required idle time: " + currentStationaryTime.ToString());
+                if (lookAroundTimer <= -currentStationaryTime)
+                {
+                    GetNextPoint();
+                    lookAroundTimer = 0;
+                }
+            }
+
             if (CanSeePlayer())
             {
                 stateTimer += Time.deltaTime * GetDetectionTimeCoef();
