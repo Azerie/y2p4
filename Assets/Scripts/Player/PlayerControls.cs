@@ -146,7 +146,7 @@ public class PlayerControls : MonoBehaviour
             // stop our velocity dropping infinitely when grounded
             if (_verticalVelocity < 0.0f)
             {
-                _verticalVelocity = -2f;
+                _verticalVelocity = -0.1f;
             }
         }
     }
@@ -177,6 +177,10 @@ public class PlayerControls : MonoBehaviour
 
         // a reference to the players current horizontal velocity
         float currentHorizontalSpeed = new Vector3(_rb.velocity.x, 0.0f, _rb.velocity.z).magnitude;
+        if (Grounded && SlopeCheck())
+        {
+            currentHorizontalSpeed = (Quaternion.FromToRotation(currentSlopeNormal, Vector3.up) * _rb.velocity).magnitude;
+        }
 
         float speedOffset = 0.1f;
         float inputMagnitude = 1f;
