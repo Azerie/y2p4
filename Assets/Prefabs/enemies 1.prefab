@@ -1081,14 +1081,6 @@ PrefabInstance:
       propertyPath: pointsParent
       value: 
       objectReference: {fileID: 1410700754862782224}
-    - target: {fileID: 3532642181388419142, guid: e8402fc969eeac35eb145db69f597900, type: 3}
-      propertyPath: detectionRange
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 3532642181388419142, guid: e8402fc969eeac35eb145db69f597900, type: 3}
-      propertyPath: MinDetectionCoefAlert
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 4011043403573591943, guid: e8402fc969eeac35eb145db69f597900, type: 3}
       propertyPath: m_Name
       value: Enemy two
@@ -1159,10 +1151,6 @@ PrefabInstance:
       propertyPath: pointsParent
       value: 
       objectReference: {fileID: 78750060926988050}
-    - target: {fileID: 3532642181388419142, guid: e8402fc969eeac35eb145db69f597900, type: 3}
-      propertyPath: MinDetectionCoefAlert
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 4011043403573591943, guid: e8402fc969eeac35eb145db69f597900, type: 3}
       propertyPath: m_Name
       value: Enemy one

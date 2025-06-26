@@ -17,13 +17,10 @@ public class HidingPlaceBehaviour : InteractableBehaviourAbstract
     private bool isInHidingAnimation;
     private bool hasPlayer = false;
     private EnemyBehaviour[] enemies;
-    void Start()
-    {
-        player = GameObject.FindGameObjectWithTag("Player");
-    }
 
     void Awake()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         enemies = GameObject.FindObjectsByType<EnemyBehaviour>(FindObjectsSortMode.None);
     }
 

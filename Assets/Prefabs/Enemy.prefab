@@ -335,22 +335,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   points: []
   pointsParent: {fileID: 0}
-  proximityDetectionRange: 3
-  detectionRange: 14
-  detectionAngle: 60
+  proximityDetectionRange: 5
+  detectionRange: 12
+  detectionAngle: 75
   heightOffset: 0.1
-  RoamingToAlertTime: 2
-  AlertToChasingTime: 1.5
-  AlertToRoamingTime: 3
+  RoamingToAlertTime: 2.5
+  AlertToChasingTime: 2.5
+  AlertToRoamingTime: 2
   ChasingToAlertTime: 1.5
-  RoamingSpeed: 2.5
-  AlertSpeed: 3
-  ChasingSpeed: 3.5
-  MinDetectionCoefRoaming: 0.5
-  MinDetectionCoefAlert: 0.5
+  RoamingSpeed: 2
+  AlertSpeed: 2.5
+  ChasingSpeed: 3
+  MinDetectionCoefRoaming: 3
+  MinDetectionCoefAlert: 1
   failEnabled: 1
   failSceneName: MainMenu
   killAnimationTime: 0.5
+  knockoutTime: 2
+  isLethal: 1
+  idleAnimationName: Idle
+  walkingAnimationName: Walking
+  runningAnimationName: F_Run
+  attackAnimationName: Idle
+  knockedAnimationName: Idle
   m_AlertSoundEventPath:
     Guid:
       Data1: 272438237
