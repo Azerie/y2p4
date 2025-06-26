@@ -74,6 +74,7 @@ public class EnemyBehaviour : MonoBehaviour
     private SkillCheck skillCheck;
     public static event UnityAction OnKillAnimationStart;
     public static event UnityAction OnKillAnimationEnd;
+    public event UnityAction OnStateChange;
     
     private NavMeshAgent _navMeshAgent;
     private Animator _animator;
@@ -135,6 +136,11 @@ public class EnemyBehaviour : MonoBehaviour
 
     private void ChangeState(State newState)
     {
+        if (newState != state)
+        {
+            OnStateChange?.Invoke();
+        }
+        
         if (newState == State.Chasing)
         {
             GetComponentInChildren<MeshRenderer>().material.SetColor("_BaseColor", Color.red);
