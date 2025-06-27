@@ -41,8 +41,8 @@ ModelImporter:
       name: F_ForehandAttack
       takeName: mixamo.com
       internalID: -203655887218126122
-      firstFrame: 0
-      lastFrame: 190
+      firstFrame: 53
+      lastFrame: 122
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
