@@ -50,7 +50,8 @@ public class DoorBehaviour : InteractableBehaviourAbstract
     public override void OnInteract()
     {
         // Debug.Log("interacted");
-        if(requiredItem != null) {
+        if (requiredItem != null)
+        {
             if (PlayerInventory.GetInstance().GetSelectedItem() == requiredItem)
             {
                 Use();
@@ -62,9 +63,15 @@ public class DoorBehaviour : InteractableBehaviourAbstract
             {
                 RuntimeManager.PlayOneShot(lockedSound, transform.position);
             }
-        } 
-        else {
+        }
+        else
+        {
             Use();
+            if (doorCollider != null)
+            {
+                doorCollider.enabled = false;
+            }
+            StartCoroutine(ReenableColliderAfterDelay(disableTime));
         }
     }
 
@@ -80,7 +87,7 @@ public class DoorBehaviour : InteractableBehaviourAbstract
 
     public void Open()
     {
-        // Debug.Log("Door opened");
+        Debug.Log("Door opened");
         if (!openSound.IsNull)
         {
             RuntimeManager.PlayOneShot(openSound, transform.position);
@@ -88,9 +95,7 @@ public class DoorBehaviour : InteractableBehaviourAbstract
         targetRotation = openRotation;
         isOpen = true;
 
-        doorCollider.enabled = false;
-
-        StartCoroutine(ReenableColliderAfterDelay(disableTime));
+        
 
         // this part is for editor buttons to work properly
         GetComponent<NavMeshObstacle>().enabled = false;
@@ -99,7 +104,7 @@ public class DoorBehaviour : InteractableBehaviourAbstract
 
     public void Close()
     {
-        // Debug.Log("Door closed");
+        Debug.Log("Door closed");
 
         if (!closeSound.IsNull)
         {

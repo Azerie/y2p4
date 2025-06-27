@@ -81,7 +81,7 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private Vector3 currentSlopeNormal = Vector3.up;
     [SerializeField] private Quaternion targetRotation;
     [SerializeField] private Quaternion targetHeadRotation;
-
+    [SerializeField] private ImageFading staminaUI;
 
     private Rigidbody _rb;
     private PlayerInteraction _pickupHandler;
@@ -105,11 +105,14 @@ public class PlayerControls : MonoBehaviour
     {
         EvidenceJournal = GameObject.Find("EvidenceJournal").GetComponent<Canvas>();
         skillcheck = FindObjectOfType<SkillCheck>();
+        staminaUI = GameObject.Find("StaminaUI").GetComponent<ImageFading>();
         Cursor.visible = false;
     }
 
     void Update()
     {
+        Debug.DrawRay(transform.position, transform.up * StandingHeight, Color.blue);
+
         GroundedCheck();
         ApplyGravity();
         if (isEnabled)
@@ -156,6 +159,17 @@ public class PlayerControls : MonoBehaviour
         if (_stamina <= 0)
         {
             _isSprinting = false;
+            if (staminaUI != null)
+            {
+                staminaUI.FadeIn();
+            }
+        }
+        else if (_stamina >= MaxStamina / 4)
+        {
+            if (staminaUI != null)
+            {
+                staminaUI.FadeOut();
+            }
         }
         // set target speed based on move speed, sprint speed and if sprint is pressed
         float targetSpeed = _isSprinting ? SprintSpeed : MoveSpeed;
