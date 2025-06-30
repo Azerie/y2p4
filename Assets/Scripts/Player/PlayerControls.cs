@@ -296,6 +296,7 @@ public class PlayerControls : MonoBehaviour
     {
         if (isEnabled)
         {
+            RaycastHit hit;
             if (!_isCrouching)
             {
                 _hitbox.height = CrouchHeight;
@@ -304,13 +305,17 @@ public class PlayerControls : MonoBehaviour
                 _isSprinting = false;
                 _isCrouching = true;
             }
-            else if (!Physics.Raycast(transform.position, transform.up, StandingHeight, GroundLayers))
+            else if (!Physics.Raycast(transform.position, transform.up, out hit, StandingHeight, GroundLayers))
             {
                 _hitbox.height = StandingHeight;
                 _hitbox.center = new Vector3(0, StandingHeight / 2, 0);
                 head.localPosition = new Vector3(0, head.position.y + StandingHeight - CrouchHeight, 0);
                 _isCrouching = false;
             }   
+            else
+            {
+                Debug.Log("Couldn't uncrouch, hit " + hit.transform.gameObject.name);
+            }
         }
     }
 
