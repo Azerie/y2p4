@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd30a8cee654d5c2093e3f4321ec5801, type: 3}
+  m_Name: Ligting Candles note
+  m_EditorClassIdentifier: 
+  audio:
+    Guid:
+      Data1: 967461682
+      Data2: 1115265249
+      Data3: -1357613427
+      Data4: 2019833025
+    Path: event:/Voicelines/Ligting Candles note
+  subtitlesText: I should try finding unlit candles
+  subtitlesTime: 3

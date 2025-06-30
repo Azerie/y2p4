@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audio:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: 337310159
+      Data2: 1159969494
+      Data3: -150473585
+      Data4: -1002438146
+    Path: event:/Voicelines/Evidence voiceline
   subtitlesText: Lorem ipsum dolor sit amet consectetur adipiscing.
   subtitlesTime: 3
