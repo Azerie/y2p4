@@ -46,11 +46,12 @@ public class EnemyBehaviour : MonoBehaviour
 
 
     [Header("Animation names")]
-    [SerializeField] private string idleAnimationName = "Idle";
-    [SerializeField] private string walkingAnimationName = "Walking";
-    [SerializeField] private string runningAnimationName = "F_Run";
-    [SerializeField] private string attackAnimationName = "Idle";
-    [SerializeField] private string knockedAnimationName = "Idle";
+    [SerializeField] private int idleAnimationMovementStage = 0;
+    [SerializeField] private int walkingAnimationMovementStage = 1;
+    [SerializeField] private int alertWalkingAnimationMovementStage = 2;
+    [SerializeField] private int runningAnimationMovementStage = 3;
+    [SerializeField] private string attackAnimationTriggerName = "Attack";
+    [SerializeField] private string knockedAnimationTriggerName = "Fall";
 
     [Header("FMOD State Sounds")]
     [Tooltip("FMOD event path for the alert state sound.")]
@@ -151,7 +152,8 @@ public class EnemyBehaviour : MonoBehaviour
             }
             if (_animator != null)
             {
-                _animator.Play(runningAnimationName);
+                // _animator.Play(runningAnimationName);
+                _animator.SetInteger("MovementStage", runningAnimationMovementStage);
             }
             RuntimeManager.PlayOneShotAttached(m_ChasingSoundEventPath, gameObject);
         }
@@ -165,7 +167,8 @@ public class EnemyBehaviour : MonoBehaviour
             }
             if (_animator != null)
             {
-                _animator.Play(walkingAnimationName);
+                // _animator.Play(walkingAnimationName);
+                _animator.SetInteger("MovementStage", alertWalkingAnimationMovementStage);
             }
             lookAroundTimer = 0;
             RuntimeManager.PlayOneShotAttached(m_AlertSoundEventPath, gameObject);
@@ -177,7 +180,8 @@ public class EnemyBehaviour : MonoBehaviour
             _navMeshAgent.destination = points[currentPointIndex].position;
             if (_animator != null)
             {
-                _animator.Play(walkingAnimationName);
+                // _animator.Play(walkingAnimationName);
+                _animator.SetInteger("MovementStage", walkingAnimationMovementStage);
             }
             lookAroundTimer = 0;
         }
@@ -187,7 +191,8 @@ public class EnemyBehaviour : MonoBehaviour
             OnKillAnimationStart();
             if (_animator != null)
             {
-                _animator.Play(attackAnimationName);
+                // _animator.Play(attackAnimationName);
+                _animator.SetTrigger(attackAnimationTriggerName);
             }
         }
         else if (newState == State.SkillCheck)
@@ -199,7 +204,8 @@ public class EnemyBehaviour : MonoBehaviour
             _collider.enabled = false;
             if (_animator != null)
             {
-                _animator.Play(knockedAnimationName);
+                // _animator.Play(knockedAnimationName);
+                _animator.SetTrigger(knockedAnimationTriggerName);
             }
         }
         state = newState;
@@ -210,7 +216,8 @@ public class EnemyBehaviour : MonoBehaviour
     {
         if (_animator != null)
         {
-            _animator.Play(walkingAnimationName);
+            // _animator.Play(walkingAnimationName);
+            _animator.SetInteger("MovementStage", walkingAnimationMovementStage);
         }
 
         currentPointIndex++;
@@ -280,7 +287,8 @@ public class EnemyBehaviour : MonoBehaviour
             {
                 if (_animator != null)
                 {
-                    _animator.Play(idleAnimationName);
+                    // _animator.Play(idleAnimationName);
+                    _animator.SetInteger("MovementStage", idleAnimationMovementStage);
                 }
                 float curRot = Mathf.Sin(Mathf.Max(0, -(lookAroundTimer / AlertToRoamingTime)) * Mathf.PI * 2) * 90;
                 // Debug.Log("time: " + (lookAroundTimer / AlertToRoamingTime).ToString() + "rotation: " + curRot);
@@ -299,7 +307,8 @@ public class EnemyBehaviour : MonoBehaviour
             {
                 if (_animator != null)
                 {
-                    _animator.Play(idleAnimationName);
+                    // _animator.Play(idleAnimationName);
+                    _animator.SetInteger("MovementStage", idleAnimationMovementStage);
                 }
                 lookAroundTimer -= Time.deltaTime;
                 // Debug.Log("idle timer: " + lookAroundTimer.ToString() + " required idle time: " + currentStationaryTime.ToString());
