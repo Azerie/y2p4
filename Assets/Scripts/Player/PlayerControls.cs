@@ -103,9 +103,11 @@ public class PlayerControls : MonoBehaviour
 
     private void Awake()
     {
-        EvidenceJournal = GameObject.Find("EvidenceJournal").GetComponent<Canvas>();
+        GameObject evidenceJournalTemp = GameObject.Find("EvidenceJournal");
+        if (evidenceJournalTemp != null) { EvidenceJournal = evidenceJournalTemp.GetComponent<Canvas>(); }
         skillcheck = FindObjectOfType<SkillCheck>();
-        staminaUI = GameObject.Find("StaminaUI").GetComponent<ImageFading>();
+        GameObject staminaUITemp = GameObject.Find("StaminaUI");
+        if (staminaUITemp != null) { staminaUI = staminaUITemp.GetComponent<ImageFading>(); }
         Cursor.visible = false;
     }
 
