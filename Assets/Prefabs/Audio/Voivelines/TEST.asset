@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audio:
     Guid:
-      Data1: 337310159
-      Data2: 1159969494
-      Data3: -150473585
-      Data4: -1002438146
-    Path: event:/Voicelines/Evidence voiceline
+      Data1: 1479605374
+      Data2: 1166079892
+      Data3: 1047255716
+      Data4: -1639994984
+    Path: event:/Voicelines/Clock Check VL
   subtitlesText: Damn WHATAFUCK
   subtitlesTime: 3
