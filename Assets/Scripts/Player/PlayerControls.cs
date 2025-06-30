@@ -61,7 +61,7 @@ public class PlayerControls : MonoBehaviour
 
     [Space(10)]
     [SerializeField] private string FailScene;
-    [SerializeField] private float KillAnimationRotationSpeed = 60f;
+    [SerializeField] private float KillAnimationRotationTime = 0.3f;
 
     [Space(10)]
     [Header("Debug values")]
@@ -84,6 +84,7 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private Quaternion targetRotation;
     [SerializeField] private Quaternion targetHeadRotation;
     [SerializeField] private ImageFading staminaUI;
+    [SerializeField] private float killAnimationTimer = 0;
 
     private Rigidbody _rb;
     private PlayerInteraction _pickupHandler;
@@ -123,14 +124,6 @@ public class PlayerControls : MonoBehaviour
         {
             Move();
         }
-
-        if (IsInKillAnimation())
-        {
-            float step = KillAnimationRotationSpeed * Time.deltaTime;
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, step);
-            // head.transform.rotation = Quaternion.RotateTowards(head.transform.rotation, targetHeadRotation, step);
-        }
-        // Debug.DrawRay(transform.position, transform.up, Color.red, StandingHeight);
     }
 
     private void GroundedCheck()
@@ -352,17 +345,60 @@ public class PlayerControls : MonoBehaviour
         return false;
     }
 
-    public void StartKillAnimation(EnemyBehaviour target)
+    public void Die()
     {
-        DisableMovement();
-        _isInKillAnimation = true;
-        // transform.LookAt(target.transform);
+        
+    }
+
+    private IEnumerator KillAnimationCameraPan(EnemyBehaviour target)
+    {
+        killAnimationTimer = 0;
+        // float step = KillAnimationRotationSpeed * Time.deltaTime;
+        // transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, step);
         Vector3 relativePos = target.transform.position - transform.position;
         targetRotation = Quaternion.LookRotation(relativePos);
         targetRotation = Quaternion.Euler(0, targetRotation.eulerAngles.y, 0);
 
         targetHeadRotation = Quaternion.LookRotation(relativePos + new Vector3(0, target.GetHeight(), 0));
         targetHeadRotation = Quaternion.Euler(targetHeadRotation.eulerAngles.x, 0, 0);
+
+        // float curAngle = Quaternion.Angle(transform.rotation, targetRotation);
+
+        while (killAnimationTimer < KillAnimationRotationTime)
+        {
+            // current and new rotation as float ranging forom 0 to 1
+            float curRot = killAnimationTimer / KillAnimationRotationTime;
+            // formula increasing between (0, 0) and (1, 1), slower increase near the start and near the end
+            curRot = -2 * Mathf.Pow(curRot, 3) + 3 * Mathf.Pow(curRot, 2);
+            // Debug.Log("time: " + (lookAroundTimer / AlertToRoamingTime).ToString() + "rotation: " + curRot);
+            killAnimationTimer += Time.deltaTime;
+            float newRot = killAnimationTimer / KillAnimationRotationTime;
+            newRot = -2 * Mathf.Pow(newRot, 3) + 3 * Mathf.Pow(newRot, 2);
+
+            // get a "forward vector" for each rotation
+            var forwardA = transform.forward;
+            var forwardB = targetRotation * Vector3.forward;
+
+            // get a numeric angle for each vector, on the X-Z plane (relative to world forward)
+            var angleA = Mathf.Atan2(forwardA.x, forwardA.z) * Mathf.Rad2Deg;
+            var angleB = Mathf.Atan2(forwardB.x, forwardB.z) * Mathf.Rad2Deg;
+
+            // get the signed difference in these angles
+            var angleDiff = Mathf.DeltaAngle( angleA, angleB );
+
+            float fullAngle = angleDiff / killAnimationTimer * KillAnimationRotationTime;
+            transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0, (newRot - curRot) * fullAngle, 0));
+            // curAngle = Quaternion.Angle(transform.rotation, targetRotation);
+            yield return null;
+        }
+    }
+
+    public void StartKillAnimation(EnemyBehaviour target)
+    {
+        DisableMovement();
+        _isInKillAnimation = true;
+        StartCoroutine(KillAnimationCameraPan(target));
+        // transform.LookAt(target.transform);
         // head.transform.LookAt(target.transform.position + new Vector3(0, target.GetHeight(), 0));
     }
 

@@ -188,7 +188,7 @@ public class EnemyBehaviour : MonoBehaviour
         else if (newState == State.KillAnimation)
         {
             _navMeshAgent.destination = transform.position;
-            OnKillAnimationStart();
+            OnKillAnimationStart?.Invoke();
             if (_animator != null)
             {
                 // _animator.Play(attackAnimationName);
@@ -372,7 +372,7 @@ public class EnemyBehaviour : MonoBehaviour
             if (stateTimer >= knockoutTime)
             {
                 _collider.enabled = true;
-                OnKillAnimationEnd();
+                OnKillAnimationEnd?.Invoke();
                 ChangeState(State.Roaming);
             }
         }
@@ -465,7 +465,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     private void KillPlayer()
     {
-        OnKillAnimationEnd();
+        OnKillAnimationEnd?.Invoke();
         SceneManager.LoadScene(failSceneName);
         Cursor.lockState = CursorLockMode.None;
     }
