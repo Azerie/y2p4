@@ -81,7 +81,7 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private Vector3 currentSlopeNormal = Vector3.up;
     [SerializeField] private Quaternion targetRotation;
     [SerializeField] private Quaternion targetHeadRotation;
-
+    [SerializeField] private ImageFading staminaUI;
 
     private Rigidbody _rb;
     private PlayerInteraction _pickupHandler;
@@ -103,13 +103,18 @@ public class PlayerControls : MonoBehaviour
 
     private void Awake()
     {
-        EvidenceJournal = GameObject.Find("EvidenceJournal").GetComponent<Canvas>();
+        GameObject evidenceJournalTemp = GameObject.Find("EvidenceJournal");
+        if (evidenceJournalTemp != null) { EvidenceJournal = evidenceJournalTemp.GetComponent<Canvas>(); }
         skillcheck = FindObjectOfType<SkillCheck>();
+        GameObject staminaUITemp = GameObject.Find("StaminaUI");
+        if (staminaUITemp != null) { staminaUI = staminaUITemp.GetComponent<ImageFading>(); }
         Cursor.visible = false;
     }
 
     void Update()
     {
+        Debug.DrawRay(transform.position, transform.up * StandingHeight, Color.blue);
+
         GroundedCheck();
         ApplyGravity();
         if (isEnabled)
@@ -146,7 +151,7 @@ public class PlayerControls : MonoBehaviour
             // stop our velocity dropping infinitely when grounded
             if (_verticalVelocity < 0.0f)
             {
-                _verticalVelocity = -2f;
+                _verticalVelocity = -0.1f;
             }
         }
     }
@@ -156,6 +161,17 @@ public class PlayerControls : MonoBehaviour
         if (_stamina <= 0)
         {
             _isSprinting = false;
+            if (staminaUI != null)
+            {
+                staminaUI.FadeIn();
+            }
+        }
+        else if (_stamina >= MaxStamina / 4)
+        {
+            if (staminaUI != null)
+            {
+                staminaUI.FadeOut();
+            }
         }
         // set target speed based on move speed, sprint speed and if sprint is pressed
         float targetSpeed = _isSprinting ? SprintSpeed : MoveSpeed;
@@ -177,6 +193,10 @@ public class PlayerControls : MonoBehaviour
 
         // a reference to the players current horizontal velocity
         float currentHorizontalSpeed = new Vector3(_rb.velocity.x, 0.0f, _rb.velocity.z).magnitude;
+        if (Grounded && SlopeCheck())
+        {
+            currentHorizontalSpeed = (Quaternion.FromToRotation(currentSlopeNormal, Vector3.up) * _rb.velocity).magnitude;
+        }
 
         float speedOffset = 0.1f;
         float inputMagnitude = 1f;
@@ -276,6 +296,7 @@ public class PlayerControls : MonoBehaviour
     {
         if (isEnabled)
         {
+            RaycastHit hit;
             if (!_isCrouching)
             {
                 _hitbox.height = CrouchHeight;
@@ -284,13 +305,17 @@ public class PlayerControls : MonoBehaviour
                 _isSprinting = false;
                 _isCrouching = true;
             }
-            else if (!Physics.Raycast(transform.position, transform.up, StandingHeight, GroundLayers))
+            else if (!Physics.Raycast(transform.position, transform.up, out hit, StandingHeight, GroundLayers))
             {
                 _hitbox.height = StandingHeight;
                 _hitbox.center = new Vector3(0, StandingHeight / 2, 0);
                 head.localPosition = new Vector3(0, head.position.y + StandingHeight - CrouchHeight, 0);
                 _isCrouching = false;
             }   
+            else
+            {
+                Debug.Log("Couldn't uncrouch, hit " + hit.transform.gameObject.name);
+            }
         }
     }
 
