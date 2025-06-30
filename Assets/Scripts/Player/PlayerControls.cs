@@ -54,8 +54,10 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private float MaxStamina = 5f;
     [Tooltip("Full stamina recovery time (in seconds)")]
     [SerializeField] private float StaminaRecoveryRate = 3f;
-    [SerializeField] private float StandingHeight = 2f;
-    [SerializeField] private float CrouchHeight = 1f;
+    [SerializeField] private float HitboxStandingHeight = 1.5f;
+    [SerializeField] private float HitboxCrouchHeight = 1f;
+    [SerializeField] private float HeadStandingHeight = 1.375f;
+    [SerializeField] private float HeadCrouchHeight = 0.875f;
 
     [Space(10)]
     [SerializeField] private string FailScene;
@@ -113,7 +115,7 @@ public class PlayerControls : MonoBehaviour
 
     void Update()
     {
-        Debug.DrawRay(transform.position, transform.up * StandingHeight, Color.blue);
+        Debug.DrawRay(transform.position, transform.up * HitboxStandingHeight, Color.blue);
 
         GroundedCheck();
         ApplyGravity();
@@ -299,17 +301,17 @@ public class PlayerControls : MonoBehaviour
             RaycastHit hit;
             if (!_isCrouching)
             {
-                _hitbox.height = CrouchHeight;
-                _hitbox.center = new Vector3(0, CrouchHeight / 2, 0);
-                head.localPosition = new Vector3(0, head.position.y + CrouchHeight - StandingHeight, 0);
+                _hitbox.height = HitboxCrouchHeight;
+                _hitbox.center = new Vector3(0, HitboxCrouchHeight / 2, 0);
+                head.localPosition = new Vector3(0, HeadCrouchHeight, 0);
                 _isSprinting = false;
                 _isCrouching = true;
             }
-            else if (!Physics.Raycast(transform.position, transform.up, out hit, StandingHeight, GroundLayers))
+            else if (!Physics.Raycast(transform.position, transform.up, out hit, HitboxStandingHeight, GroundLayers))
             {
-                _hitbox.height = StandingHeight;
-                _hitbox.center = new Vector3(0, StandingHeight / 2, 0);
-                head.localPosition = new Vector3(0, head.position.y + StandingHeight - CrouchHeight, 0);
+                _hitbox.height = HitboxStandingHeight;
+                _hitbox.center = new Vector3(0, HitboxStandingHeight / 2, 0);
+                head.localPosition = new Vector3(0, HeadStandingHeight, 0);
                 _isCrouching = false;
             }   
             else
