@@ -9,6 +9,7 @@ public class ClockPuzzlePieceBehaviour : InteractableBehaviourAbstract
     public override void OnInteract()
     {
         // Debug.Log("puzzle position interacted");
+        base.OnInteract();
         clockHand.SetClockInPosition(transform);
     }
 

@@ -238,7 +238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8d634974c4579d3bbf1a451f822030c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playSceneName: level-blockout A
+  playSceneName: level-blockout A 1
   menuSceneName: MainMenu
 --- !u!1 &910599577
 GameObject:

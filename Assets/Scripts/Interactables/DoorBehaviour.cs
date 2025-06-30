@@ -50,8 +50,8 @@ public class DoorBehaviour : InteractableBehaviourAbstract
     public override void OnInteract()
     {
         // Debug.Log("interacted");
-        if (requiredItem != null) {
-            if (PlayerInventory.GetInstance().HasItem(requiredItem))
+        if(requiredItem != null) {
+            if (PlayerInventory.GetInstance().GetSelectedItem() == requiredItem)
             {
                 Use();
                 PlayerInventory.GetInstance().RemoveItem(requiredItem);
@@ -80,7 +80,7 @@ public class DoorBehaviour : InteractableBehaviourAbstract
 
     public void Open()
     {
-        Debug.Log("Door opened");
+        // Debug.Log("Door opened");
         if (!openSound.IsNull)
         {
             RuntimeManager.PlayOneShot(openSound, transform.position);
@@ -99,7 +99,7 @@ public class DoorBehaviour : InteractableBehaviourAbstract
 
     public void Close()
     {
-        Debug.Log("Door closed");
+        // Debug.Log("Door closed");
 
         if (!closeSound.IsNull)
         {

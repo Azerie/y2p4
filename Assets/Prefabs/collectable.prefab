@@ -126,6 +126,7 @@ MonoBehaviour:
       Data3: 1303637648
       Data4: -178225152
     Path: event:/Interactables/Evidence pickup
+  pickupVoiceline: {fileID: 0}
   collectableInfo: {fileID: 11400000, guid: 239faaf086eb2d686bf5fff0df350536, type: 2}
 --- !u!1001 &970398823706182236
 PrefabInstance:
@@ -135,6 +136,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2736989933235681919}
     m_Modifications:
+    - target: {fileID: 1709170773446728230, guid: 6bbf8f02e9f96314b80f906fa7943d66, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 99558f2f03a18ea40bb104c8b637d6c7, type: 2}
     - target: {fileID: 1721367572368148490, guid: 6bbf8f02e9f96314b80f906fa7943d66, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

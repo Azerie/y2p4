@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 4633051154041580205}
   - component: {fileID: 5163135104322859254}
   m_Layer: 5
-  m_Name: PauseMenu
+  m_Name: MainCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -167,6 +167,7 @@ RectTransform:
   - {fileID: 6827439616203435977}
   - {fileID: 3598841778063435443}
   - {fileID: 1744774620992903948}
+  - {fileID: 5188103595528506971}
   m_Father: {fileID: 3505072454830441165}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -715,7 +716,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4483599031869983858}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -724,7 +725,7 @@ RectTransform:
   - {fileID: 4285180542707336694}
   - {fileID: 8799825156311739489}
   - {fileID: 1783800340208767684}
-  m_Father: {fileID: 3505072454830441165}
+  m_Father: {fileID: 7645057495902290954}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -1243,7 +1244,6 @@ RectTransform:
   m_Children:
   - {fileID: 6024779319711501478}
   - {fileID: 7645057495902290954}
-  - {fileID: 5188103595528506971}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

@@ -59,6 +59,7 @@ public class PlayerControls : MonoBehaviour
 
     [Space(10)]
     [SerializeField] private string FailScene;
+    [SerializeField] private float KillAnimationRotationSpeed = 60f;
 
     [Space(10)]
     [Header("Debug values")]
@@ -71,17 +72,22 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private bool _isSprinting = false;
     [SerializeField] private bool _isCrouching = false;
     [SerializeField] private bool _isInKillAnimation = false;
-    [SerializeField] private float _jumpTimeoutDelta = 0f;
+    // [SerializeField] private float _jumpTimeoutDelta = 0f;
     [SerializeField] private float _cameraYrotation = 0f;
 
     [SerializeField] private Vector2 moveInput = Vector2.zero;
     [SerializeField] private Vector2 lookInput = Vector2.zero;
     [SerializeField] private bool isEnabled = true;
     [SerializeField] private Vector3 currentSlopeNormal = Vector3.up;
+    [SerializeField] private Quaternion targetRotation;
+    [SerializeField] private Quaternion targetHeadRotation;
+
 
     private Rigidbody _rb;
     private PlayerInteraction _pickupHandler;
     private CapsuleCollider _hitbox;
+    [SerializeField] private Transform head;
+    [SerializeField] private SkillCheck skillcheck;
     private Canvas EvidenceJournal;
 
     void Start()
@@ -91,12 +97,14 @@ public class PlayerControls : MonoBehaviour
         _pickupHandler = GetComponentInChildren<PlayerInteraction>();
         _health = MaxHealth;
         _stamina = MaxStamina;
-        EvidenceJournal = GameObject.Find("EvidenceJournal").GetComponent<Canvas>();
         isEnabled = true;
+        head = GetComponentInChildren<PlayerInteraction>().transform;
     }
 
     private void Awake()
     {
+        EvidenceJournal = GameObject.Find("EvidenceJournal").GetComponent<Canvas>();
+        skillcheck = FindObjectOfType<SkillCheck>();
         Cursor.visible = false;
     }
 
@@ -109,6 +117,12 @@ public class PlayerControls : MonoBehaviour
             Move();
         }
 
+        if (IsInKillAnimation())
+        {
+            float step = KillAnimationRotationSpeed * Time.deltaTime;
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, step);
+            // head.transform.rotation = Quaternion.RotateTowards(head.transform.rotation, targetHeadRotation, step);
+        }
         // Debug.DrawRay(transform.position, transform.up, Color.red, StandingHeight);
     }
 
@@ -132,7 +146,7 @@ public class PlayerControls : MonoBehaviour
             // stop our velocity dropping infinitely when grounded
             if (_verticalVelocity < 0.0f)
             {
-                _verticalVelocity = -0.1f;
+                _verticalVelocity = -2f;
             }
         }
     }
@@ -224,7 +238,7 @@ public class PlayerControls : MonoBehaviour
         // }
 
         // FindObjectOfType<SkillCheck>().DebugFunc();
-        FindObjectOfType<SkillCheck>().EndMinigame();
+        skillcheck.EndMinigame();
     }
 
     private void OnInteract()
@@ -239,7 +253,8 @@ public class PlayerControls : MonoBehaviour
             _rotationVelocity = value.Get<Vector2>().x * Sensitivity;
 
             // rotate the player left and right
-            _rb.MoveRotation(transform.rotation * Quaternion.Euler(Vector3.up * _rotationVelocity));
+            // _rb.MoveRotation(transform.rotation * Quaternion.Euler(Vector3.up * _rotationVelocity));
+            transform.rotation = transform.rotation * Quaternion.Euler(Vector3.up * _rotationVelocity);
 
             Transform head = GetComponentInChildren<Camera>().transform.parent;
             _cameraYrotation -= value.Get<Vector2>().y * Sensitivity;
@@ -264,12 +279,16 @@ public class PlayerControls : MonoBehaviour
             if (!_isCrouching)
             {
                 _hitbox.height = CrouchHeight;
+                _hitbox.center = new Vector3(0, CrouchHeight / 2, 0);
+                head.localPosition = new Vector3(0, head.position.y + CrouchHeight - StandingHeight, 0);
                 _isSprinting = false;
                 _isCrouching = true;
             }
             else if (!Physics.Raycast(transform.position, transform.up, StandingHeight, GroundLayers))
             {
                 _hitbox.height = StandingHeight;
+                _hitbox.center = new Vector3(0, StandingHeight / 2, 0);
+                head.localPosition = new Vector3(0, head.position.y + StandingHeight - CrouchHeight, 0);
                 _isCrouching = false;
             }   
         }
@@ -310,10 +329,14 @@ public class PlayerControls : MonoBehaviour
     {
         DisableMovement();
         _isInKillAnimation = true;
-        transform.LookAt(target.transform);
-        transform.rotation = Quaternion.Euler(0, transform.rotation.y, 0);
-        Transform head = GetComponentInChildren<Camera>().transform.parent;
-        head.transform.LookAt(target.transform.position + new Vector3(0, target.GetHeight(), 0));
+        // transform.LookAt(target.transform);
+        Vector3 relativePos = target.transform.position - transform.position;
+        targetRotation = Quaternion.LookRotation(relativePos);
+        targetRotation = Quaternion.Euler(0, targetRotation.eulerAngles.y, 0);
+
+        targetHeadRotation = Quaternion.LookRotation(relativePos + new Vector3(0, target.GetHeight(), 0));
+        targetHeadRotation = Quaternion.Euler(targetHeadRotation.eulerAngles.x, 0, 0);
+        // head.transform.LookAt(target.transform.position + new Vector3(0, target.GetHeight(), 0));
     }
 
     public void ExitKillAnimation()

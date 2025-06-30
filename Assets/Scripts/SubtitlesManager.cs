@@ -22,6 +22,7 @@ public class SubtitlesManager : MonoBehaviour
     public static void SetSubtitles(Voiceline line)
     {
         Instance.currentVoiceline = line;
+        OnSubtitleChanged();
     }
 
     public static Voiceline GetCurrentSubtitles()
