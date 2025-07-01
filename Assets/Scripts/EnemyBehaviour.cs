@@ -16,6 +16,8 @@ public class EnemyBehaviour : MonoBehaviour
     [SerializeField] private Transform pointsParent;
     [Tooltip("How far away the enemy detects player when player is not in vision cone")]
     [SerializeField] private float proximityDetectionRange = 1f;
+    [Tooltip("How far away the enemy detects player when player is running and is not in vision cone")]
+    [SerializeField] private float proximityRunningDetectionRange = 4f;
     [Tooltip("How far away the enemy detects player when player is in vision cone")]
     [SerializeField] private float detectionRange = 5f;
     [Tooltip("1/2 of the angle of the detection cone (in degrees)")]
@@ -38,7 +40,6 @@ public class EnemyBehaviour : MonoBehaviour
     [SerializeField] private float MinDetectionCoefAlert = 0.5f;
 
     [SerializeField] private bool failEnabled = true;
-    [SerializeField] private string failSceneName = "MainMenu";
     [SerializeField] private float killAnimationTime = 0.5f;
     [SerializeField] private float knockoutTime = 2f;
     [SerializeField] private bool isLethal = true;
@@ -188,7 +189,7 @@ public class EnemyBehaviour : MonoBehaviour
         else if (newState == State.KillAnimation)
         {
             _navMeshAgent.destination = transform.position;
-            OnKillAnimationStart();
+            OnKillAnimationStart?.Invoke();
             if (_animator != null)
             {
                 // _animator.Play(attackAnimationName);
@@ -363,6 +364,7 @@ public class EnemyBehaviour : MonoBehaviour
                 else
                 {
                     KillPlayer();
+                    ChangeState(State.Roaming);
                 }
             }
         }
@@ -372,7 +374,7 @@ public class EnemyBehaviour : MonoBehaviour
             if (stateTimer >= knockoutTime)
             {
                 _collider.enabled = true;
-                OnKillAnimationEnd();
+                OnKillAnimationEnd?.Invoke();
                 ChangeState(State.Roaming);
             }
         }
@@ -394,6 +396,10 @@ public class EnemyBehaviour : MonoBehaviour
     private bool IsPlayerClose()
     {
         Vector3 directLine = player.position - transform.position;
+        if (player.GetComponent<PlayerControls>().IsSprinting())
+        {
+            return directLine.magnitude < proximityRunningDetectionRange;
+        }
         return directLine.magnitude < proximityDetectionRange;
     }
 
@@ -465,9 +471,8 @@ public class EnemyBehaviour : MonoBehaviour
 
     private void KillPlayer()
     {
-        OnKillAnimationEnd();
-        SceneManager.LoadScene(failSceneName);
-        Cursor.lockState = CursorLockMode.None;
+        OnKillAnimationEnd?.Invoke();
+        player.GetComponent<PlayerControls>().Die();
     }
 
     public State GetState() { return state; }

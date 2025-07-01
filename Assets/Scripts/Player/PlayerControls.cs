@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem.Controls;
 
 public class PlayerControls : MonoBehaviour
 {
@@ -25,6 +26,9 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private float Gravity = -15.0f;
     // [Tooltip("Time required to pass before being able to jump again. Set to 0f to instantly jump again")]
     // [SerializeField] private float JumpTimeout = 0.1f;
+    [SerializeField] private Transform respawnPoint;
+    [SerializeField] private DeathScreen deathScreen;
+    [SerializeField] private GameObject sprintPopup;
 
     [Space(10)]
     [Header("Player Grounded")]
@@ -54,12 +58,15 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private float MaxStamina = 5f;
     [Tooltip("Full stamina recovery time (in seconds)")]
     [SerializeField] private float StaminaRecoveryRate = 3f;
-    [SerializeField] private float StandingHeight = 2f;
-    [SerializeField] private float CrouchHeight = 1f;
+    [SerializeField] private float HitboxStandingHeight = 1.5f;
+    [SerializeField] private float HitboxCrouchHeight = 1f;
+    [SerializeField] private float HeadStandingHeight = 1.375f;
+    [SerializeField] private float HeadCrouchHeight = 0.875f;
 
     [Space(10)]
-    [SerializeField] private string FailScene;
-    [SerializeField] private float KillAnimationRotationSpeed = 60f;
+    [SerializeField] private string FailScene = "MainMenu";
+    [SerializeField] private float KillAnimationRotationTime = 0.3f;
+    [SerializeField] private float KillAnimationCameraAngle = -10f;
 
     [Space(10)]
     [Header("Debug values")]
@@ -82,6 +89,7 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private Quaternion targetRotation;
     [SerializeField] private Quaternion targetHeadRotation;
     [SerializeField] private ImageFading staminaUI;
+    [SerializeField] private float killAnimationTimer = 0;
 
     private Rigidbody _rb;
     private PlayerInteraction _pickupHandler;
@@ -89,6 +97,11 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private Transform head;
     [SerializeField] private SkillCheck skillcheck;
     private Canvas EvidenceJournal;
+
+    public InputActionAsset asset;
+    private InputAction inputAction;
+    private ButtonControl buttonControl;
+    private bool isFirstSprint = true;
 
     void Start()
     {
@@ -109,11 +122,15 @@ public class PlayerControls : MonoBehaviour
         GameObject staminaUITemp = GameObject.Find("StaminaUI");
         if (staminaUITemp != null) { staminaUI = staminaUITemp.GetComponent<ImageFading>(); }
         Cursor.visible = false;
+
+        inputAction = asset.FindAction("Sprint");
+        buttonControl = (ButtonControl)inputAction.controls[0];
+        inputAction.Enable();
     }
 
     void Update()
     {
-        Debug.DrawRay(transform.position, transform.up * StandingHeight, Color.blue);
+        Debug.DrawRay(transform.position, transform.up * HitboxStandingHeight, Color.blue);
 
         GroundedCheck();
         ApplyGravity();
@@ -121,14 +138,6 @@ public class PlayerControls : MonoBehaviour
         {
             Move();
         }
-
-        if (IsInKillAnimation())
-        {
-            float step = KillAnimationRotationSpeed * Time.deltaTime;
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, step);
-            // head.transform.rotation = Quaternion.RotateTowards(head.transform.rotation, targetHeadRotation, step);
-        }
-        // Debug.DrawRay(transform.position, transform.up, Color.red, StandingHeight);
     }
 
     private void GroundedCheck()
@@ -158,6 +167,35 @@ public class PlayerControls : MonoBehaviour
 
     private void Move()
     {
+        if (buttonControl.wasPressedThisFrame)
+        {
+            if (_isCrouching)
+            {
+                OnCrouch();
+            }
+            if (!_isCrouching)
+            {
+                _isSprinting = true;
+            }
+
+            if (isFirstSprint)
+            {
+                if (sprintPopup != null)
+                {
+                    sprintPopup.SetActive(true);
+                }
+                else
+                {
+                    Debug.LogWarning("Popup reminder about sprint is not assigned");
+                }
+                isFirstSprint = false;
+            }
+        }
+        else if (buttonControl.wasReleasedThisFrame)
+        {
+            _isSprinting = false;
+        }
+
         if (_stamina <= 0)
         {
             _isSprinting = false;
@@ -234,20 +272,20 @@ public class PlayerControls : MonoBehaviour
     {
         moveInput = value.Get<Vector2>();
     }
-    private void OnSprint()
-    {
-        if (isEnabled)
-        {
-            if (_isCrouching)
-            {
-                OnCrouch();
-            }
-            if (!_isCrouching)
-            {
-                _isSprinting = !_isSprinting;
-            }
-        }
-    }
+    // private void OnSprint()
+    // {
+    //     if (isEnabled)
+    //     {
+    //         if (_isCrouching)
+    //         {
+    //             OnCrouch();
+    //         }
+    //         if (!_isCrouching)
+    //         {
+    //             _isSprinting = !_isSprinting;
+    //         }
+    //     }
+    // }
 
     private void OnSpace()
     {
@@ -299,17 +337,17 @@ public class PlayerControls : MonoBehaviour
             RaycastHit hit;
             if (!_isCrouching)
             {
-                _hitbox.height = CrouchHeight;
-                _hitbox.center = new Vector3(0, CrouchHeight / 2, 0);
-                head.localPosition = new Vector3(0, head.position.y + CrouchHeight - StandingHeight, 0);
+                _hitbox.height = HitboxCrouchHeight;
+                _hitbox.center = new Vector3(0, HitboxCrouchHeight / 2, 0);
+                head.localPosition = new Vector3(0, HeadCrouchHeight, 0);
                 _isSprinting = false;
                 _isCrouching = true;
             }
-            else if (!Physics.Raycast(transform.position, transform.up, out hit, StandingHeight, GroundLayers))
+            else if (!Physics.Raycast(transform.position, transform.up, out hit, HitboxStandingHeight, GroundLayers))
             {
-                _hitbox.height = StandingHeight;
-                _hitbox.center = new Vector3(0, StandingHeight / 2, 0);
-                head.localPosition = new Vector3(0, head.position.y + StandingHeight - CrouchHeight, 0);
+                _hitbox.height = HitboxStandingHeight;
+                _hitbox.center = new Vector3(0, HitboxStandingHeight / 2, 0);
+                head.localPosition = new Vector3(0, HeadStandingHeight, 0);
                 _isCrouching = false;
             }   
             else
@@ -350,17 +388,104 @@ public class PlayerControls : MonoBehaviour
         return false;
     }
 
-    public void StartKillAnimation(EnemyBehaviour target)
+    public void Die()
     {
         DisableMovement();
-        _isInKillAnimation = true;
-        // transform.LookAt(target.transform);
+        if (deathScreen != null)
+        {
+            deathScreen.Die();
+        }
+        else
+        {
+            Debug.Log("Death screen not set, loading fail scene instead");
+            SceneManager.LoadScene(FailScene);
+        }
+    }
+
+    public void Respawn()
+    {
+        if (respawnPoint != null)
+        {
+            transform.position = respawnPoint.position;
+        }
+        else
+        {
+            Debug.Log("Respawn point not set");
+        }
+        EnableMovement();
+    }
+
+    private IEnumerator KillAnimationCameraPan(EnemyBehaviour target)
+    {
+        killAnimationTimer = 0;
+        // float step = KillAnimationRotationSpeed * Time.deltaTime;
+        // transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, step);
         Vector3 relativePos = target.transform.position - transform.position;
         targetRotation = Quaternion.LookRotation(relativePos);
         targetRotation = Quaternion.Euler(0, targetRotation.eulerAngles.y, 0);
 
-        targetHeadRotation = Quaternion.LookRotation(relativePos + new Vector3(0, target.GetHeight(), 0));
-        targetHeadRotation = Quaternion.Euler(targetHeadRotation.eulerAngles.x, 0, 0);
+        targetHeadRotation = Quaternion.Euler(KillAnimationCameraAngle, 0, 0);
+        // Debug.Log(targetHeadRotation.eulerAngles);
+        // Debug.Log(head.localEulerAngles);
+
+        // var aforwardA = head.transform.localRotation * Vector3.forward;
+        // var aforwardB = targetHeadRotation * Vector3.forward;
+        // Debug.Log(aforwardA);
+        // Debug.Log(aforwardB);
+        // var aangleA = Mathf.Atan2(aforwardA.y, aforwardA.z) * Mathf.Rad2Deg;
+        // var aangleB = Mathf.Atan2(aforwardB.y, aforwardB.z) * Mathf.Rad2Deg;
+        // var aangleDiff = Mathf.DeltaAngle(aangleA, aangleB);
+        // Debug.Log(aangleDiff);
+
+
+        // float curAngle = Quaternion.Angle(transform.rotation, targetRotation);
+
+        while (killAnimationTimer < KillAnimationRotationTime)
+        {
+            // current and new rotation as float ranging forom 0 to 1
+            float curRot = killAnimationTimer / KillAnimationRotationTime;
+            // formula increasing between (0, 0) and (1, 1), slower increase near the start and near the end
+            curRot = -2 * Mathf.Pow(curRot, 3) + 3 * Mathf.Pow(curRot, 2);
+            // Debug.Log("time: " + (lookAroundTimer / AlertToRoamingTime).ToString() + "rotation: " + curRot);
+            killAnimationTimer += Time.deltaTime;
+            float newRot = killAnimationTimer / KillAnimationRotationTime;
+            newRot = -2 * Mathf.Pow(newRot, 3) + 3 * Mathf.Pow(newRot, 2);
+
+            // get a "forward vector" for each rotation
+            var forwardA = transform.forward;
+            var forwardB = targetRotation * Vector3.forward;
+
+            // get a numeric angle for each vector, on the X-Z plane (relative to world forward)
+            var angleA = Mathf.Atan2(forwardA.x, forwardA.z) * Mathf.Rad2Deg;
+            var angleB = Mathf.Atan2(forwardB.x, forwardB.z) * Mathf.Rad2Deg;
+
+            // get the signed difference in these angles
+            var angleDiff = Mathf.DeltaAngle(angleA, angleB);
+
+            float fullAngle = angleDiff / killAnimationTimer * KillAnimationRotationTime;
+            transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0, (newRot - curRot) * fullAngle, 0));
+            // curAngle = Quaternion.Angle(transform.rotation, targetRotation);
+
+            // same for the head rotation
+            forwardA = head.transform.localRotation * Vector3.forward;
+            forwardB = targetHeadRotation * Vector3.forward;
+            angleA = Mathf.Atan2(forwardA.y, forwardA.z) * Mathf.Rad2Deg;
+            angleB = Mathf.Atan2(forwardB.y, forwardB.z) * Mathf.Rad2Deg;
+            angleDiff = Mathf.DeltaAngle(angleA, angleB);
+
+            fullAngle = angleDiff / killAnimationTimer * KillAnimationRotationTime;
+            head.transform.localRotation = Quaternion.Euler(head.transform.localRotation.eulerAngles + new Vector3(-(newRot - curRot) * fullAngle, 0, 0));
+
+            yield return null;
+        }
+    }
+
+    public void StartKillAnimation(EnemyBehaviour target)
+    {
+        DisableMovement();
+        _isInKillAnimation = true;
+        StartCoroutine(KillAnimationCameraPan(target));
+        // transform.LookAt(target.transform);
         // head.transform.LookAt(target.transform.position + new Vector3(0, target.GetHeight(), 0));
     }
 
