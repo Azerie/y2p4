@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6c3ee6d3806270a29037880a9b22941, type: 3}
   m_Name: basement note
   m_EditorClassIdentifier: 
-  collectableName: 
-  journalEntry: 'Entry 217 September 25th ???   The smell coming from the basement
-    is killing me. It smells like something or someone died in there. I was trying
-    to open the door and get in but got stopped when the son came walking by. It
-    was a close one, but luckily he believed I was lost looking for a bathroom. I
-    can''t take the risk anymore. First thing tomorrow I''m getting out of here. '
+  collectableName: 'Entry 217 September 25th ???   '
+  journalEntry: 'The smell coming from the basement is killing me. It smells like
+    something or someone died in there. I was trying to open the door and get in
+    but got stopped when the son came walking by. It was a close one, but luckily
+    he believed I was lost looking for a bathroom. I can''t take the risk anymore.
+    First thing tomorrow I''m getting out of here. '
   icon: {fileID: 0}
