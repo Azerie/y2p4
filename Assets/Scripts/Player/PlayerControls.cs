@@ -64,7 +64,7 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private float HeadCrouchHeight = 0.875f;
 
     [Space(10)]
-    [SerializeField] private string FailScene;
+    [SerializeField] private string FailScene = "MainMenu";
     [SerializeField] private float KillAnimationRotationTime = 0.3f;
     [SerializeField] private float KillAnimationCameraAngle = -10f;
 
@@ -391,7 +391,15 @@ public class PlayerControls : MonoBehaviour
     public void Die()
     {
         DisableMovement();
-        deathScreen.Die();
+        if (deathScreen != null)
+        {
+            deathScreen.Die();
+        }
+        else
+        {
+            Debug.Log("Death screen not set, loading fail scene instead");
+            SceneManager.LoadScene(FailScene);
+        }
     }
 
     public void Respawn()

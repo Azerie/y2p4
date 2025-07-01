@@ -40,7 +40,6 @@ public class EnemyBehaviour : MonoBehaviour
     [SerializeField] private float MinDetectionCoefAlert = 0.5f;
 
     [SerializeField] private bool failEnabled = true;
-    [SerializeField] private string failSceneName = "MainMenu";
     [SerializeField] private float killAnimationTime = 0.5f;
     [SerializeField] private float knockoutTime = 2f;
     [SerializeField] private bool isLethal = true;
