@@ -25,6 +25,8 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private float Gravity = -15.0f;
     // [Tooltip("Time required to pass before being able to jump again. Set to 0f to instantly jump again")]
     // [SerializeField] private float JumpTimeout = 0.1f;
+    [SerializeField] private Transform respawnPoint;
+    [SerializeField] private DeathScreen deathScreen;
 
     [Space(10)]
     [Header("Player Grounded")]
@@ -347,7 +349,21 @@ public class PlayerControls : MonoBehaviour
 
     public void Die()
     {
-        
+        DisableMovement();
+        deathScreen.Die();
+    }
+
+    public void Respawn()
+    {
+        if (respawnPoint != null)
+        {
+            transform.position = respawnPoint.position;
+        }
+        else
+        {
+            Debug.Log("Respawn point not set");
+        }
+        EnableMovement();
     }
 
     private IEnumerator KillAnimationCameraPan(EnemyBehaviour target)
@@ -384,7 +400,7 @@ public class PlayerControls : MonoBehaviour
             var angleB = Mathf.Atan2(forwardB.x, forwardB.z) * Mathf.Rad2Deg;
 
             // get the signed difference in these angles
-            var angleDiff = Mathf.DeltaAngle( angleA, angleB );
+            var angleDiff = Mathf.DeltaAngle(angleA, angleB);
 
             float fullAngle = angleDiff / killAnimationTimer * KillAnimationRotationTime;
             transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0, (newRot - curRot) * fullAngle, 0));

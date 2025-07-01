@@ -71,7 +71,7 @@ public class SkillCheck : MonoBehaviour
         }
     }
 
-    public bool IsActive() { return isActive; }
+    public bool IsActive() { return canvas.enabled; }
 
     public bool WasLastCheckPassed() { return wasLastCheckPassed; }
 }

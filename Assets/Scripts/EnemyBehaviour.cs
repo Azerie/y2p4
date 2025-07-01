@@ -363,6 +363,7 @@ public class EnemyBehaviour : MonoBehaviour
                 else
                 {
                     KillPlayer();
+                    ChangeState(State.Roaming);
                 }
             }
         }
@@ -466,8 +467,7 @@ public class EnemyBehaviour : MonoBehaviour
     private void KillPlayer()
     {
         OnKillAnimationEnd?.Invoke();
-        SceneManager.LoadScene(failSceneName);
-        Cursor.lockState = CursorLockMode.None;
+        player.GetComponent<PlayerControls>().Die();
     }
 
     public State GetState() { return state; }
