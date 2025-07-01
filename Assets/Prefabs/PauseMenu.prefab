@@ -131,7 +131,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 48.4
+  m_fontSize: 42.4
   m_fontSizeBase: 39.6
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -696,7 +696,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 48.3
+  m_fontSize: 42.35
   m_fontSizeBase: 39.6
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -4186,7 +4186,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 77.1
+  m_fontSize: 67.75
   m_fontSizeBase: 39.6
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -4322,7 +4322,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 48.3
+  m_fontSize: 42.35
   m_fontSizeBase: 39.6
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -4567,7 +4567,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 48.4
+  m_fontSize: 42.4
   m_fontSizeBase: 39.6
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -5524,7 +5524,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 48.4
+  m_fontSize: 42.4
   m_fontSizeBase: 39.6
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -7644,7 +7644,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 115
+  m_fontSize: 105.6
   m_fontSizeBase: 39.6
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -7799,7 +7799,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 48.6
+  m_fontSize: 42.65
   m_fontSizeBase: 39.6
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -8942,7 +8942,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 48.6
+  m_fontSize: 42.65
   m_fontSizeBase: 39.6
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -9720,6 +9720,7 @@ GameObject:
   - component: {fileID: 6368565537706096948}
   - component: {fileID: 8316709625904715509}
   - component: {fileID: 6513048623953078223}
+  - component: {fileID: 2047131886101255009}
   m_Layer: 5
   m_Name: PauseMenu
   m_TagString: PauseMenu
@@ -9874,6 +9875,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuSceneName: MainMenu
   mainCanvas: {fileID: 5898031126343488308}
+--- !u!114 &2047131886101255009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6601784857866365984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e8854ef5641357d5b77ede44fac4129, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuSceneName: MainMenu
+  deathCanvas: {fileID: 6785846941616065805}
+  mainPauseMenu: {fileID: 5995530065778559702}
+  pauseMenu: {fileID: 6513048623953078223}
+  playerControls: {fileID: 0}
 --- !u!1 &6651511842357163862
 GameObject:
   m_ObjectHideFlags: 0

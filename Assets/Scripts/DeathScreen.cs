@@ -6,25 +6,27 @@ using UnityEngine.SceneManagement;
 public class DeathScreen : MonoBehaviour
 {
     [SerializeField] private string menuSceneName = "MainMenu";
-    [SerializeField] private Canvas deathCanvas;
+    [SerializeField] private GameObject deathCanvas;
+    [SerializeField] private GameObject mainPauseMenu;
+    [SerializeField] private PauseMenu pauseMenu;
     [SerializeField] private PlayerControls playerControls;
     void Awake()
     {
         playerControls = FindObjectOfType<PlayerControls>();
-        deathCanvas = GetComponent<Canvas>();
+        pauseMenu = GetComponent<PauseMenu>();
     }
     public void Die()
     {
-        Time.timeScale = 0;
-        deathCanvas.enabled = true;
-        Cursor.lockState = CursorLockMode.None;
+        pauseMenu.Pause();
+        mainPauseMenu.SetActive(false);
+        deathCanvas.SetActive(true);
     }
 
     public void Respawn()
     {
-        Time.timeScale = 1;
-        deathCanvas.enabled = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        pauseMenu.Resume();
+        mainPauseMenu.SetActive(true);
+        deathCanvas.SetActive(false);
 
         if (playerControls != null)
         {
