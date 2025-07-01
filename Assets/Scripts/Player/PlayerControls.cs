@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem.Controls;
 
 public class PlayerControls : MonoBehaviour
 {
@@ -96,6 +97,11 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private SkillCheck skillcheck;
     private Canvas EvidenceJournal;
 
+    public InputActionAsset asset;
+
+    private InputAction inputAction;
+    private ButtonControl buttonControl;
+
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
@@ -115,6 +121,10 @@ public class PlayerControls : MonoBehaviour
         GameObject staminaUITemp = GameObject.Find("StaminaUI");
         if (staminaUITemp != null) { staminaUI = staminaUITemp.GetComponent<ImageFading>(); }
         Cursor.visible = false;
+
+        inputAction = asset.FindAction("Sprint");
+        buttonControl = (ButtonControl)inputAction.controls[0];
+        inputAction.Enable();
     }
 
     void Update()
@@ -156,6 +166,22 @@ public class PlayerControls : MonoBehaviour
 
     private void Move()
     {
+        if (buttonControl.wasPressedThisFrame)
+        {
+            if (_isCrouching)
+            {
+                OnCrouch();
+            }
+            if (!_isCrouching)
+            {
+                _isSprinting = true;
+            }
+        }
+        else if (buttonControl.wasReleasedThisFrame)
+        {
+            _isSprinting = false;
+        }
+
         if (_stamina <= 0)
         {
             _isSprinting = false;
@@ -232,20 +258,20 @@ public class PlayerControls : MonoBehaviour
     {
         moveInput = value.Get<Vector2>();
     }
-    private void OnSprint()
-    {
-        if (isEnabled)
-        {
-            if (_isCrouching)
-            {
-                OnCrouch();
-            }
-            if (!_isCrouching)
-            {
-                _isSprinting = !_isSprinting;
-            }
-        }
-    }
+    // private void OnSprint()
+    // {
+    //     if (isEnabled)
+    //     {
+    //         if (_isCrouching)
+    //         {
+    //             OnCrouch();
+    //         }
+    //         if (!_isCrouching)
+    //         {
+    //             _isSprinting = !_isSprinting;
+    //         }
+    //     }
+    // }
 
     private void OnSpace()
     {
