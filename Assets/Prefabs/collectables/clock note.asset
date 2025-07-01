@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6c3ee6d3806270a29037880a9b22941, type: 3}
   m_Name: clock note
   m_EditorClassIdentifier: 
-  collectableName: 
-  journalEntry: 'Entry 216 September 25th 3:00 AM??   There is something off about
-    the clock in the room. It has not moved since I''ve got here. I think I''m going
-    insane in this house. I wanted to leave this morning but my boots were gone.
-    I asked Anne but she said the dog might have eaten them. I have not seen any
-    sign of a dog since I got here. What is going on? They went out yesterday and
-    came home late. Ever since then a smell has been coming from the basement. '
+  collectableName: 'Entry 216 September 25th 3:00 AM??   '
+  journalEntry: 'There is something off about the clock in the room. It has not moved
+    since I''ve got here. I think I''m going insane in this house. I wanted to leave
+    this morning but my boots were gone. I asked Anne but she said the dog might
+    have eaten them. I have not seen any sign of a dog since I got here. What is
+    going on? They went out yesterday and came home late. Ever since then a smell
+    has been coming from the basement. '
   icon: {fileID: 0}

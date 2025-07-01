@@ -12,12 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6c3ee6d3806270a29037880a9b22941, type: 3}
   m_Name: found stuff note
   m_EditorClassIdentifier: 
-  collectableName: 
-  journalEntry: 'Entry 218 September 25th ???   I managed to unlock the basement
-    door. The smell only grew more intense the further down I went. Only when I lit
-    my candle I could see what caused the stench. Corpses or better yet what was
-    left of them. Most of them were mutilated beyond recognition. Only one of them
-    had his eyes left, It was looking straight at me. Not long after I heard the
-    door open, Klaas was coming. Luckily I was able to hide on time. I need to tell
-    someone! I need to leave! '
+  collectableName: 'Entry 218 September 25th ???   '
+  journalEntry: 'I managed to unlock the basement door. The smell only grew more
+    intense the further down I went. Only when I lit my candle I could see what caused
+    the stench. Corpses or better yet what was left of them. Most of them were mutilated
+    beyond recognition. Only one of them had his eyes left, It was looking straight
+    at me. Not long after I heard the door open, Klaas was coming. Luckily I was
+    able to hide on time. I need to tell someone! I need to leave! '
   icon: {fileID: 0}

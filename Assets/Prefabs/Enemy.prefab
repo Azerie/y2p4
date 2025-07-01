@@ -346,13 +346,14 @@ MonoBehaviour:
   RoamingSpeed: 2
   AlertSpeed: 2.5
   ChasingSpeed: 3
-  MinDetectionCoefRoaming: 3
+  MinDetectionCoefRoaming: 0.2
   MinDetectionCoefAlert: 1
   failEnabled: 1
   failSceneName: MainMenu
   killAnimationTime: 0.5
   knockoutTime: 2
   isLethal: 1
+  stationaryTimes: []
   idleAnimationName: Idle
   walkingAnimationName: Walking
   runningAnimationName: F_Run

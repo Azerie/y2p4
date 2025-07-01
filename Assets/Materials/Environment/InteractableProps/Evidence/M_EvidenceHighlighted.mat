@@ -191,7 +191,7 @@ Material:
     - _DoubleSidedGIMode: 0
     - _DoubleSidedNormalMode: 1
     - _DstBlend: 0
-    - _EdgeStrength: 1.45
+    - _EdgeStrength: 1.14
     - _EmissiveColorMode: 1
     - _EmissiveExposureWeight: 1
     - _EmissiveIntensity: 1
@@ -211,13 +211,13 @@ Material:
     - _HeightTessAmplitude: 2
     - _HeightTessCenter: 0.5
     - _HighLightSharpness: 0.89
-    - _HighlightShowDistance: 1.5
+    - _HighlightShowDistance: 3
     - _InvTilingScale: 1
     - _Ior: 1.5
     - _IridescenceMask: 1
     - _IridescenceThickness: 1
     - _LinkDetailsWithBase: 1
-    - _LookDirectionStrength: 0.74
+    - _LookDirectionStrength: -2.51
     - _MaterialID: 1
     - _Metallic: 0
     - _MetallicRemapMax: 1
