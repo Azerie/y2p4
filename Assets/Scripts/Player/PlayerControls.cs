@@ -64,6 +64,7 @@ public class PlayerControls : MonoBehaviour
     [Space(10)]
     [SerializeField] private string FailScene;
     [SerializeField] private float KillAnimationRotationTime = 0.3f;
+    [SerializeField] private float KillAnimationCameraAngle = -10f;
 
     [Space(10)]
     [Header("Debug values")]
@@ -375,8 +376,19 @@ public class PlayerControls : MonoBehaviour
         targetRotation = Quaternion.LookRotation(relativePos);
         targetRotation = Quaternion.Euler(0, targetRotation.eulerAngles.y, 0);
 
-        targetHeadRotation = Quaternion.LookRotation(relativePos + new Vector3(0, target.GetHeight(), 0));
-        targetHeadRotation = Quaternion.Euler(targetHeadRotation.eulerAngles.x, 0, 0);
+        targetHeadRotation = Quaternion.Euler(KillAnimationCameraAngle, 0, 0);
+        // Debug.Log(targetHeadRotation.eulerAngles);
+        // Debug.Log(head.localEulerAngles);
+
+        // var aforwardA = head.transform.localRotation * Vector3.forward;
+        // var aforwardB = targetHeadRotation * Vector3.forward;
+        // Debug.Log(aforwardA);
+        // Debug.Log(aforwardB);
+        // var aangleA = Mathf.Atan2(aforwardA.y, aforwardA.z) * Mathf.Rad2Deg;
+        // var aangleB = Mathf.Atan2(aforwardB.y, aforwardB.z) * Mathf.Rad2Deg;
+        // var aangleDiff = Mathf.DeltaAngle(aangleA, aangleB);
+        // Debug.Log(aangleDiff);
+
 
         // float curAngle = Quaternion.Angle(transform.rotation, targetRotation);
 
@@ -405,6 +417,17 @@ public class PlayerControls : MonoBehaviour
             float fullAngle = angleDiff / killAnimationTimer * KillAnimationRotationTime;
             transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0, (newRot - curRot) * fullAngle, 0));
             // curAngle = Quaternion.Angle(transform.rotation, targetRotation);
+
+            // same for the head rotation
+            forwardA = head.transform.localRotation * Vector3.forward;
+            forwardB = targetHeadRotation * Vector3.forward;
+            angleA = Mathf.Atan2(forwardA.y, forwardA.z) * Mathf.Rad2Deg;
+            angleB = Mathf.Atan2(forwardB.y, forwardB.z) * Mathf.Rad2Deg;
+            angleDiff = Mathf.DeltaAngle(angleA, angleB);
+
+            fullAngle = angleDiff / killAnimationTimer * KillAnimationRotationTime;
+            head.transform.localRotation = Quaternion.Euler(head.transform.localRotation.eulerAngles + new Vector3(-(newRot - curRot) * fullAngle, 0, 0));
+
             yield return null;
         }
     }
