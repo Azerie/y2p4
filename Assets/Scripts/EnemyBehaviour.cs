@@ -16,6 +16,8 @@ public class EnemyBehaviour : MonoBehaviour
     [SerializeField] private Transform pointsParent;
     [Tooltip("How far away the enemy detects player when player is not in vision cone")]
     [SerializeField] private float proximityDetectionRange = 1f;
+    [Tooltip("How far away the enemy detects player when player is running and is not in vision cone")]
+    [SerializeField] private float proximityRunningDetectionRange = 4f;
     [Tooltip("How far away the enemy detects player when player is in vision cone")]
     [SerializeField] private float detectionRange = 5f;
     [Tooltip("1/2 of the angle of the detection cone (in degrees)")]
@@ -395,6 +397,10 @@ public class EnemyBehaviour : MonoBehaviour
     private bool IsPlayerClose()
     {
         Vector3 directLine = player.position - transform.position;
+        if (player.GetComponent<PlayerControls>().IsSprinting())
+        {
+            return directLine.magnitude < proximityRunningDetectionRange;
+        }
         return directLine.magnitude < proximityDetectionRange;
     }
 

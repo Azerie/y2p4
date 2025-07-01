@@ -28,6 +28,7 @@ public class PlayerControls : MonoBehaviour
     // [SerializeField] private float JumpTimeout = 0.1f;
     [SerializeField] private Transform respawnPoint;
     [SerializeField] private DeathScreen deathScreen;
+    [SerializeField] private GameObject sprintPopup;
 
     [Space(10)]
     [Header("Player Grounded")]
@@ -98,9 +99,9 @@ public class PlayerControls : MonoBehaviour
     private Canvas EvidenceJournal;
 
     public InputActionAsset asset;
-
     private InputAction inputAction;
     private ButtonControl buttonControl;
+    private bool isFirstSprint = true;
 
     void Start()
     {
@@ -175,6 +176,19 @@ public class PlayerControls : MonoBehaviour
             if (!_isCrouching)
             {
                 _isSprinting = true;
+            }
+
+            if (isFirstSprint)
+            {
+                if (sprintPopup != null)
+                {
+                    sprintPopup.SetActive(true);
+                }
+                else
+                {
+                    Debug.LogWarning("Popup reminder about sprint is not assigned");
+                }
+                isFirstSprint = false;
             }
         }
         else if (buttonControl.wasReleasedThisFrame)
