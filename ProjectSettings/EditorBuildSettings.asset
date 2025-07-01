@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 1aed8a58f44b1630a90def1c2cb50f5e
   - enabled: 1
-    path: Assets/Scenes/Start Cutscene.unity
+    path: Assets/Scenes/BOOT upCutscene.unity
     guid: b78bed35f563a314a8be6ab69678c799
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity

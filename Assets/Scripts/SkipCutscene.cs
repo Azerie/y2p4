@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class SkipCutscene : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class SkipCutscene : MonoBehaviour
 
     void Update()
     {
-        if (canSkip && Input.GetKeyDown(KeyCode.Space))
+        if (canSkip && Keyboard.current.spaceKey.wasPressedThisFrame)
         {
             LoadNextScene();
         }
