@@ -11,7 +11,7 @@ public class anotherSceneSwitch : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag(triggeringTag))
+        if (other.transform.parent != null && other.transform.parent.CompareTag(triggeringTag))
         {
             SceneManager.LoadScene(sceneToLoad);
         }
