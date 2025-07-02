@@ -73,6 +73,7 @@ public class EnemyBehaviour : MonoBehaviour
     private bool isPlayerHidden = false;
     private float lookAroundTimer = 0f;
     private float currentStationaryTime;
+    private Vector3 respawnPosition;
     private SkillCheck skillCheck;
     public static event UnityAction OnKillAnimationStart;
     public static event UnityAction OnKillAnimationEnd;
@@ -114,6 +115,7 @@ public class EnemyBehaviour : MonoBehaviour
         {
             _navMeshAgent.destination = points[currentPointIndex].position;
         }
+        respawnPosition = transform.position;
 
         ChangeState(State.Roaming);
     }
@@ -473,6 +475,12 @@ public class EnemyBehaviour : MonoBehaviour
     {
         OnKillAnimationEnd?.Invoke();
         player.GetComponent<PlayerControls>().Die();
+    }
+
+    public void Respawn()
+    {
+        ChangeState(State.Roaming);
+        transform.position = respawnPosition;
     }
 
     public State GetState() { return state; }

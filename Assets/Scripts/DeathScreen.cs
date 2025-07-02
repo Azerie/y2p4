@@ -28,6 +28,10 @@ public class DeathScreen : MonoBehaviour
         mainPauseMenu.SetActive(true);
         deathCanvas.SetActive(false);
 
+        foreach (EnemyBehaviour enemyBehaviour in FindObjectsByType<EnemyBehaviour>(FindObjectsSortMode.None))
+        {
+            enemyBehaviour.Respawn();
+        }
         if (playerControls != null)
         {
             playerControls.Respawn();
