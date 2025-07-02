@@ -273,19 +273,6 @@ public class EnemyBehaviour : MonoBehaviour
         }
         else if (state == State.Alert)
         {
-            if (CanSeePlayer())
-            {
-                if (stateTimer < 0)
-                {
-                    stateTimer = 0;
-                }
-                stateTimer += Time.deltaTime * GetDetectionTimeCoef();
-                if (stateTimer >= AlertToChasingTime)
-                {
-                    ChangeState(State.Chasing);
-                }
-            }
-
             if (IsAtDestination())
             {
                 if (_animator != null)
@@ -301,6 +288,19 @@ public class EnemyBehaviour : MonoBehaviour
                 if (lookAroundTimer <= -AlertToRoamingTime)
                 {
                     ChangeState(State.Roaming);
+                }
+            }
+            
+            if (CanSeePlayer())
+            {
+                if (stateTimer < 0)
+                {
+                    stateTimer = 0;
+                }
+                stateTimer += Time.deltaTime * GetDetectionTimeCoef();
+                if (stateTimer >= AlertToChasingTime)
+                {
+                    ChangeState(State.Chasing);
                 }
             }
         }
@@ -343,7 +343,7 @@ public class EnemyBehaviour : MonoBehaviour
             stateTimer += Time.deltaTime;
             if (stateTimer >= killAnimationTime)
             {
-                if(isLethal)
+                if (isLethal)
                 {
                     KillPlayer();
                 }
