@@ -23,7 +23,7 @@ public class DoorBehaviour : InteractableBehaviourAbstract
     protected Quaternion targetRotation;
 
     private Collider doorCollider;
-    private float disableTime = 1;
+    [SerializeField] private float disableTime = 4f;
 
     void Start()
     {
@@ -67,11 +67,6 @@ public class DoorBehaviour : InteractableBehaviourAbstract
         else
         {
             Use();
-            if (doorCollider != null)
-            {
-                doorCollider.enabled = false;
-            }
-            StartCoroutine(ReenableColliderAfterDelay(disableTime));
         }
     }
 
@@ -95,7 +90,12 @@ public class DoorBehaviour : InteractableBehaviourAbstract
         targetRotation = openRotation;
         isOpen = true;
 
-        
+        if (doorCollider != null)
+        {
+            doorCollider.enabled = false;
+            isMarkedForDestruction = true;
+        }
+        StartCoroutine(ReenableColliderAfterDelay(disableTime));
 
         // this part is for editor buttons to work properly
         GetComponent<NavMeshObstacle>().enabled = false;
@@ -147,6 +147,7 @@ public class DoorBehaviour : InteractableBehaviourAbstract
         if(doorCollider != null)
         {
             doorCollider.enabled = true;
+            isMarkedForDestruction = false;
         }
     }
 }

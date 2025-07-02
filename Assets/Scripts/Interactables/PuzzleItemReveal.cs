@@ -11,7 +11,13 @@ public class PuzzleItemReveal : MonoBehaviour
     }
     public void EndPuzzle()
     {
-        itemInside.SetActive(true);
-        Destroy(gameObject);
+        if (itemInside != null)
+        {
+            itemInside.SetActive(true);
+        }
+        if (gameObject != null)
+        {
+            Destroy(gameObject);
+        }
     }
 }
