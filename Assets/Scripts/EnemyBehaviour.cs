@@ -125,6 +125,7 @@ public class EnemyBehaviour : MonoBehaviour
 
         // Debug.Log(GetDetectionTimeCoef());
         // Debug.Log("Can detect player? " + CanDetectPlayer());
+        // Debug.Log("Can detect player? " + CanDetectPlayer());
         // Debug.Log("Has line of sight to the player? " + HasLineOfSight());
     }
 
@@ -472,6 +473,7 @@ public class EnemyBehaviour : MonoBehaviour
     private void KillPlayer()
     {
         OnKillAnimationEnd?.Invoke();
+        ChangeState(State.Roaming);
         player.GetComponent<PlayerControls>().Die();
     }
 

@@ -6,13 +6,17 @@ public class VoicelineZone : MonoBehaviour
 {
     [SerializeField] private Collectable requiredCollectable;
     [SerializeField] private Voiceline voicelineToPlay;
+    private bool isFirst = true;
     void OnTriggerEnter(Collider other)
     {
         if (other.transform.parent != null && other.transform.parent.CompareTag("Player"))
         {
             if (requiredCollectable == null || EvidenceManager.GetInstance().GetJournal().Contains(requiredCollectable))
             {
-                other.transform.parent.GetComponent<VoicelinePlayer>().PlayVoiceline(voicelineToPlay);
+                if(isFirst) {
+                    other.transform.parent.GetComponent<VoicelinePlayer>().PlayVoiceline(voicelineToPlay);
+                    isFirst = false;
+                }
             }
         }
     }

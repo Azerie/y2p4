@@ -297,8 +297,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.57600003}
-  m_AnchoredPosition: {x: 0, y: -40.99997}
-  m_SizeDelta: {x: 200, y: -31.999992}
+  m_AnchoredPosition: {x: 3, y: -36}
+  m_SizeDelta: {x: 115.18, y: -32}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &66558211
 MonoBehaviour:
@@ -321,7 +321,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: On the 13th of September, 1775, Klaas Annink, also known as Huttenkloas,
-    was found guilty of murder and convicted.
+    was found guilty of murder.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 40db4b331c621f54bb623684d4f77ba6, type: 2}
   m_sharedMaterial: {fileID: -6261698321404327616, guid: 40db4b331c621f54bb623684d4f77ba6, type: 2}
@@ -330,7 +330,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 16777215
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -706,7 +706,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 16777215
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -1025,8 +1025,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.57600003}
-  m_AnchoredPosition: {x: 0, y: -40.99997}
-  m_SizeDelta: {x: 200, y: -31.999992}
+  m_AnchoredPosition: {x: -7, y: -49}
+  m_SizeDelta: {x: 49.1379, y: -32}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1690872898
 MonoBehaviour:
