@@ -20,5 +20,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/level-blockout A 1.unity
     guid: 47e0fca6100f4b946a07aed42488f368
+  - enabled: 1
+    path: Assets/Scenes/Start Cutscene 1.unity
+    guid: b0c607d0efe55cf47909bc20c8d5946c
+  - enabled: 1
+    path: Assets/Scenes/GOOD ending CUTSCENE.unity
+    guid: 3fae046008e11ca45a11a358e220e2f0
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 931a3ff48ce78f55f903065da5af2e62, type: 2}

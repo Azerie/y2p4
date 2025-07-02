@@ -26,6 +26,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Resume()
     {
+        Debug.Log("Resuming");
         Time.timeScale = 1;
         gameObject.GetComponent<Canvas>().enabled = false;
         Cursor.lockState = CursorLockMode.Locked;

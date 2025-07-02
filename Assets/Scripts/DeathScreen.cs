@@ -24,9 +24,11 @@ public class DeathScreen : MonoBehaviour
 
     public void Respawn()
     {
-        pauseMenu.Resume();
         mainPauseMenu.SetActive(true);
         deathCanvas.SetActive(false);
+        pauseMenu.Resume();
+        
+        Debug.Log("Respawn button pressed");
 
         if (playerControls != null)
         {
