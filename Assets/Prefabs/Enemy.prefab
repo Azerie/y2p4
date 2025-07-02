@@ -336,6 +336,7 @@ MonoBehaviour:
   points: []
   pointsParent: {fileID: 0}
   proximityDetectionRange: 5
+  proximityRunningDetectionRange: 7
   detectionRange: 12
   detectionAngle: 75
   heightOffset: 0.1
@@ -349,16 +350,16 @@ MonoBehaviour:
   MinDetectionCoefRoaming: 0.2
   MinDetectionCoefAlert: 1
   failEnabled: 1
-  failSceneName: MainMenu
-  killAnimationTime: 0.5
+  killAnimationTime: 1
   knockoutTime: 2
   isLethal: 1
   stationaryTimes: []
-  idleAnimationName: Idle
-  walkingAnimationName: Walking
-  runningAnimationName: F_Run
-  attackAnimationName: Idle
-  knockedAnimationName: Idle
+  idleAnimationMovementStage: 0
+  walkingAnimationMovementStage: 1
+  alertWalkingAnimationMovementStage: 2
+  runningAnimationMovementStage: 3
+  attackAnimationTriggerName: Attack
+  knockedAnimationTriggerName: Fall
   m_AlertSoundEventPath:
     Guid:
       Data1: 272438237
