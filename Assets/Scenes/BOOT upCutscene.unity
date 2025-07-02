@@ -269,7 +269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 143035d25b3d91e4d89e904f9ca0b7d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextSceneName: MainMenu
+  nextSceneName: Main menu with house and light
 --- !u!1 &70987895
 GameObject:
   m_ObjectHideFlags: 0
