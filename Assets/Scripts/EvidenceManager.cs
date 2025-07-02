@@ -6,6 +6,7 @@ using UnityEngine.Events;
 
 public class EvidenceManager : MonoBehaviour
 {
+    [SerializeField] private GameObject newJournalEntryPopup;
     private List<Collectable> evidenceJournal = new List<Collectable>();
     public static UnityAction EvidenceJournalChanged;
     public static EvidenceManager Instance;
@@ -36,6 +37,10 @@ public class EvidenceManager : MonoBehaviour
     public void AddEntry(Collectable line)
     {
         evidenceJournal.Add(line);
+        if (newJournalEntryPopup != null)
+        {
+            newJournalEntryPopup.SetActive(true);
+        }
         EvidenceJournalChanged?.Invoke();
     }
 

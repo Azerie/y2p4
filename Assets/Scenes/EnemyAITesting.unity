@@ -1937,6 +1937,9 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 6218528845464916777, guid: bfe1492213abf4c44a7a351d87906e93, type: 3}
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 8519062213056255415, guid: bfe1492213abf4c44a7a351d87906e93, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2107964572}
     - targetCorrespondingSourceObject: {fileID: 475560222493713549, guid: bfe1492213abf4c44a7a351d87906e93, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1716614552}
@@ -4168,6 +4171,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa5a4ff932fb55b4aa01ca532e10540f, type: 3}
+--- !u!224 &1684260988 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8519062213056255415, guid: bfe1492213abf4c44a7a351d87906e93, type: 3}
+  m_PrefabInstance: {fileID: 841215562}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1702203952 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4785226270245847088, guid: 7d317c7a3d20dd14e9acf109a0b78fdd, type: 3}
@@ -5523,6 +5531,7 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  disableTime: 4
 --- !u!65 &2002426424
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5801,6 +5810,95 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d09be856a195a793a68cf24c3d1584b, type: 3}
+--- !u!1 &2107964571
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2107964572}
+  - component: {fileID: 2107964575}
+  - component: {fileID: 2107964574}
+  - component: {fileID: 2107964573}
+  m_Layer: 5
+  m_Name: EvidencePopup
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &2107964572
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2107964571}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1684260988}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 258, y: 232}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2107964573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2107964571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d45256e311ecf7028e51ee6d07a5622, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupDuration: 4
+--- !u!114 &2107964574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2107964571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &2107964575
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2107964571}
+  m_CullTransparentMesh: 1
 --- !u!1 &2121528404
 GameObject:
   m_ObjectHideFlags: 0
@@ -7265,6 +7363,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemInside: {fileID: 1340203389818440136}
+  puzzleFinishSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!4 &4006237259928044741
 Transform:
   m_ObjectHideFlags: 0
@@ -9339,6 +9444,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f93f7cba19f15a16adfb69a6dc647ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  newJournalEntryPopup: {fileID: 2107964571}
 --- !u!114 &8915656036451569480
 MonoBehaviour:
   m_ObjectHideFlags: 0

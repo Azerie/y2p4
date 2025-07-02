@@ -14,6 +14,8 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private float MoveSpeed = 4.0f;
     [Tooltip("Sprint speed of the character")]
     [SerializeField] private float SprintSpeed = 6.0f;
+    [Tooltip("Crouch speed of the character")]
+    [SerializeField] private float CrouchSpeed = 2f;
     [Tooltip("Rotation speed of the character")]
     [SerializeField] private float Sensitivity = 1.0f;
     [Tooltip("Acceleration and deceleration")]
@@ -29,6 +31,11 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private Transform respawnPoint;
     [SerializeField] private DeathScreen deathScreen;
     [SerializeField] private GameObject sprintPopup;
+
+    [Space(10)]
+    [Header("Head bop settings")]
+    [SerializeField] private float speedMult = 20f;
+    [SerializeField] private float maxHeightDiff = 0.05f;
 
     [Space(10)]
     [Header("Player Grounded")]
@@ -96,6 +103,9 @@ public class PlayerControls : MonoBehaviour
     private CapsuleCollider _hitbox;
     [SerializeField] private Transform head;
     [SerializeField] private SkillCheck skillcheck;
+    [SerializeField] private bool isBopping;
+    float bopStartTime;
+    float bopStartOffset;
     private Canvas EvidenceJournal;
 
     public InputActionAsset asset;
@@ -134,6 +144,7 @@ public class PlayerControls : MonoBehaviour
 
         GroundedCheck();
         ApplyGravity();
+        HeadBopping();
         if (isEnabled)
         {
             Move();
@@ -176,6 +187,7 @@ public class PlayerControls : MonoBehaviour
             if (!_isCrouching)
             {
                 _isSprinting = true;
+                StartHeadBop();
             }
 
             if (isFirstSprint)
@@ -194,11 +206,15 @@ public class PlayerControls : MonoBehaviour
         else if (buttonControl.wasReleasedThisFrame)
         {
             _isSprinting = false;
+            StopHeadBop();
         }
 
         if (_stamina <= 0)
         {
             _isSprinting = false;
+            StopHeadBop();
+
+
             if (staminaUI != null)
             {
                 staminaUI.FadeIn();
@@ -211,8 +227,8 @@ public class PlayerControls : MonoBehaviour
                 staminaUI.FadeOut();
             }
         }
-        // set target speed based on move speed, sprint speed and if sprint is pressed
-        float targetSpeed = _isSprinting ? SprintSpeed : MoveSpeed;
+        // set target speed based on move speed, sprint speed and if sprint is pressed/crouch if crouching
+        float targetSpeed = _isSprinting ? SprintSpeed : (_isCrouching ? CrouchSpeed : MoveSpeed);
 
         if (_isSprinting)
         {
@@ -493,6 +509,26 @@ public class PlayerControls : MonoBehaviour
     {
         EnableMovement();
         _isInKillAnimation = false;
+    }
+
+    private void HeadBopping()
+    {
+        if (isBopping)
+        {
+            head.transform.localPosition = new Vector3(0, HeadStandingHeight + Mathf.Sin((Time.time - bopStartTime + bopStartOffset) * speedMult) * maxHeightDiff, 0);
+        }
+    }
+
+    private void StartHeadBop()
+    {
+        isBopping = true;
+        bopStartTime = Time.time;
+        bopStartOffset = (Mathf.Asin((head.transform.localPosition.y - HeadStandingHeight) / maxHeightDiff) / speedMult) * 2 * MathF.PI;
+    }
+
+    private void StopHeadBop()
+    {
+        isBopping = false;
     }
 
     public void SetCameraSensitivity(float pSensitivity)
