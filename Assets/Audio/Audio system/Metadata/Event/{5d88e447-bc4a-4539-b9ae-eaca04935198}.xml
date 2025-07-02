@@ -441,6 +441,7 @@ Possibly add crouch
 		</property>
 		<relationship name="automationCurves">
 			<destination>{f6a210eb-84ef-4317-9f1e-9d26e90b12c4}</destination>
+			<destination>{9e0f7be0-cb2d-41af-8e86-5a5802f95c4e}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusEffectChain" id="{f5ad0d05-1ee0-4962-be45-8a2c1c912073}">
@@ -609,6 +610,7 @@ Possibly add crouch
 		</property>
 		<relationship name="automationCurves">
 			<destination>{f790c573-3311-4a88-9cbb-5c4f881b59c9}</destination>
+			<destination>{99cd7165-902a-4689-8d4c-b1bfd6237c6d}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusEffectChain" id="{4a69e7c1-54fb-4957-866b-275925494692}">
@@ -628,6 +630,15 @@ Possibly add crouch
 			<destination>{edb57eab-92a8-4323-a481-eb032eaccb58}</destination>
 		</relationship>
 	</object>
+	<object class="AutomationCurve" id="{9e0f7be0-cb2d-41af-8e86-5a5802f95c4e}">
+		<relationship name="parameter">
+			<destination>{f5381125-d71e-4cee-8531-98e65893bf4b}</destination>
+		</relationship>
+		<relationship name="automationPoints">
+			<destination>{f1ad94de-96ed-43b8-a202-6952fb930a77}</destination>
+			<destination>{2fe63efe-8ede-48ab-a776-c33421f9d44a}</destination>
+		</relationship>
+	</object>
 	<object class="MixerBusFader" id="{2295283f-07b0-4ace-be85-284b01a28f77}" />
 	<object class="AutomationCurve" id="{f790c573-3311-4a88-9cbb-5c4f881b59c9}">
 		<relationship name="parameter">
@@ -636,6 +647,15 @@ Possibly add crouch
 		<relationship name="automationPoints">
 			<destination>{1a019b60-d424-49c4-b1eb-ce3d50905cbc}</destination>
 			<destination>{7f610119-afc5-4e97-8f6a-d2cbd4559fbf}</destination>
+		</relationship>
+	</object>
+	<object class="AutomationCurve" id="{99cd7165-902a-4689-8d4c-b1bfd6237c6d}">
+		<relationship name="parameter">
+			<destination>{f5381125-d71e-4cee-8531-98e65893bf4b}</destination>
+		</relationship>
+		<relationship name="automationPoints">
+			<destination>{244681e7-b485-461f-9187-4978891499ad}</destination>
+			<destination>{6834f2c3-cf18-4443-9ea4-5cd0969baca3}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusFader" id="{d6544ab8-7646-4a98-ae2f-2b0b6062dd51}" />
@@ -655,6 +675,22 @@ Possibly add crouch
 			<value>-80</value>
 		</property>
 	</object>
+	<object class="AutomationPoint" id="{f1ad94de-96ed-43b8-a202-6952fb930a77}">
+		<property name="position">
+			<value>0</value>
+		</property>
+		<property name="value">
+			<value>3.81469727e-06</value>
+		</property>
+	</object>
+	<object class="AutomationPoint" id="{2fe63efe-8ede-48ab-a776-c33421f9d44a}">
+		<property name="position">
+			<value>1</value>
+		</property>
+		<property name="value">
+			<value>-6</value>
+		</property>
+	</object>
 	<object class="AutomationPoint" id="{1a019b60-d424-49c4-b1eb-ce3d50905cbc}">
 		<property name="position">
 			<value>0</value>
@@ -669,6 +705,22 @@ Possibly add crouch
 		</property>
 		<property name="value">
 			<value>0</value>
+		</property>
+	</object>
+	<object class="AutomationPoint" id="{244681e7-b485-461f-9187-4978891499ad}">
+		<property name="position">
+			<value>0</value>
+		</property>
+		<property name="value">
+			<value>3.81469727e-06</value>
+		</property>
+	</object>
+	<object class="AutomationPoint" id="{6834f2c3-cf18-4443-9ea4-5cd0969baca3}">
+		<property name="position">
+			<value>1</value>
+		</property>
+		<property name="value">
+			<value>-6</value>
 		</property>
 	</object>
 </objects>
