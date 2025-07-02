@@ -73,6 +73,7 @@ public class EnemyBehaviour : MonoBehaviour
     private bool isPlayerHidden = false;
     private float lookAroundTimer = 0f;
     private float currentStationaryTime;
+    private Vector3 respawnPosition;
     private SkillCheck skillCheck;
     public static event UnityAction OnKillAnimationStart;
     public static event UnityAction OnKillAnimationEnd;
@@ -114,6 +115,7 @@ public class EnemyBehaviour : MonoBehaviour
         {
             _navMeshAgent.destination = points[currentPointIndex].position;
         }
+        respawnPosition = transform.position;
 
         ChangeState(State.Roaming);
     }
@@ -272,19 +274,6 @@ public class EnemyBehaviour : MonoBehaviour
         }
         else if (state == State.Alert)
         {
-            if (CanSeePlayer())
-            {
-                if (stateTimer < 0)
-                {
-                    stateTimer = 0;
-                }
-                stateTimer += Time.deltaTime * GetDetectionTimeCoef();
-                if (stateTimer >= AlertToChasingTime)
-                {
-                    ChangeState(State.Chasing);
-                }
-            }
-
             if (IsAtDestination())
             {
                 if (_animator != null)
@@ -300,6 +289,19 @@ public class EnemyBehaviour : MonoBehaviour
                 if (lookAroundTimer <= -AlertToRoamingTime)
                 {
                     ChangeState(State.Roaming);
+                }
+            }
+            
+            if (CanSeePlayer())
+            {
+                if (stateTimer < 0)
+                {
+                    stateTimer = 0;
+                }
+                stateTimer += Time.deltaTime * GetDetectionTimeCoef();
+                if (stateTimer >= AlertToChasingTime)
+                {
+                    ChangeState(State.Chasing);
                 }
             }
         }
@@ -342,7 +344,7 @@ public class EnemyBehaviour : MonoBehaviour
             stateTimer += Time.deltaTime;
             if (stateTimer >= killAnimationTime)
             {
-                if(isLethal)
+                if (isLethal)
                 {
                     KillPlayer();
                 }
@@ -475,6 +477,12 @@ public class EnemyBehaviour : MonoBehaviour
         OnKillAnimationEnd?.Invoke();
         ChangeState(State.Roaming);
         player.GetComponent<PlayerControls>().Die();
+    }
+
+    public void Respawn()
+    {
+        ChangeState(State.Roaming);
+        transform.position = respawnPosition;
     }
 
     public State GetState() { return state; }

@@ -30,6 +30,10 @@ public class DeathScreen : MonoBehaviour
         
         Debug.Log("Respawn button pressed");
 
+        foreach (EnemyBehaviour enemyBehaviour in FindObjectsByType<EnemyBehaviour>(FindObjectsSortMode.None))
+        {
+            enemyBehaviour.Respawn();
+        }
         if (playerControls != null)
         {
             playerControls.Respawn();
