@@ -120,11 +120,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupSound:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: -1333292454
+      Data2: 1196800750
+      Data3: 1003450039
+      Data4: 111784048
+    Path: event:/Interactables/Hide
+  pickupVoiceline: {fileID: 0}
   playerHiddenPosition: {fileID: 6437388136413483438}
   playerOutsidePosition: {fileID: 4175693075964337163}
   hideTime: 0.5

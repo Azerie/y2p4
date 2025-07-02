@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using FMODUnity;
 
 
 public class HidingPlaceBehaviour : InteractableBehaviourAbstract
@@ -9,6 +10,8 @@ public class HidingPlaceBehaviour : InteractableBehaviourAbstract
     [SerializeField] private Transform playerHiddenPosition;
     [SerializeField] private Transform playerOutsidePosition;
     [SerializeField] private float hideTime = 0.5f;
+    [SerializeField] private EventReference hideSound;
+    [SerializeField] private EventReference revealSound;
     public static event UnityAction OnPlayerHidden;
     public static event UnityAction OnPlayerRevealed;
     private GameObject player;
@@ -82,6 +85,7 @@ public class HidingPlaceBehaviour : InteractableBehaviourAbstract
         isInHidingAnimation = true;
         GetComponent<Collider>().enabled = false;
         OnPlayerHidden();
+        RuntimeManager.PlayOneShot(hideSound);
 
         hasPlayer = true;
     }
@@ -92,6 +96,7 @@ public class HidingPlaceBehaviour : InteractableBehaviourAbstract
         player.GetComponent<PlayerControls>().EnableMovement();
         // isInHidingAnimation = true;
         OnPlayerRevealed();
+        RuntimeManager.PlayOneShot(revealSound);
 
         hasPlayer = false;
     }

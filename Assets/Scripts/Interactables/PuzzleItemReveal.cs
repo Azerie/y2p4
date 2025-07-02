@@ -1,3 +1,4 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,19 +6,18 @@ using UnityEngine;
 public class PuzzleItemReveal : MonoBehaviour
 {
     [SerializeField] GameObject itemInside;
+    [SerializeField] private EventReference puzzleFinishSound;
     private void Start()
     {
         itemInside.SetActive(false);
     }
     public void EndPuzzle()
     {
-        if (itemInside != null)
+        if(!puzzleFinishSound.IsNull)
         {
-            itemInside.SetActive(true);
+            RuntimeManager.PlayOneShotAttached(puzzleFinishSound, gameObject);
         }
-        if (gameObject != null)
-        {
-            Destroy(gameObject);
-        }
+        itemInside.SetActive(true);
+        Destroy(gameObject);
     }
 }
