@@ -233,6 +233,17 @@
                 },
                 {
                     "name": "",
+                    "id": "75128ed8-d991-4850-a86c-c6b88cca3409",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Journal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "72e679ec-caa5-4d42-b19e-cc00f1d1da7f",
                     "path": "<Keyboard>/space",
                     "interactions": "",
