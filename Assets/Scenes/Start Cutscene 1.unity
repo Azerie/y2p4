@@ -263,7 +263,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e09c3f9a63b7cda4089e849083abea39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fmodEventPath: 
 --- !u!114 &14417658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -376,14 +375,14 @@ RectTransform:
   m_GameObject: {fileID: 188643889}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.5027, y: 2.5027, z: 2.5027}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2.12, y: 2.12, z: 2.12}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 14417651}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.57600003}
-  m_AnchoredPosition: {x: 0, y: -40.99997}
+  m_AnchoredPosition: {x: 0, y: -86}
   m_SizeDelta: {x: 200, y: -31.999992}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &188643891
@@ -406,7 +405,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '12 September - 1775 '
+  m_text: '26th September - 1775 '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 40db4b331c621f54bb623684d4f77ba6, type: 2}
   m_sharedMaterial: {fileID: -6261698321404327616, guid: 40db4b331c621f54bb623684d4f77ba6, type: 2}
@@ -741,7 +740,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e09c3f9a63b7cda4089e849083abea39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fmodEventPath: 
 --- !u!1 &1609111973
 GameObject:
   m_ObjectHideFlags: 0
