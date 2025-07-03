@@ -257,7 +257,12 @@ public class PlayerControls : MonoBehaviour
         }
 
         // if there is no input, set the target speed to 0
-        if (moveInput == Vector2.zero) targetSpeed = 0.0f;
+        if (moveInput == Vector2.zero)
+        {
+            targetSpeed = 0.0f;
+            _isSprinting = false;
+            StopHeadBop();
+        }
 
         // a reference to the players current horizontal velocity
         float currentHorizontalSpeed = new Vector3(_rb.velocity.x, 0.0f, _rb.velocity.z).magnitude;
