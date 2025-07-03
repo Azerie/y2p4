@@ -54,6 +54,18 @@ public class EnemyBehaviour : MonoBehaviour
     [SerializeField] private string attackAnimationTriggerName = "Attack";
     [SerializeField] private string knockedAnimationTriggerName = "Fall";
 
+    [Header("Voicelines")]
+    [Tooltip("Voiceline for the roaming state.")]
+    public Voiceline m_RoamingVoiceline;
+    [Tooltip("Voiceline for the alert state.")]
+    public Voiceline m_AlertVoiceline;
+    [Tooltip("Voiceline for the chasing state.")]
+    public Voiceline m_ChasingVoiceline;
+    [Tooltip("Randomly played voicelines")]
+    public List<Voiceline> randomVoicelines = new List<Voiceline>();
+    [Tooltip("Time between randomly played voicelines")]
+    public float randomVoicelinesTime = 20f;
+    private float randomVoicelinesTimer = 0;
     [Header("FMOD State Sounds")]
     [Tooltip("FMOD event path for the alert state sound.")]
     public EventReference m_AlertSoundEventPath = new EventReference();
@@ -83,10 +95,12 @@ public class EnemyBehaviour : MonoBehaviour
     private Animator _animator;
     private Rigidbody _rb;
     private Collider _collider;
+    private VoicelinePlayer _vp;
     void Start()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _collider = GetComponent<Collider>();
+        _vp = GetComponent<VoicelinePlayer>();
 
         player = GameObject.FindGameObjectWithTag("Player").transform;
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").transform;
@@ -160,6 +174,10 @@ public class EnemyBehaviour : MonoBehaviour
                 _animator.SetInteger("MovementStage", runningAnimationMovementStage);
             }
             RuntimeManager.PlayOneShotAttached(m_ChasingSoundEventPath, gameObject);
+            if (m_RoamingVoiceline != null)
+            {
+                _vp.PlayVoiceline(m_RoamingVoiceline);
+            }
         }
         else if (newState == State.Alert)
         {
@@ -176,6 +194,10 @@ public class EnemyBehaviour : MonoBehaviour
             }
             lookAroundTimer = 0;
             RuntimeManager.PlayOneShotAttached(m_AlertSoundEventPath, gameObject);
+            if(m_AlertVoiceline != null)
+            {
+                _vp.PlayVoiceline(m_AlertVoiceline);
+            }
         }
         else if (newState == State.Roaming)
         {
@@ -188,6 +210,11 @@ public class EnemyBehaviour : MonoBehaviour
                 _animator.SetInteger("MovementStage", walkingAnimationMovementStage);
             }
             lookAroundTimer = 0;
+            randomVoicelinesTimer = 0;
+            if (m_RoamingVoiceline != null)
+            {
+                _vp.PlayVoiceline(m_RoamingVoiceline);
+            }
         }
         else if (newState == State.KillAnimation)
         {
@@ -337,6 +364,13 @@ public class EnemyBehaviour : MonoBehaviour
                 {
                     stateTimer -= Time.deltaTime;
                 }
+            }
+
+            randomVoicelinesTimer += Time.deltaTime;
+            if (randomVoicelinesTimer >= randomVoicelinesTime && randomVoicelines.Count != 0)
+            {
+                randomVoicelinesTimer = 0;
+                _vp.PlayVoiceline(randomVoicelines[UnityEngine.Random.Range(0, randomVoicelines.Count)]);
             }
         }
         else if (state == State.KillAnimation)

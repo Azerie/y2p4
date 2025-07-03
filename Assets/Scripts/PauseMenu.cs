@@ -28,7 +28,7 @@ public class PauseMenu : MonoBehaviour
     public void Resume()
     {
         Debug.Log("Resuming");
-        isPaused = true;
+        isPaused = false;
         Time.timeScale = 1;
         gameObject.GetComponent<Canvas>().enabled = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -40,7 +40,7 @@ public class PauseMenu : MonoBehaviour
     }
     public void Pause()
     {
-        isPaused = false;
+        isPaused = true;
         Time.timeScale = 0;
         gameObject.GetComponent<Canvas>().enabled = true;
         Cursor.lockState = CursorLockMode.None;

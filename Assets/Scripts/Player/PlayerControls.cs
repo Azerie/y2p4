@@ -6,6 +6,7 @@ using UnityEngine.Animations;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem.Controls;
+using FMODUnity;
 
 public class PlayerControls : MonoBehaviour
 {
@@ -74,6 +75,10 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private string FailScene = "MainMenu";
     [SerializeField] private float KillAnimationRotationTime = 0.3f;
     [SerializeField] private float KillAnimationCameraAngle = -10f;
+
+    [Header("FMOD State Sounds")]
+    public EventReference m_OutOfStaminaEventPath = new EventReference();
+    public EventReference m_RecoveringStaminaEventPath = new EventReference();
 
     [Space(10)]
     [Header("Debug values")]
@@ -213,8 +218,11 @@ public class PlayerControls : MonoBehaviour
         if (_stamina <= 0)
         {
             _isSprinting = false;
+            if(!m_OutOfStaminaEventPath.IsNull)
+            {
+                RuntimeManager.PlayOneShot(m_OutOfStaminaEventPath);
+            }
             StopHeadBop();
-
 
             if (staminaUI != null)
             {
@@ -223,6 +231,11 @@ public class PlayerControls : MonoBehaviour
         }
         else if (_stamina >= MaxStamina / 4)
         {
+            if (!m_RecoveringStaminaEventPath.IsNull)
+            {
+                RuntimeManager.PlayOneShot(m_RecoveringStaminaEventPath);
+            }
+
             if (staminaUI != null)
             {
                 staminaUI.FadeOut();
