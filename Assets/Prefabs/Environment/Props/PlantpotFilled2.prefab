@@ -77,6 +77,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bush_big
       objectReference: {fileID: 0}
+    - target: {fileID: 6387584557542040442, guid: c70c90f5b41f1c5499fd675e274d2b27, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1d40c8900a2f71846b8ba28176cb5b1b, type: 2}
     - target: {fileID: 7095183244195553947, guid: c70c90f5b41f1c5499fd675e274d2b27, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.085387096
