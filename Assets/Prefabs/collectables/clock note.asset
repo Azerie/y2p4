@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6c3ee6d3806270a29037880a9b22941, type: 3}
   m_Name: clock note
   m_EditorClassIdentifier: 
-  collectableName: 'Entry 216 September 25th 3:00 AM??   '
+  collectableName: 'Entry 216 September 25th 3:30 AM??   '
   journalEntry: 'There is something off about the clock in the room. It has not moved
     since I''ve got here. I think I''m going insane in this house. I wanted to leave
     this morning but my boots were gone. I asked Anne but she said the dog might

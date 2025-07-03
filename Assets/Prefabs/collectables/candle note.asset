@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6c3ee6d3806270a29037880a9b22941, type: 3}
   m_Name: candle note
   m_EditorClassIdentifier: 
-  collectableName: ' Entry 214 September 23rd  3:00 AM'
+  collectableName: ' Entry 214 September 23rd  3:30 AM'
   journalEntry: 'Something weird just happened.  I was just trying to sleep when
     there was some light creeping into my room. I think Klaas lit some candles or
     something. I heard him talking to his son. I''m not sure what it was about, but
