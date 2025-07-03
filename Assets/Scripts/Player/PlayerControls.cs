@@ -106,7 +106,8 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private bool isBopping;
     float bopStartTime;
     float bopStartOffset;
-    private Canvas EvidenceJournal;
+    private EvidenceJournal evidenceJournal;
+    private PauseMenu pauseMenu;
 
     public InputActionAsset asset;
     private InputAction inputAction;
@@ -126,8 +127,8 @@ public class PlayerControls : MonoBehaviour
 
     private void Awake()
     {
-        GameObject evidenceJournalTemp = GameObject.Find("EvidenceJournal");
-        if (evidenceJournalTemp != null) { EvidenceJournal = evidenceJournalTemp.GetComponent<Canvas>(); }
+        pauseMenu = FindObjectOfType<PauseMenu>();
+        evidenceJournal = FindObjectOfType<EvidenceJournal>();
         skillcheck = FindObjectOfType<SkillCheck>();
         GameObject staminaUITemp = GameObject.Find("StaminaUI");
         if (staminaUITemp != null) { staminaUI = staminaUITemp.GetComponent<ImageFading>(); }
@@ -342,8 +343,7 @@ public class PlayerControls : MonoBehaviour
 
     private void OnPause()
     {
-        GameObject pauseMenu = GameObject.FindGameObjectWithTag("PauseMenu");
-        pauseMenu.GetComponent<PauseMenu>().Pause();
+        pauseMenu.OnPauseButton();
     }
 
     private void OnCrouch()
@@ -384,7 +384,7 @@ public class PlayerControls : MonoBehaviour
 
     private void OnJournal()
     {
-        EvidenceJournal.enabled = !EvidenceJournal.enabled;
+        evidenceJournal.OnJournalButton();
     }
 
     private bool SlopeCheck()
