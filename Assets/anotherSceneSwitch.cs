@@ -6,14 +6,27 @@ using UnityEngine.SceneManagement;
 public class anotherSceneSwitch : MonoBehaviour
 {
     [Header("Scene Switch Settings")]
-    public string sceneToLoad = "NextScene";
-    public string triggeringTag = "Player"; // Tag of the object that triggers the scene switch
+    [SerializeField] private string goodSceneToLoad = "NextScene";
+    [SerializeField] private string badSceneToLoad = "NextScene";
+    [SerializeField] private int requiredEvidenceNumber = 3;
+    [SerializeField] private Item requiredItem;
+    private string triggeringTag = "Player";
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.parent != null && other.transform.parent.CompareTag(triggeringTag))
         {
-            SceneManager.LoadScene(sceneToLoad);
+            if (requiredItem != null && PlayerInventory.GetInstance().HasItem(requiredItem))
+            {
+                if (EvidenceManager.GetInstance().GetJournal().Count >= requiredEvidenceNumber)
+                {
+                    SceneManager.LoadScene(goodSceneToLoad);
+                }
+                else
+                {
+                    SceneManager.LoadScene(badSceneToLoad);
+                }
+            }
         }
     }
 }

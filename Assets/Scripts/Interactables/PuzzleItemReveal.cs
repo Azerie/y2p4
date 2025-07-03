@@ -18,6 +18,6 @@ public class PuzzleItemReveal : MonoBehaviour
             RuntimeManager.PlayOneShotAttached(puzzleFinishSound, gameObject);
         }
         itemInside.SetActive(true);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }
