@@ -20,8 +20,8 @@ MonoBehaviour:
   GUID: f838389f-b1ee-4d3d-a561-a69d020c4f07
   Index: 1
   Input:
-  - rid: 51031155797655554
-  - rid: 51031155797655555
+  - rid: 51031155797655564
+  - rid: 51031155797655565
   Output:
   - Index: 0
     VirtualOutputIndex: 4
@@ -79,7 +79,7 @@ MonoBehaviour:
       Index: 3
       Type: 8
       Channel: mask
-    OutputTexture: {fileID: 2800000, guid: aa6c4917128fb484fbaa785edd3a0e41, type: 3}
+    OutputTexture: {fileID: 0}
     sRGB: 0
     IsVirtual: 1
     IsAlphaAssignable: 0
@@ -96,9 +96,7 @@ MonoBehaviour:
   GenerateAllOutputs: 0
   GenerateAllMipmaps: 1
   OutputMaterial: {fileID: 2100000, guid: 4c4a1d914e2e5264dbdddefdef88e174, type: 2}
-  DefaultPreset: " <sbspreset pkgurl=\"pkg://0_WoodPattern\" label=\"\" >\n  <presetinput
-    identifier=\"$outputsize\" uid=\"2374355537\" type=\"8\" value=\"10,10\" />\n
-    </sbspreset>\n"
+  DefaultPreset: " <sbspreset pkgurl=\"pkg://0_WoodPattern\" label=\"\" >\n </sbspreset>\n"
   MaterialShader: HDRP/Lit
   RenderTextures: 0
   OutputRemaped: 0
@@ -106,7 +104,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 51031155797655554
+    - rid: 51031155797655564
       type: {class: SubstanceInputInt2, ns: Adobe.Substance.Input, asm: Adobe.Substance}
       data:
         Index: 0
@@ -125,7 +123,7 @@ MonoBehaviour:
           SliderClamp: 0
           EnumValueCount: 0
           EnumValues: []
-    - rid: 51031155797655555
+    - rid: 51031155797655565
       type: {class: SubstanceInputInt, ns: Adobe.Substance.Input, asm: Adobe.Substance}
       data:
         Index: 1
