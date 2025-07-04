@@ -71,6 +71,8 @@ public class EnemyBehaviour : MonoBehaviour
     public EventReference m_AlertSoundEventPath = new EventReference();
     [Tooltip("FMOD event path for the chasing state sound.")]
     public EventReference m_ChasingSoundEventPath = new EventReference();
+    [Tooltip("FMOD looping event path for the kill animation state sound.")]
+    public EventReference m_KillAnimationSoundEventPath = new EventReference();
 
 
 
@@ -87,6 +89,7 @@ public class EnemyBehaviour : MonoBehaviour
     private float currentStationaryTime;
     private Vector3 respawnPosition;
     private SkillCheck skillCheck;
+    private FMOD.Studio.EventInstance killAnimationSoundInstance;
     public static event UnityAction OnKillAnimationStart;
     public static event UnityAction OnKillAnimationEnd;
     public event UnityAction OnStateChange;
@@ -159,7 +162,7 @@ public class EnemyBehaviour : MonoBehaviour
         {
             OnStateChange?.Invoke();
         }
-        
+
         if (newState == State.Chasing)
         {
             GetComponentInChildren<MeshRenderer>().material.SetColor("_BaseColor", Color.red);
@@ -194,7 +197,7 @@ public class EnemyBehaviour : MonoBehaviour
             }
             lookAroundTimer = 0;
             RuntimeManager.PlayOneShotAttached(m_AlertSoundEventPath, gameObject);
-            if(m_AlertVoiceline != null)
+            if (m_AlertVoiceline != null)
             {
                 _vp.PlayVoiceline(m_AlertVoiceline);
             }
@@ -225,6 +228,15 @@ public class EnemyBehaviour : MonoBehaviour
                 // _animator.Play(attackAnimationName);
                 _animator.SetTrigger(attackAnimationTriggerName);
             }
+
+            if (!m_KillAnimationSoundEventPath.IsNull)
+            {
+                killAnimationSoundInstance = RuntimeManager.CreateInstance(m_KillAnimationSoundEventPath);
+                killAnimationSoundInstance.set3DAttributes(RuntimeUtils.To3DAttributes(gameObject));
+                RuntimeManager.AttachInstanceToGameObject(killAnimationSoundInstance, gameObject);
+                killAnimationSoundInstance.start();
+                Debug.Log("Creating instance for looping choke sound");
+            }
         }
         else if (newState == State.SkillCheck)
         {
@@ -237,6 +249,15 @@ public class EnemyBehaviour : MonoBehaviour
             {
                 // _animator.Play(knockedAnimationName);
                 _animator.SetTrigger(knockedAnimationTriggerName);
+            }
+        }
+
+        if (state == State.KillAnimation)
+        {
+            if (!m_KillAnimationSoundEventPath.IsNull)
+            {
+                killAnimationSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                killAnimationSoundInstance.release();
             }
         }
         state = newState;

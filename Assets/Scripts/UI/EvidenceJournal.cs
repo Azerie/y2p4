@@ -95,4 +95,9 @@ public class EvidenceJournal : MonoBehaviour
             entry.Find("Text").gameObject.SetActive(false);
         }
     }
+
+    public bool IsEnabled()
+    {
+        return isEnabled;
+    }
 }

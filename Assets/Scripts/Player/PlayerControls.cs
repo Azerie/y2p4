@@ -118,6 +118,7 @@ public class PlayerControls : MonoBehaviour
     private InputAction inputAction;
     private ButtonControl buttonControl;
     private bool isFirstSprint = true;
+    private bool isPauseButtonEnabled = true;
 
     void Start()
     {
@@ -135,6 +136,7 @@ public class PlayerControls : MonoBehaviour
         pauseMenu = FindObjectOfType<PauseMenu>();
         evidenceJournal = FindObjectOfType<EvidenceJournal>();
         skillcheck = FindObjectOfType<SkillCheck>();
+        deathScreen = FindObjectOfType<DeathScreen>();
         GameObject staminaUITemp = GameObject.Find("StaminaUI");
         if (staminaUITemp != null) { staminaUI = staminaUITemp.GetComponent<ImageFading>(); }
         Cursor.visible = false;
@@ -215,38 +217,40 @@ public class PlayerControls : MonoBehaviour
             StopHeadBop();
         }
 
-        if (_stamina <= 0)
-        {
-            _isSprinting = false;
-            if(!m_OutOfStaminaEventPath.IsNull)
-            {
-                RuntimeManager.PlayOneShot(m_OutOfStaminaEventPath);
-            }
-            StopHeadBop();
-
-            if (staminaUI != null)
-            {
-                staminaUI.FadeIn();
-            }
-        }
-        else if (_stamina >= MaxStamina / 4)
-        {
-            if (!m_RecoveringStaminaEventPath.IsNull)
-            {
-                RuntimeManager.PlayOneShot(m_RecoveringStaminaEventPath);
-            }
-
-            if (staminaUI != null)
-            {
-                staminaUI.FadeOut();
-            }
-        }
         // set target speed based on move speed, sprint speed and if sprint is pressed/crouch if crouching
         float targetSpeed = _isSprinting ? SprintSpeed : (_isCrouching ? CrouchSpeed : MoveSpeed);
 
         if (_isSprinting)
         {
+            float oldStamina = _stamina;
             _stamina -= Time.deltaTime;
+
+            if (_stamina <= 0 && oldStamina > 0)
+            {
+                _isSprinting = false;
+                if(!m_OutOfStaminaEventPath.IsNull)
+                {
+                    RuntimeManager.PlayOneShot(m_OutOfStaminaEventPath);
+                }
+                StopHeadBop();
+
+                if (staminaUI != null)
+                {
+                    staminaUI.FadeIn();
+                }
+            }
+            else if (_stamina >= MaxStamina / 4 && oldStamina < MaxStamina / 4)
+            {
+                if (!m_RecoveringStaminaEventPath.IsNull)
+                {
+                    RuntimeManager.PlayOneShot(m_RecoveringStaminaEventPath);
+                }
+
+                if (staminaUI != null)
+                {
+                    staminaUI.FadeOut();
+                }
+            }
         }
         else
         {
@@ -361,7 +365,10 @@ public class PlayerControls : MonoBehaviour
 
     private void OnPause()
     {
-        pauseMenu.OnPauseButton();
+        if (isPauseButtonEnabled)
+        {
+            pauseMenu.OnPauseButton();
+        }
     }
 
     private void OnCrouch()
@@ -403,6 +410,14 @@ public class PlayerControls : MonoBehaviour
     private void OnJournal()
     {
         evidenceJournal.OnJournalButton();
+        if (evidenceJournal.IsEnabled())
+        {
+            isPauseButtonEnabled = false;
+        }
+        else
+        {
+            isPauseButtonEnabled = true;
+        }
     }
 
     private bool SlopeCheck()
@@ -425,6 +440,7 @@ public class PlayerControls : MonoBehaviour
     public void Die()
     {
         DisableMovement();
+        isPauseButtonEnabled = false;
         if (deathScreen != null)
         {
             deathScreen.Die();
@@ -447,6 +463,7 @@ public class PlayerControls : MonoBehaviour
             Debug.Log("Respawn point not set");
         }
         EnableMovement();
+        isPauseButtonEnabled = true;
     }
 
     private IEnumerator KillAnimationCameraPan(EnemyBehaviour target)
