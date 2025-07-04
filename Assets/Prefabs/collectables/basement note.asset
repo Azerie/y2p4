@@ -19,3 +19,7 @@ MonoBehaviour:
     he believed I was lost looking for a bathroom. I can''t take the risk anymore.
     First thing tomorrow I''m getting out of here. '
   icon: {fileID: 0}
+  bloodyBackground: 1
+  important: 1
+  journalSummary: The basement? Did Willem give in to his curiosity in the end and
+    go in there anyways?

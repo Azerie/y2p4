@@ -12,7 +12,7 @@ public class Collectable : ScriptableObject
     [Header("Extra Journal Info")]
     [SerializeField] private bool bloodyBackground;
     [SerializeField] private bool important;
-    [SerializeField] private string journalSummary;
+    [SerializeField, TextArea(3,9)] private string journalSummary;
 
     public string CollectableName => collectableName;
     public string JournalEntry => journalEntry;

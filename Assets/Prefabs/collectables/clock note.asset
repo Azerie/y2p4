@@ -20,3 +20,7 @@ MonoBehaviour:
     going on? They went out yesterday and came home late. Ever since then a smell
     has been coming from the basement. '
   icon: {fileID: 0}
+  bloodyBackground: 0
+  important: 1
+  journalSummary: '> Half past 3? Could this possibly have something to do with the
+    grandfather clock?'
