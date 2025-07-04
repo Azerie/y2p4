@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
 
 public class AnimationZone : MonoBehaviour
 {
     [SerializeField] private Animator _aniamtor;
     [SerializeField] private string animationName;
-    [SerializeField] private Voiceline voicelineToPlay;
+    [SerializeField] private EventReference _audio;
+
     private bool isFirst = true;
     void OnTriggerEnter(Collider other)
     {
@@ -14,9 +16,9 @@ public class AnimationZone : MonoBehaviour
         {
             if(isFirst) {
                 _aniamtor.Play(animationName);
-                if(voicelineToPlay != null)
+                if(!_audio.IsNull)
                 {
-                    other.transform.parent.GetComponent<VoicelinePlayer>().PlayVoiceline(voicelineToPlay);
+                    RuntimeManager.PlayOneShot(_audio);
                 }
                 isFirst = false;
             }
