@@ -263,6 +263,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e09c3f9a63b7cda4089e849083abea39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fmodEventPath: event:/Voicelines/Intro
 --- !u!114 &14417658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -740,6 +741,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e09c3f9a63b7cda4089e849083abea39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fmodEventPath: 
 --- !u!1 &1609111973
 GameObject:
   m_ObjectHideFlags: 0

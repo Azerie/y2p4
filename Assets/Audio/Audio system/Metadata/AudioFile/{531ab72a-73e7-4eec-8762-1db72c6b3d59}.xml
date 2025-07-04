@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{531ab72a-73e7-4eec-8762-1db72c6b3d59}">
+		<property name="assetPath">
+			<value>Blood droplet.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>1.9199999999999999</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{e8f4920c-e530-4a39-9c89-f285b4bf8e22}</destination>
+		</relationship>
+	</object>
+</objects>
