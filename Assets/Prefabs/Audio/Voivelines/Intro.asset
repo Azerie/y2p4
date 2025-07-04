@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd30a8cee654d5c2093e3f4321ec5801, type: 3}
+  m_Name: Intro
+  m_EditorClassIdentifier: 
+  audio:
+    Guid:
+      Data1: -827810480
+      Data2: 1249872631
+      Data3: -1320282450
+      Data4: 1029605185
+    Path: event:/Voicelines/Intro
+  subtitlesText: 'Hey Wilhelmina, shouldn''t Willem have been home yesterday? The
+    Goorse market was over a week ago. If his plans had changed, he would have written
+    by now. Something must be wrong. I will have to go look for him. He told me his
+    route so I''ll just retrace it until I find him. '
+  subtitlesTime: 3
