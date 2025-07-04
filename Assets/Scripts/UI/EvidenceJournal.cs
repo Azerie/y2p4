@@ -8,6 +8,7 @@ public class EvidenceJournal : MonoBehaviour
     [SerializeField] private RectTransform journalEntries;
     [SerializeField] private GameObject evidenceJournalCanvas;
     [SerializeField] private GameObject mainPauseCanvas;
+    [SerializeField] private Sprite journalBackground, journalBackgroundBloody;
     private PauseMenu pauseMenu;
     private bool isEnabled = false;
     void Awake()
@@ -79,13 +80,22 @@ public class EvidenceJournal : MonoBehaviour
 
     void DrawJournalEntry(Collectable item, Transform entry)
     {
-        TMP_Text entryTitle = entry.Find("Button").Find("Title").GetComponent<TMP_Text>();
-        TMP_Text entryText = entry.Find("Text").GetComponent<TMP_Text>();
+        JournalEntryReferences entryReferences = entry.GetComponent<JournalEntryReferences>();
+
+        //TMP_Text entryHeader = entry.Find("Button").Find("Title").GetComponent<TMP_Text>();
+        //TMP_Text entryText = entry.Find("Text").GetComponent<TMP_Text>();
+        //TMP_Text entrySummary = entry.Find("Text").GetComponent<TMP_Text>();
+        //GameObject entryStamp = entry.Find("Stamp").gameObject;
         // TMP_Text itemNumber = entry.Find("Counter").GetComponent<TMP_Text>();
         // Debug.Log(item.ItemName);
 
-        entryTitle.text = item.CollectableName;
-        entryText.text = item.JournalEntry;
+        entryReferences.header.text = item.CollectableName;
+        entryReferences.buttonHeader.text = item.CollectableName;
+
+        entryReferences.description.text = item.JournalEntry;
+        entryReferences.summary.text = item.JournalSummary;
+        entryReferences.background.sprite = item.BloodyBackground ? journalBackground : journalBackgroundBloody;
+        entryReferences.stamp.SetActive(item.Important);
     }
 
     public void DisableAllText()
