@@ -7,6 +7,7 @@ public class SubtitlesUI : MonoBehaviour
 {
     [SerializeField] private const float defaultDisappearingTime = 3f;
     [SerializeField] private TMP_Text subtitlesField;
+    [SerializeField] private GameObject subtitlesBg;
     private float endTime;
     private bool isActive = false;
     void Start()
@@ -20,6 +21,10 @@ public class SubtitlesUI : MonoBehaviour
         {
             subtitlesField.enabled = false;
             isActive = false;
+            if (subtitlesBg != null)
+            {
+                subtitlesBg.SetActive(false);
+            }
         }
     }
     private void SetSubtitles(string text, float disappearingTime = defaultDisappearingTime)
@@ -28,6 +33,10 @@ public class SubtitlesUI : MonoBehaviour
         isActive = true;
         subtitlesField.text = text;
         subtitlesField.enabled = true;
+        if (subtitlesBg != null)
+        {
+            subtitlesBg.SetActive(true);
+        }
     }
     private void UpdateSubtitles()
     {
