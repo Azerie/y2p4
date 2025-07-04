@@ -14,7 +14,10 @@ public class AnimationZone : MonoBehaviour
         {
             if(isFirst) {
                 _aniamtor.Play(animationName);
-                other.transform.parent.GetComponent<VoicelinePlayer>().PlayVoiceline(voicelineToPlay);
+                if(voicelineToPlay != null)
+                {
+                    other.transform.parent.GetComponent<VoicelinePlayer>().PlayVoiceline(voicelineToPlay);
+                }
                 isFirst = false;
             }
         }
