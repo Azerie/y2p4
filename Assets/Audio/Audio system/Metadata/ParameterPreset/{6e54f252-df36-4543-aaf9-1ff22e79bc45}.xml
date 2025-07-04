@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{6e54f252-df36-4543-aaf9-1ff22e79bc45}">
+		<property name="name">
+			<value>EnemyState</value>
+		</property>
+		<relationship name="folder">
+			<destination>{2e8440f0-d7d0-49ef-9b1c-21c366fc679e}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{e91c7dd5-5692-4544-9c99-ccd58ab683f6}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{e91c7dd5-5692-4544-9c99-ccd58ab683f6}">
+		<property name="maximum">
+			<value>3</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+		<relationship name="modulators">
+			<destination>{92c9e8d1-fe79-43ac-8f0b-53a6f1360542}</destination>
+		</relationship>
+	</object>
+	<object class="SeekModulator" id="{92c9e8d1-fe79-43ac-8f0b-53a6f1360542}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>cursorPosition</value>
+		</property>
+		<property name="speedAscending">
+			<value>0.35999998450279236</value>
+		</property>
+	</object>
+</objects>

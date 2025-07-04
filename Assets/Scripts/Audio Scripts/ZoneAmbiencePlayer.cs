@@ -1,16 +1,17 @@
 using UnityEngine;
-using FMOD.Studio; // Needed for EventInstance and the correct STOP_MODE
-using FMODUnity; // Needed for EventReference and the RuntimeManager
+using System.Collections.Generic; // Required for using Lists
+using FMOD.Studio;
+using FMODUnity;
 
 /// <summary>
 /// Plays a continuous FMOD event while a player is inside a compound trigger zone.
-/// This version is designed for hierarchical characters, where the collider is on a child
-/// object (e.g., "Body") and the identifying tag is on the parent object.
+/// This version monitors a list of Enemies and adjusts a parameter on the 
+/// ambience event based on the most aggressive enemy's state.
 /// </summary>
 public class ZoneAmbiencePlayer : MonoBehaviour
 {
     // ------------------------------------------------------------------
-    // SETTINGS - Configure these in the Unity Inspector
+    // SETTINGS
     // ------------------------------------------------------------------
 
     [Header("FMOD Event to Play")]
@@ -21,31 +22,52 @@ public class ZoneAmbiencePlayer : MonoBehaviour
     [Tooltip("The tag of the PARENT player GameObject this zone should react to.")]
     public string playerParentTag = "Player";
 
+    [Header("Enemy State Integration")]
+    [Tooltip("Drag all Enemy GameObjects here. The ambience will react to the most aggressive one.")]
+    [SerializeField] private List<EnemyBehaviour> enemiesToMonitor = new List<EnemyBehaviour>();
+
+    [Tooltip("The name of the FMOD parameter to control (e.g., 'EnemyState').")]
+    [SerializeField] private string parameterName = "EnemyState";
+
 
     // ------------------------------------------------------------------
-    // INTERNAL STATE - Do not modify these from other scripts
+    // INTERNAL STATE
     // ------------------------------------------------------------------
     private int _triggerCount = 0;
     private EventInstance _ambienceInstance;
+    private bool _isPlayerInZone = false;
 
 
-    // This function is called whenever any object's collider ENTERS one of the child trigger volumes.
+    private void Start()
+    {
+        if (enemiesToMonitor.Count == 0)
+        {
+            Debug.LogWarning($"The 'Enemies To Monitor' list is empty on {gameObject.name}. The FMOD parameter will not be updated.", this);
+        }
+    }
+
+    // This will run every frame.
+    private void Update()
+    {
+        // If the player is in the zone and we have a valid sound playing...
+        if (_isPlayerInZone && _ambienceInstance.isValid())
+        {
+            // ...continuously update the FMOD parameter based on the highest enemy threat.
+            UpdateAmbienceParameter();
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        // --- KEY CHANGE IS HERE ---
-        // Instead of checking the tag of 'other' directly, we check the tag of its PARENT.
-        // This works for characters where a child object like "Body" has the collider.
         if (other.transform.parent != null && other.transform.parent.CompareTag(playerParentTag))
         {
-            // The object that entered belongs to our player, so increase the count.
             _triggerCount++;
 
-            // If this is the FIRST volume the player has entered (count is now 1), start the sound.
             if (_triggerCount == 1)
             {
                 Debug.Log("Player has entered the zone. Starting ambience.");
+                _isPlayerInZone = true;
 
-                // Start the sound instance.
                 _ambienceInstance = RuntimeManager.CreateInstance(zoneAmbienceEvent);
                 RuntimeManager.AttachInstanceToGameObject(_ambienceInstance, gameObject);
                 _ambienceInstance.start();
@@ -53,37 +75,85 @@ public class ZoneAmbiencePlayer : MonoBehaviour
         }
     }
 
-    // This function is called whenever any object's collider EXITS one of the child trigger volumes.
     private void OnTriggerExit(Collider other)
     {
-        // --- KEY CHANGE IS HERE ---
-        // We also check the parent's tag upon exiting.
         if (other.transform.parent != null && other.transform.parent.CompareTag(playerParentTag))
         {
-            // The player is leaving one of our volumes, so decrease the count.
             if (_triggerCount > 0)
             {
                 _triggerCount--;
             }
 
-            // If the count has dropped to ZERO, the player is completely outside the zone. Stop the sound.
             if (_triggerCount == 0)
             {
                 Debug.Log("Player has exited the zone. Stopping ambience.");
+                _isPlayerInZone = false;
 
-                // Stop the sound with a fade-out and release it from memory.
                 _ambienceInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
                 _ambienceInstance.release();
             }
         }
     }
 
-    // A safety function to stop the sound if this zone object is ever disabled.
+    /// <summary>
+    /// Checks all monitored enemies and finds the most aggressive state among them.
+    /// </summary>
+    private void UpdateAmbienceParameter()
+    {
+        if (enemiesToMonitor == null || enemiesToMonitor.Count == 0) return;
+
+        // Assume the least aggressive state to start.
+        EnemyBehaviour.State highestState = EnemyBehaviour.State.Roaming;
+
+        // Loop through all enemies to find the highest alert level.
+        foreach (var enemy in enemiesToMonitor)
+        {
+            if (enemy == null) continue; // Skip if an entry in the list is empty.
+
+            EnemyBehaviour.State currentState = enemy.GetState();
+
+            // Chasing is the highest priority. If we find one, we can stop looking.
+            if (currentState == EnemyBehaviour.State.Chasing)
+            {
+                highestState = EnemyBehaviour.State.Chasing;
+                break;
+            }
+            // Alert is the next highest.
+            else if (currentState == EnemyBehaviour.State.Alert)
+            {
+                highestState = EnemyBehaviour.State.Alert;
+            }
+        }
+
+        // Now set the parameter based on the most aggressive state we found.
+        float parameterValue = 0f;
+        switch (highestState)
+        {
+            case EnemyBehaviour.State.Roaming:
+                parameterValue = 0f;
+                break;
+            case EnemyBehaviour.State.Alert:
+                parameterValue = 0.25f;
+                break;
+            case EnemyBehaviour.State.Chasing:
+                parameterValue = 0.75f;
+                break;
+            default:
+                parameterValue = 0f;
+                break;
+        }
+
+        // Set the parameter. This will now be called every frame.
+        _ambienceInstance.setParameterByName(parameterName, parameterValue);
+    }
+
+
     private void OnDisable()
     {
         if (_ambienceInstance.isValid())
         {
             Debug.LogWarning("Zone object was disabled. Forcing sound to stop immediately.");
+            _isPlayerInZone = false;
             _ambienceInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
             _ambienceInstance.release();
         }
