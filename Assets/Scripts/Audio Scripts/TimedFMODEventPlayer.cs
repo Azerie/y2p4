@@ -70,7 +70,7 @@ public class TimedFMODEventPlayer : MonoBehaviour
             // If debugging is enabled, log a message to the console.
             if (enableDebugLogging)
             {
-                Debug.Log($"Played FMOD event '{fmodEvent.Path}' at {Time.time} seconds on {gameObject.name}.");
+                Debug.Log($"Played FMOD event '{fmodEvent.ToString()}' at {Time.time} seconds on {gameObject.name}.");
             }
         }
         else
