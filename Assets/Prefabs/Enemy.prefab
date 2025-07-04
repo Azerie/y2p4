@@ -340,8 +340,8 @@ MonoBehaviour:
   detectionRange: 12
   detectionAngle: 75
   heightOffset: 0.1
-  RoamingToAlertTime: 2.5
-  AlertToChasingTime: 2.5
+  RoamingToAlertTime: 1.5
+  AlertToChasingTime: 2
   AlertToRoamingTime: 2
   ChasingToAlertTime: 1.5
   RoamingSpeed: 2
@@ -360,6 +360,11 @@ MonoBehaviour:
   runningAnimationMovementStage: 3
   attackAnimationTriggerName: Attack
   knockedAnimationTriggerName: Fall
+  m_RoamingVoiceline: {fileID: 0}
+  m_AlertVoiceline: {fileID: 0}
+  m_ChasingVoiceline: {fileID: 0}
+  randomVoicelines: []
+  randomVoicelinesTime: 20
   m_AlertSoundEventPath:
     Guid:
       Data1: 272438237

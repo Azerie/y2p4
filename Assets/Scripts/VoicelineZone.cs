@@ -9,7 +9,7 @@ public class VoicelineZone : MonoBehaviour
     private bool isFirst = true;
     void OnTriggerEnter(Collider other)
     {
-        if (other.transform.parent != null && other.transform.parent.CompareTag("Player"))
+        if (other.transform.parent != null && other.transform.parent.CompareTag("Player") && !other.isTrigger)
         {
             if (requiredCollectable == null || EvidenceManager.GetInstance().GetJournal().Contains(requiredCollectable))
             {
