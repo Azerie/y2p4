@@ -7,7 +7,7 @@ public class StartTeleport : MonoBehaviour
     [SerializeField] Transform teleportPosition;
     void OnTriggerEnter(Collider other)
     {
-        if (other.transform.parent != null && other.transform.parent.CompareTag("Player"))
+        if (other.transform.parent != null && other.transform.parent.CompareTag("Player") && !other.isTrigger)
         {
             if (teleportPosition == null || PlayerInventory.GetInstance().GetItems().Count == 0)
             {
