@@ -20,3 +20,7 @@ MonoBehaviour:
     just going a bit crazy it has been a stressful few days. I just need to rest
     some more. '
   icon: {fileID: 0}
+  bloodyBackground: 0
+  important: 1
+  journalSummary: Maybe there are unkindled candles somewhere. Does lighting them
+    up do something?

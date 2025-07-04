@@ -94,7 +94,7 @@ public class EvidenceJournal : MonoBehaviour
 
         entryReferences.description.text = item.JournalEntry;
         entryReferences.summary.text = item.JournalSummary;
-        entryReferences.background.sprite = item.BloodyBackground ? journalBackground : journalBackgroundBloody;
+        entryReferences.background.sprite = !item.BloodyBackground ? journalBackground : journalBackgroundBloody;
         entryReferences.stamp.SetActive(item.Important);
     }
 

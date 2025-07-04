@@ -20,3 +20,6 @@ MonoBehaviour:
     of room behind there, but why would he have it and for what? I need to get out
     of here as fast as possible! '
   icon: {fileID: 0}
+  bloodyBackground: 0
+  important: 1
+  journalSummary: A secret door behind a painting?

@@ -20,3 +20,6 @@ MonoBehaviour:
     at me. Not long after I heard the door open, Klaas was coming. Luckily I was
     able to hide on time. I need to tell someone! I need to leave! '
   icon: {fileID: 0}
+  bloodyBackground: 1
+  important: 1
+  journalSummary: A key in the kitchen? Possibly a key to get out of here.

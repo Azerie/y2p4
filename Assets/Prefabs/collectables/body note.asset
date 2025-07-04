@@ -18,3 +18,6 @@ MonoBehaviour:
     sorry, sorry I couldn''t warn you sooner. In case I don''t get out of here, tell
     my parents I love them. '
   icon: {fileID: 0}
+  bloodyBackground: 1
+  important: 0
+  journalSummary: Willem..these people outright murdered him..
