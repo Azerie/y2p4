@@ -9,7 +9,16 @@ public class Collectable : ScriptableObject
     [SerializeField] private string journalEntry;
     [SerializeField] private Sprite icon;
 
+    [Header("Extra Journal Info")]
+    [SerializeField] private bool bloodyBackground;
+    [SerializeField] private bool important;
+    [SerializeField] private string journalSummary;
+
     public string CollectableName => collectableName;
     public string JournalEntry => journalEntry;
     public Sprite Icon => icon;
+    public bool BloodyBackground => bloodyBackground;
+    public bool Important => important;
+    public string JournalSummary => journalSummary;
+
 }
