@@ -136,6 +136,7 @@ public class PlayerControls : MonoBehaviour
         pauseMenu = FindObjectOfType<PauseMenu>();
         evidenceJournal = FindObjectOfType<EvidenceJournal>();
         skillcheck = FindObjectOfType<SkillCheck>();
+        deathScreen = FindObjectOfType<DeathScreen>();
         GameObject staminaUITemp = GameObject.Find("StaminaUI");
         if (staminaUITemp != null) { staminaUI = staminaUITemp.GetComponent<ImageFading>(); }
         Cursor.visible = false;
@@ -411,11 +412,11 @@ public class PlayerControls : MonoBehaviour
         evidenceJournal.OnJournalButton();
         if (evidenceJournal.IsEnabled())
         {
-            isPauseButtonEnabled = true;
+            isPauseButtonEnabled = false;
         }
         else
         {
-            isPauseButtonEnabled = false;
+            isPauseButtonEnabled = true;
         }
     }
 
