@@ -6,7 +6,7 @@ public class EnemyFootsteps : MonoBehaviour
 {
     [Header("FMOD Settings")]
     [Tooltip("FMOD event path for footsteps.")]
-    public FMODUnity.EventReference m_EventPath = new FMODUnity.EventReference { Path = "event:/Footsteps/Dynamic footsteps" }; // Example path
+    public FMODUnity.EventReference m_EventPath = new FMODUnity.EventReference();
 
     [Header("FMOD Parameters (Read-Only in Inspector)")]
     [Tooltip("Current value for the 'Terrain' parameter in FMOD (0 for Dirt/Ground, 1 for Floor). Set automatically.")]
@@ -178,7 +178,7 @@ public class EnemyFootsteps : MonoBehaviour
         }
 
         // --- 3. Play FMOD Event ---
-        if (!string.IsNullOrEmpty(m_EventPath.Path))
+        if (!string.IsNullOrEmpty(m_EventPath.ToString()))
         {
             FMOD.Studio.EventInstance footstepEvent = FMODUnity.RuntimeManager.CreateInstance(m_EventPath);
 

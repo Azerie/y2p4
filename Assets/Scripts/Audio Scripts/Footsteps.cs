@@ -4,7 +4,7 @@ using UnityEngine.InputSystem; // Required for InputAction
 public class Footsteps : MonoBehaviour
 {
     [Tooltip("FMOD event path for footsteps.")]
-    public FMODUnity.EventReference m_EventPath = new FMODUnity.EventReference { Path = "event:/Footsteps/Dynamic footsteps" };
+    public FMODUnity.EventReference m_EventPath = new FMODUnity.EventReference();
 
     [Header("FMOD Parameters (Read-Only)")]
     [Tooltip("Current value for the 'Terrain' parameter in FMOD (0 for Dirt/Ground, 1 for Floor).")]
@@ -221,7 +221,7 @@ public class Footsteps : MonoBehaviour
         if (m_Debug)
             Debug.Log("FMOD Params - Terrain: " + m_Terrain + ", WalkRun: " + m_WalkRun + ", isCrouching: " + m_IsCrouching);
 
-        if (!string.IsNullOrEmpty(m_EventPath.Path))
+        if (!string.IsNullOrEmpty(m_EventPath.ToString()))
         {
             FMOD.Studio.EventInstance footstepEvent = FMODUnity.RuntimeManager.CreateInstance(m_EventPath);
             footstepEvent.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(gameObject));

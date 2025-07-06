@@ -47,7 +47,7 @@ public class PlayFMODInTriggerZone : MonoBehaviour
             if (playLoopCoroutine == null)
             {
                 playLoopCoroutine = StartCoroutine(PlayEventLoop());
-                Debug.Log($"Player '{other.name}' entered trigger zone. Starting FMOD event loop for '{fmodEvent.Path}' every {playInterval}s.", this);
+                Debug.Log($"Player '{other.name}' entered trigger zone. Starting FMOD event loop for '{fmodEvent.ToString()}' every {playInterval}s.", this);
             }
         }
     }
@@ -64,7 +64,7 @@ public class PlayFMODInTriggerZone : MonoBehaviour
             {
                 StopCoroutine(playLoopCoroutine);
                 playLoopCoroutine = null;
-                Debug.Log($"Player '{other.name}' exited trigger zone. Stopped FMOD event loop for '{fmodEvent.Path}'.", this);
+                Debug.Log($"Player '{other.name}' exited trigger zone. Stopped FMOD event loop for '{fmodEvent.ToString()}'.", this);
             }
         }
     }
@@ -82,7 +82,7 @@ public class PlayFMODInTriggerZone : MonoBehaviour
 
     IEnumerator PlayEventLoop()
     {
-        Debug.Log($"PlayEventLoop started for '{fmodEvent.Path}'. Waiting for initial interval of {playInterval}s.", this);
+        Debug.Log($"PlayEventLoop started for '{fmodEvent.ToString()}'. Waiting for initial interval of {playInterval}s.", this);
         // This waits for the first interval THEN plays.
         // If you want it to play immediately on enter, then wait, uncomment PlayEvent() and move the yield.
         // PlayEvent(); // Play immediately
@@ -93,10 +93,10 @@ public class PlayFMODInTriggerZone : MonoBehaviour
         while (isPlayerInside) // Loop only while player is inside and coroutine is active
         {
             PlayEvent();
-            Debug.Log($"PlayEventLoop: Waiting for next interval of {playInterval}s for '{fmodEvent.Path}'.", this);
+            Debug.Log($"PlayEventLoop: Waiting for next interval of {playInterval}s for '{fmodEvent.ToString()}'.", this);
             yield return new WaitForSeconds(playInterval);
         }
-        Debug.Log($"PlayEventLoop for '{fmodEvent.Path}' naturally ended because player is no longer inside or coroutine was stopped.", this);
+        Debug.Log($"PlayEventLoop for '{fmodEvent.ToString()}' naturally ended because player is no longer inside or coroutine was stopped.", this);
         playLoopCoroutine = null; // Clean up
     }
 
@@ -111,7 +111,7 @@ public class PlayFMODInTriggerZone : MonoBehaviour
         // Play the FMOD event. For a multi-instrument, this triggers it once.
         // Its internal complexity (what sounds it makes, how long it lasts) is handled by FMOD Studio.
         RuntimeManager.PlayOneShotAttached(fmodEvent, this.gameObject);
-        Debug.Log($"Played FMOD event: '{fmodEvent.Path}' at {Time.time} attached to {gameObject.name}.", this);
+        Debug.Log($"Played FMOD event: '{fmodEvent.ToString()}' at {Time.time} attached to {gameObject.name}.", this);
     }
 
     void OnDisable()

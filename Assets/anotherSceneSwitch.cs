@@ -18,6 +18,8 @@ public class anotherSceneSwitch : MonoBehaviour
         {
             if (requiredItem != null && PlayerInventory.GetInstance().HasItem(requiredItem))
             {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
                 if (EvidenceManager.GetInstance().GetJournal().Count >= requiredEvidenceNumber)
                 {
                     SceneManager.LoadScene(goodSceneToLoad);
