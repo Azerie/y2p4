@@ -131,7 +131,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 48.55
+  m_fontSize: 48.6
   m_fontSizeBase: 39.6
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -696,7 +696,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 48.45
+  m_fontSize: 48.5
   m_fontSizeBase: 39.6
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -6078,7 +6078,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 77.35
+  m_fontSize: 77.4
   m_fontSizeBase: 39.6
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -7765,7 +7765,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 48.55
+  m_fontSize: 48.6
   m_fontSizeBase: 39.6
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -11899,7 +11899,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 48.75
+  m_fontSize: 48.8
   m_fontSizeBase: 39.6
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -14188,9 +14188,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6513048623953078223}
-        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
-        m_MethodName: Resume
+      - m_Target: {fileID: 3982576452093771039}
+        m_TargetAssemblyTypeName: EvidenceJournal, Assembly-CSharp
+        m_MethodName: CloseJournal
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
