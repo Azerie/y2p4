@@ -14,8 +14,8 @@ public class CandlePuzzlePieceBehaviour : InteractableBehaviourAbstract
     public override void OnInteract()
     {
         if (!isLit) {
-            base.OnInteract();
             CandleLit?.Invoke();
+            base.OnInteract();
             isLit = true;
             if (visualToDisable != null)
             {

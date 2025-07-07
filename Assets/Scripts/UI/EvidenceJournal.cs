@@ -35,7 +35,7 @@ public class EvidenceJournal : MonoBehaviour
         isEnabled = true;
     }
 
-    void CloseJournal()
+    public void CloseJournal()
     {
         pauseMenu.Resume();
         mainPauseCanvas.SetActive(true);

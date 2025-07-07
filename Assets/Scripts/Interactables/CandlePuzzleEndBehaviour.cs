@@ -6,9 +6,9 @@ using UnityEngine.Events;
 public class CandlePuzzleEndBehaviour : MonoBehaviour
 {
     [SerializeField] int requiredCandlesNumber;
-    [SerializeField] List<GameObject> gameObjectsToDisable;
-    [SerializeField] List<GameObject> gameObjectsToEnable;
-    int currentCandlesNumber = 0;
+    [SerializeField] public List<GameObject> gameObjectsToDisable;
+    [SerializeField] public List<GameObject> gameObjectsToEnable;
+    private int currentCandlesNumber = 0;
     PuzzleItemReveal itemReveal;
 
     void Start()
